@@ -13,27 +13,44 @@ class LRInterfaceSearch extends WP_Widget
 {
   function LRInterfaceSearch()
   {
-    $widget_ops = array('classname' => 'LRInterfaceSearch', 'description' => 'Add an LR search bar to a page' );
+    $widget_ops = array('classname' => 'LRInterfaceSearch', 'description' => 'Adds an LR search bar to a page' );
     $this->WP_Widget('LRInterfaceSearch', 'LR Interface Search Bar', $widget_ops);
   }
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'type' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'type' => '' , 'results' => '', 'placeholder'=>'' ) );
     $title = $instance['title'];
 	$type = $instance['type'];
+	$results = $instance['results'];
+	$placeholder = $instance['placeholder'];
 ?>
 
 <p>
-	<label for="<?php echo $this->get_field_id('title'); ?>">
-		Title: 
-		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
-	</label>	
+	<label for="<?php echo $this->get_field_id('placeholder'); ?>">
+		Search Placeholder: 
+		<input class="widefat" id="<?php echo $this->get_field_id('placeholder'); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo attribute_escape($placeholder); ?>" />
+	</label><br/><br/>
+	<label for="<?php echo $this->get_field_id('results'); ?>">
+		Results: 
+		<select class="widefat" id="<?php echo $this->get_field_id('results'); ?>" name="<?php echo $this->get_field_name('results'); ?>"> 
+			<option value=""><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
+			<?php 
+				$pages = get_pages(); 
+				foreach ( $pages as $page ) {
+					$option = ($page->ID == attribute_escape($results)) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
+					$option .= $page->post_title;
+					$option .= '</option>';
+					echo $option;
+				}
+			?>
+		</select>
+	</label>	<br/><br/>	
 	<label for="<?php echo $this->get_field_id('type'); ?>">
 		Search Method:
 		<select class="widefat" id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
-			<option>Indexed Search</option>
-			<option>Slice</option>
+			<option value="index" <?php echo attribute_escape($type) == "index" ? 'selected="selected"':'""'; ?>>Indexed Search</option>
+			<option value="slice" <?php echo attribute_escape($type) == "slice" ? 'selected="selected"':'""'; ?>>Slice</option>
 		</select>
 	</label>
 </p>
@@ -45,6 +62,9 @@ class LRInterfaceSearch extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
+	$instance['type'] = $new_instance['type'];
+	$instance['results'] = $new_instance['results'];
+	$instance['placeholder'] = $new_instance['placeholder'];
     return $instance;
   }
  
@@ -58,11 +78,38 @@ class LRInterfaceSearch extends WP_Widget
     if (!empty($title))
       echo $before_title . $title . $after_title;;
  
-	// WIDGET CODE GOES HERE
-	echo 'LR Search Bar: <input type="text" placeholder="Search for resources" name="lrSearchBar" /><input type="submit" value="Search" />';
- 
+	?>
+	<form method="post" id="LRsearchForm" action="<?php echo get_page_link( $instance['results'] ); ?>">
+		<input type="text" placeholder="<?php echo $instance['placeholder']; ?>" name="quedry" />
+		<input type="submit" value="Search" />
+	</form>
+	
+	<script type="text/javascript">
+		jQuery(document).ready(function($){
+		
+			$("#LRsearchForm").submit(function(e){
+				e.preventDefault();
+				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", $("#LRsearchForm input").val());
+			});
+		});
+	</script>
+	<?php
     echo $after_widget;
   }
  
 }
-add_action( 'widgets_init', create_function('', 'return register_widget("LRInterfaceSearch");') );?>
+
+include_once('LRInterfaceResults.php');
+
+function registerWidgets(){
+
+	register_widget("LRInterfaceSearch");
+	register_widget("LRInterfaceResults");
+}
+
+function lr_enqueue_script(){
+
+	wp_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', false );
+}
+add_action( 'widgets_init', 'registerWidgets' );
+add_action( 'wp_enqueue_scripts', 'lr_enqueue_script' ); ?>
