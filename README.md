@@ -18,7 +18,7 @@ LR Wordpress Plugin
 0. To-do
 
 ### Displaying a Search Bar
-Note: These steps are explained after displaying the results because the search bar requires an existing results page to function properly.
+Note: This section is placed after displaying the results because the search bar requires an existing results page to function properly.
 
 0. Add the `LR Interface Search Bar` widget to a sidebar (will appear as a search box on your live site).
 0. Configure the `LR Interface Search Bar` widget
