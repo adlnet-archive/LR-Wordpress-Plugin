@@ -1,4 +1,5 @@
 <?php
+
 class LRInterfaceResults extends WP_Widget
 {
   function LRInterfaceResults()
