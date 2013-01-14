@@ -1,16 +1,28 @@
-LR-Wordpress-Widget
+LR Wordpress Plugin
 ===================
-
-1. After downloading this plugin, extract it
-2. Upload the extracted folder to "http://your_wordpress_directory/wp-content/plugins/"
-3. Install and activate the LR Wordpress plugin via the admin panel in Wordpress
-4. Install and activate [Widgetize Pages Light](http://wordpress.org/extend/plugins/widgetize-pages-light/) via the admin panel in Wordpress  
+### Install
+0. After downloading this plugin, extract it
+0. Upload the extracted folder to "http://your_wordpress_directory/wp-content/plugins/"
+0. Install and activate the LR Wordpress plugin via the admin panel in Wordpress
+0. Install and activate [Widgetize Pages Light](http://wordpress.org/extend/plugins/widgetize-pages-light/) via the admin panel in Wordpress  
   * Widgetize Pages Light allows you to create a "sidebar" that is displayed in the main content area of a page
-5. Follow [Widgetize instructions](http://otwthemes.com/online-documentation-widgetize-pages-light/) to create a sidebar and give it a name
-6. Create and name a new page to display LR search results. Before submitting, click the blue icon labeled "Insert Sidebar ShortCode"
-7. Add the "LR Interface Search Bar" Widget to a new or existing page's sidebar (will appear as a search box on your live site)
-  * You are able to configure different aspects of the search bar in the admin area of Wordpress
+  * You may follow [Widgetize instructions](http://otwthemes.com/online-documentation-widgetize-pages-light/) whenever this documents asks you to create a sidebar
+
+### Displaying the Results
+0. Follow instructions above to create a new sidebar. Name it `Results Sidebar`
+0. Create a new Wordpress page to display the results. Before publishing this new page, click the blue icon labeled labeled `Insert Sidebar ShortCode`, select `Results Sidebar` when given the option, and click "Insert". You may now save and publish the page.
+0. Add the `LR Interface Results` widget to `Results Sidebar` 
+   * [How to activate and configure widgets](http://en.support.wordpress.com/widgets/)
+0. Configure the `LR Interface Results` widget
+  * To-do...
+0. To-do
+
+### Displaying a Search Bar
+Note: These steps are explained after displaying the results because the search bar requires an existing results page to function properly.
+
+0. Add the `LR Interface Search Bar` widget to a sidebar (will appear as a search box on your live site).
+0. Configure the `LR Interface Search Bar` widget
   * `Search placeholder` is optional and is displayed whenever the search bar is empty
   * `Results` is mandatory and will determine where the search results are displayed (refer to step 6)
   * `Search Method` is also mandatory and is set to `Indexed Search` by defualt. Slice is also an option
-8. To-do...
+0. To-do...
