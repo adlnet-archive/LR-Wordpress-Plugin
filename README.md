@@ -14,6 +14,7 @@ LR Wordpress Plugin
 0. Add the `LR Interface Results` widget to `Results Sidebar` 
    * [How to activate and configure widgets](http://en.support.wordpress.com/widgets/)
 0. Configure the `LR Interface Results` widget
+  * `Search Method` is also mandatory and is set to `Indexed Search` by defualt. Slice is also an option
   * `DataService Endpoint` is mandatory and is set to `http://12.109.40.31` by default. Changing this value is generally not needed
 0. To-do
 
@@ -24,5 +25,4 @@ Note: This section is placed after displaying the results because the search bar
 0. Configure the `LR Interface Search Bar` widget
   * `Search placeholder` is optional and is displayed whenever the search bar is empty
   * `Results` is mandatory and will determine where the search results are displayed
-  * `Search Method` is also mandatory and is set to `Indexed Search` by defualt. Slice is also an option
 0. To-do...
