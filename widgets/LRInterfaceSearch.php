@@ -10,40 +10,36 @@ class LRInterfaceSearch extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'type' => '' , 'results' => '', 'placeholder'=>'' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'results' => '', 'placeholder'=>'' ) );
     $title = $instance['title'];
-	$type = $instance['type'];
 	$results = $instance['results'];
 	$placeholder = $instance['placeholder'];
 ?>
 
 <p>
+
 	<label for="<?php echo $this->get_field_id('placeholder'); ?>">
 		Search Placeholder: 
-		<input class="widefat" id="<?php echo $this->get_field_id('placeholder'); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo attribute_escape($placeholder); ?>" />
-	</label><br/><br/>
+	</label>
+	<input class="widefat" id="<?php echo $this->get_field_id('placeholder'); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo attribute_escape($placeholder); ?>" />
+	<br/><br/>
+	
 	<label for="<?php echo $this->get_field_id('results'); ?>">
 		Results: 
-		<select class="widefat" id="<?php echo $this->get_field_id('results'); ?>" name="<?php echo $this->get_field_name('results'); ?>"> 
-			<option value=""><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
-			<?php 
-				$pages = get_pages(); 
-				foreach ( $pages as $page ) {
-					$option = ($page->ID == attribute_escape($results)) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
-					$option .= $page->post_title;
-					$option .= '</option>';
-					echo $option;
-				}
-			?>
-		</select>
-	</label>	<br/><br/>	
-	<label for="<?php echo $this->get_field_id('type'); ?>">
-		Search Method:
-		<select class="widefat" id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
-			<option value="index" <?php echo attribute_escape($type) == "index" ? 'selected="selected"':'""'; ?>>Indexed Search</option>
-			<option value="slice" <?php echo attribute_escape($type) == "slice" ? 'selected="selected"':'""'; ?>>Slice</option>
-		</select>
 	</label>
+	<select class="widefat" id="<?php echo $this->get_field_id('results'); ?>" name="<?php echo $this->get_field_name('results'); ?>"> 
+		<option value=""><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
+		<?php 
+			$pages = get_pages(); 
+			foreach ( $pages as $page ) {
+				$option = ($page->ID == attribute_escape($results)) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
+				$option .= $page->post_title;
+				$option .= '</option>';
+				echo $option;
+			}
+		?>
+	</select>
+	
 </p>
   
 <?php
@@ -53,7 +49,6 @@ class LRInterfaceSearch extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
-	$instance['type'] = $new_instance['type'];
 	$instance['results'] = $new_instance['results'];
 	$instance['placeholder'] = $new_instance['placeholder'];
     return $instance;

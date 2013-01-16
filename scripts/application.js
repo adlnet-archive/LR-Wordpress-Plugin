@@ -453,7 +453,7 @@ var addFullDescriptions = function(){
 			keys = encodeURIComponent(JSON.stringify(keys));
 
 			//Do request and update self.results			
-			$.getJSON('/data/?keys=' + keys, function(data){
+			$.getJSON(serviceHost + '/data/?keys=' + keys, function(data){
 									
 				
 				console.log("Incoming data: ", data);
