@@ -1,7 +1,7 @@
 LR Wordpress Plugin
 ===================
 ### Install
-0. After downloading this plugin, extract it
+0. [Download the LR Wordpress plugin](https://github.com/mickmuzac/LR-Wordpress-Widget/archive/master.zip)
 0. [Install and activate](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins) the LR Wordpress plugin via the upload tab in the admin panel in Wordpress
 0. Install and activate [Widgetize Pages Light](http://wordpress.org/extend/plugins/widgetize-pages-light/) via the admin panel in Wordpress  
   * Widgetize Pages Light allows you to create a "sidebar" that is displayed in the main content area of a page
