@@ -156,8 +156,6 @@ class LRInterfaceResults extends WP_Widget
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/paradata.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/utils.js' , __FILE__ ) ?>"></script>
 	<link type="text/css" href="<?php echo plugins_url( '/styles/Hypertree.css' , __FILE__ ) ?>" rel="stylesheet" />
-
-	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/hexmd5.js' , __FILE__ ) ?>"></script>
 	
 	<?php endif; ?>
 	<?php if($type == "index"): ?>

@@ -51,7 +51,7 @@ var paradataStoreRequest = function(paradata){
 	
 	$.ajax({
 		type: "POST",
-		url: "/main",
+		url: serviceHost + "/main",
 		dataType: "json",
 		jsonp: false,
 		contentType: 'application/json',
@@ -177,7 +177,7 @@ var handleMainResourceModal = function(src, direct){
 	if(iframeHidden){
 
 		//Workaround to get 'hasScreenshot' property
-		$.getJSON('/data/?keys=' + encodeURIComponent(JSON.stringify([md5])),function(data){					
+		$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent(JSON.stringify([md5])),function(data){					
 		
 			if(data[0]){
 				data = data[0];
