@@ -14,7 +14,6 @@ class LRInterfaceTimeline extends WP_Widget
     $title = $instance['title'];
 	$results = $instance['results'];
 	$placeholder = $instance['placeholder'];
-	$host  = empty($instance['host']) ? "http://12.109.40.31" : $instance['host'];
 ?>
 
 <p>
@@ -64,7 +63,8 @@ class LRInterfaceTimeline extends WP_Widget
  
     if (!empty($title))
       echo $before_title . $after_title;;
- 
+	
+	$host  = "http://12.109.40.31";//empty($instance['host']) ? "http://12.109.40.31" : $instance['host'];
 	?>
 	
 	
@@ -89,7 +89,7 @@ class LRInterfaceTimeline extends WP_Widget
 	
 	
 	
-	
+	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/moment.min.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript">
 		var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo $_GET['query']; ?>";
 		var temp = new mainViewModel([]), activeModalName = null, lastSearchCache = "";
