@@ -1,14 +1,14 @@
 LR Wordpress Plugin
 ===================
 ### Install
-0. [Download the LR Wordpress plugin](https://github.com/mickmuzac/LR-Wordpress-Widget/archive/master.zip)
+0. [Download](https://github.com/mickmuzac/LR-Wordpress-Widget/archive/master.zip) the LR Wordpress plugin
 0. [Install and activate](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins) the LR Wordpress plugin via the upload tab in the admin panel in Wordpress
 0. Install and activate [Widgetize Pages Light](http://wordpress.org/extend/plugins/widgetize-pages-light/) via the admin panel in Wordpress  
   * Widgetize Pages Light allows you to create a "sidebar" that is displayed in the main content area of a page
-  * You may follow [Widgetize's instructions](http://otwthemes.com/online-documentation-widgetize-pages-light/) whenever this document asks you to create a sidebar
+  * You may follow [Widgetize's sidebar creation instructions](http://otwthemes.com/online-documentation-widgetize-pages-light/) whenever this document asks you to create a new sidebar
 
 ### Displaying the Results
-0. Follow instructions above to create a new sidebar. Name it `Results Sidebar`
+0. Create a new sidebar. Name it `Results Sidebar`
 0. Create a new Wordpress page to display the results. Before publishing this new page, click the blue icon labeled labeled `Insert Sidebar ShortCode`, select `Results Sidebar` when given the option, and click "Insert". You may now save and publish the page.
 0. Add the `LR Interface Results` widget to `Results Sidebar` 
    * [How to activate and configure widgets](http://en.support.wordpress.com/widgets/)
