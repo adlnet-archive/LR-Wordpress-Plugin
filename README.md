@@ -9,7 +9,7 @@ LR Wordpress Plugin
 
 ### Displaying the Results
 0. Create a new sidebar. Name it `Results Sidebar`
-0. [Create a new Wordpress page](http://codex.wordpress.org/Pages#Creating_Pages) to display the results. Before publishing this new page, click the blue icon labeled labeled `Insert Sidebar ShortCode`, select `Results Sidebar` when given the option, and click "Insert". You may now save and publish the page.
+0. [Create a new Wordpress page](http://codex.wordpress.org/Pages#Creating_Pages) to display the results. Before publishing this new page, click the blue icon labeled labeled `Insert Sidebar ShortCode`. Select `Results Sidebar` and then click "Insert". You may now save and publish the page.
 0. Add the `LR Interface Results` widget to `Results Sidebar` 
    * [How to activate and configure widgets](http://en.support.wordpress.com/widgets/)
 0. Configure the `LR Interface Results` widget
