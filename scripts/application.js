@@ -16,7 +16,8 @@
         self.organizations needs only to contain an array of strings that can be used to search against a node
 */
 var $ = jQuery;
-var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"];
+var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
+	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false;
 
 var urlTransform = {
 
@@ -864,4 +865,9 @@ var mainViewModel = function(resources){
             poundSign = "";
         return poundSign + name.replace(/\W/g, "");
     };
+	
+	self.wordpressLinkTransform = function(link, query){
+	
+		return link.replace("LRreplaceMe", query);
+	};
 };
