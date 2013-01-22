@@ -552,17 +552,22 @@ var mainViewModel = function(resources){
 		
 		$('#spinnerDiv').show();
 		$("#loadMore").hide();
-		
+		var query = $("#s").val();
 		if(isVisual === true){
 			
 			startNewSearch(query);
 		}
 		
 		else {
-			$.ajax(serviceHost + '/search?page='+(loadIndex-1)+'&terms=' + query,{
+			console.log(query);
+			$.ajax(serviceHost + '/search',{
 				dataType : 'json',
-				jsonp : 'callback'
-			}).complete(function(data){
+				jsonp : 'callback',
+				data: {
+					terms: query,
+					page: loadIndex-1,
+				},
+			}).done(function(data){
 				
 				if(data.responseText)
 					data = $.parseJSON(data.responseText);
@@ -591,6 +596,8 @@ var mainViewModel = function(resources){
 				});
 				
 				handlePerfectSize();
+			}).fail(function(error){
+				console.error(error);
 			});
 			
 			loadIndex++;
