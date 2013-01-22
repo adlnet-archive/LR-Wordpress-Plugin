@@ -96,6 +96,7 @@ class LRInterfaceTimeline extends WP_Widget
 	
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/moment.min.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript">
+		var serviceHost = "<?php echo $host; ?>";
 		<?php include_once('templates/scripts/applicationPreview.php'); ?>
 	</script>
 	<?php

@@ -3,27 +3,22 @@
 			
 			
 			<div class="row-fluid">
-				<div class="span5">
+				<h2 data-bind="text:currentObject().title"></h2>
+				<a href="#" data-bind="attr:{href:currentObject().url}">
+					<img style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
+				</a>
 					
+				<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p>
 					
-					<a href="#" data-bind="attr:{href:currentObject().url}">
-						<img data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
-					</a>
-					
-					<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p>
-					<div style="margin-top: 10px; text-align:center;">
-						<button class="btn btn-info" data-bind="click: handleDataClick">View Metadata</button>
-						<a class="btn btn-success" data-bind="attr:{href:doTransform(currentObject().url)}">Go to resource</a>
-					</div>
-				</div>
-				<div class="span7">
-					<p data-bind="text:currentObject().title" class="searchHeader" style="padding-top:0;height:auto;"></p>
-					<p data-bind="text:currentObject().description"></p>
+				<p data-bind="text:currentObject().description"></p>
+				<div style="margin-top: 10px; text-align:center;">
+					<button class="btn btn-info" data-bind="click: handleDataClick">View Metadata</button>
+					<a data-bind="attr:{href:doTransform(currentObject().url)}"><button>Go to resource</button></a>
 				</div>
 			</div>
 		</div>
 	</div>	
-</div>
+
 
 <div class="modal" id="metadata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div style="height: 4%;" class="modal-header visualModal">
@@ -49,12 +44,9 @@
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.xml2json.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.eComboBox.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jit-yc.js' , __FILE__ ) ?>"></script>
-	
-	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/lrbrowser.js' , __FILE__ ) ?>"></script>
+
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/paradata.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/utils.js' , __FILE__ ) ?>"></script>
 	<link type="text/css" href="<?php echo plugins_url( '/styles/Hypertree.css' , __FILE__ ) ?>" rel="stylesheet" />
 	<link type="text/css" href="<?php echo plugins_url( '/styles/prettify.css' , __FILE__ ) ?>" rel="stylesheet" />
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/prettify.js' , __FILE__ ) ?>"></script>
-	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.nicescroll.js' , __FILE__ ) ?>"></script>
-	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/moment.min.js' , __FILE__ ) ?>"></script>

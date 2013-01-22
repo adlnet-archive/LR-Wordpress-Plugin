@@ -186,7 +186,7 @@ var handleMainResourceModal = function(src, direct){
 				currentObject.timeline = self.currentObject().timeline;
 				currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
 				currentObject.description = (data.description == undefined) ? "" : data.description;
-				currentObject.image = (data.hasScreenshot !== true) ? "/images/qmark.png" : "/screenshot/" + md5;
+				currentObject.image = (data.hasScreenshot !== true) ? "/images/qmark.png" : serviceHost + "/screenshot/" + md5;
 				currentObject.hasScreenshot = data.hasScreenshot;				
 				
 				self.currentObject(currentObject);

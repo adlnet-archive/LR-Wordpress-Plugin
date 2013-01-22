@@ -173,25 +173,5 @@
 
 			//if regular search
 			self.loadNewPage(<?php echo $type == 'slice' ? 'true': ''; ?>);
-			
-
-			/*
-				var bodyWidth = $("body").css("width");
-				
-				cacheJObj.mouseenter(function(){
-						
-						$("html").add("body").addClass("overflowHidden");
-						$("body").css("width", bodyWidth);
-				});
-				cacheJObj.mouseleave(function(){
-						
-						$("html").add("body").removeClass("overflowHidden");
-				});
-				cacheJObj.niceScroll({"cursoropacitymax": 0.7, "cursorborderradius": 0} );
-				
-				{{#server}}
-					$(".warningParagraph p").append(" ("+NODE_URL+")");
-				{{/server}}
-			*/	
 		});
 	</script>
