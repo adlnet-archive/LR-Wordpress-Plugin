@@ -11,6 +11,7 @@ Author URI: http://adlnet.gov/
 //Load the individual widgets
 include_once('widgets/LRInterfaceSearch.php');
 include_once('widgets/LRInterfaceResults.php');
+include_once('widgets/LRInterfaceStandards.php');
 include_once('widgets/LRInterfaceTimeline.php');
 include_once('LRInterfacePluginSettings.php');
 
@@ -19,6 +20,7 @@ function registerWidgets(){
 	register_widget("LRInterfaceSearch");
 	register_widget("LRInterfaceResults");
 	register_widget("LRInterfaceTimeline");
+	register_widget("LRInterfaceStandards");
 }
 
 function lr_enqueue_script(){

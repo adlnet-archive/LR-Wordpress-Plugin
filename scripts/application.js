@@ -552,7 +552,7 @@ var mainViewModel = function(resources){
 		
 		$('#spinnerDiv').show();
 		$("#loadMore").hide();
-		var query = $("#s").val();
+		//var query = $("#s").val();
 		if(isVisual === true){
 			
 			startNewSearch(query);

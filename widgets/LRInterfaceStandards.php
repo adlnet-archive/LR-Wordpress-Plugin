@@ -63,10 +63,26 @@ class LRInterfaceStandards extends WP_Widget
  
     if (!empty($title))
       echo $before_title . $title . $after_title;;
- 
+	
+	$host  = "http://12.109.40.31"; //empty($instance['host']) ? "http://12.109.40.31" : $instance['host'];
 	?>
 
 	Standards Browser
+	<div class="result"></div>
+	
+	<script type="text/javascript" src="<?php echo plugins_url( '/templates/scripts/crumbs.js' , __FILE__ ) ?>"></script>
+	<script type="text/javascript" src="<?php echo plugins_url( '/templates/scripts/jquery.cookie.js' , __FILE__ ) ?>"></script>
+	<script type="text/javascript" src="<?php echo plugins_url( '/templates/scripts/browser.js' , __FILE__ ) ?>"></script>
+	<script type="text/javascript">
+		
+		
+		var serviceHost = "<?php echo $host; ?>";
+		$(document).ready(function(){
+			$.get(serviceHost + '/browser/?ajax', function(data) {
+			  $('.result').html(data);
+			});
+		});
+	</script>
 	
 	<?php
     echo $after_widget;
