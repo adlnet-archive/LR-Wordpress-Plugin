@@ -20,7 +20,7 @@ var BROWSER = (function () {
     var state = {
     category: undefined,
     standard: undefined,
-    grade: $.cookie('grade-filter') || 'K',
+    grade: $(".grade-link").val() || $.cookie('grade-filter'),
     nodes: []
     };
 
@@ -43,6 +43,7 @@ var BROWSER = (function () {
     };
 
     var gradeChange = function (event) {
+	
     var $target = $(event.target);
     var standard = $target.data('standard');
     var category = $target.data('category') ||
@@ -50,10 +51,12 @@ var BROWSER = (function () {
 				   
 	
     var grade = $target.val();
+	
     updateState(category, standard, grade);
         updateNodes([]);
+		
     updateHashLocation();
-    return false;
+    return true;
     };
 
     var childClick = function (event) {
@@ -115,7 +118,6 @@ var BROWSER = (function () {
         }
         }
     }
-    
     location.hash = hashParts.join('/');
     };
 
@@ -140,13 +142,13 @@ var BROWSER = (function () {
 
     var createGradeLink = function (category, standard) {
     var gradeFilterClone = $('#grade-filter-master').clone();
-    var grade = $.cookie('grade-filter') || 'K';
+    var grade = $(".grade-link").val() || $.cookie('grade-filter');
 
     var link = gradeFilterClone.removeAttr('id');
 
     link.find('.grade-link').data('category', category);
     link.find('.grade-link').data('standard', standard);
-    link.find('.grade-link').val(grade);
+    //link.find('.grade-link').val(grade);
     link.show();
 
     return link;
@@ -193,23 +195,20 @@ var BROWSER = (function () {
             //$('<h2 />').text('Resources').appendTo(div);
             
             var appendUsing = '<table class="table table-striped resultsTable"><tbody>';
-            var md5 = "";
-            var url = "";
-            var line1 = "";
-            var line2 = "";
-            var line3 = "";
-            var line4 = "";
+			var md5 = "", url = "", wordpressUrl = "", urlShow = "", line1 = "", line2 = "", line3 = "", line4 = "";
             $.each( resources.documents, function(i, doc) {
 				
 				url = doc.result_data.resource;
+				urlShow = (url.length > 40) ? url.substr(0, 40) + "..." : url;
+				wordpressUrl = permalink.replace("LRreplaceMe", url);
 				
 				if(notOnBlackList(url)){
 					md5 = hex_md5(url);
 					
 					line1 = '<tr style="border-top:none;"><td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">';
-					line2 = '<a href="/timeline?query='+url+'"><img height="180" width="180" src="/images/qmark.png" name="'+url+'" class="img-polaroid '+md5+'" />';
-					line3 = '</a></td><td style="border-top:none;padding-top:15px;padding-bottom:15px;"><a name="'+url+'" href="/timeline?query='+url+'" class="title getTitle">'+url+'</a><br/>';
-					line4 = '<a href="/timeline?query='+url+'" class="fine">'+url+'</a><br/><span id="'+md5+'" class="fine getDescription"></span></td></tr>';
+					line2 = '<a href="'+wordpressUrl+'"><img height="180" width="180" src="'+qmarkUrl+'" name="'+url+'" class="img-polaroid '+md5+'" />';
+					line3 = '</a></td><td style="border-top:none;padding-top:15px;padding-bottom:15px;"><a name="'+url+'" href="'+wordpressUrl+'" class="title getTitle">'+urlShow+'</a><br/>';
+					line4 = '<a href="'+wordpressUrl+'" class="fine">'+urlShow+'</a><br/><span id="'+md5+'" class="fine getDescription"></span></td></tr>';
 					appendUsing += line1 + line2 +line3 +line4;
 				}	
             });
@@ -248,7 +247,7 @@ var BROWSER = (function () {
 							data[i].title = (data[i].title == undefined) ? thisObj[i].attr("name") : data[i].title;
 							data[i].title = (data[i].title.length > 80) ? data[i].title.substr(0, 80) + "..." : data[i].title;
 							
-							image[i] = (data.hasScreenshot !== true) ? "/images/qmark.png" : "/screenshot/" + md5[i];
+							image[i] = (data.hasScreenshot !== true) ? "/images/qmark.png" : serviceHost + "/screenshot/" + md5[i];
 							
 							thisObj[i].html(data[i].title);
 							$('.'+md5[i]).attr("src", image[i]);
@@ -271,6 +270,8 @@ var BROWSER = (function () {
     var loadNodes = function ($query, data, callback) {
     var nodesUrl = serviceHost + '/nodes/';
     var $div = $('<div/>').addClass('children');
+	console.log("Data sent to nodes: ", data);
+	
     $div.load(nodesUrl, data, function () {
         loadResources($div);
         $query.append($div);
@@ -351,7 +352,7 @@ var BROWSER = (function () {
             if (!screenLoaded || !state.nodes || state.nodes.length === 0) {
             $loadLocation = $screen;
             $screen.html('');
-            discriminator = { category: category, standard: standard };
+            discriminator = { category: category, standard: standard, grade: grade };
                 }
             
             // find out what part of the node tree needs to be loaded
