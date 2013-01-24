@@ -1,12 +1,15 @@
-LR Wordpress Plugin
+Learning Registry Wordpress Plugin
 ===================
-### Install
+##Introduction
+Some info about the plugin and its usage here.
+## Install
 0. [Download](https://github.com/mickmuzac/LR-Wordpress-Widget/archive/master.zip) the LR Wordpress plugin
 0. [Install and activate](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins) the LR Wordpress plugin via the upload tab in the admin panel in Wordpress
 0. Install and activate [Widgetize Pages Light](http://wordpress.org/extend/plugins/widgetize-pages-light/) via the admin panel in Wordpress  
   * Widgetize Pages Light allows you to create a "sidebar" that is displayed in the main content area of a page
   * You may follow [Widgetize's sidebar creation instructions](http://otwthemes.com/online-documentation-widgetize-pages-light/) whenever this document asks you to create a new sidebar
 
+##Configuration
 ### Displaying Search Results
 0. Create a new sidebar. Name it `Results Sidebar`
 0. [Create a new Wordpress page](http://codex.wordpress.org/Pages#Creating_Pages) to display the results. Before publishing this new page, click the blue icon labeled `Insert Sidebar ShortCode`. Select `Results Sidebar` and then click "Insert". You may now save and publish the page.
@@ -27,4 +30,9 @@ Note: This section is placed after displaying the results because the search bar
 0. To-do...
 
 ### Displaying the Standards Browser
-0. To-do: Adding a widget vs adding a "template" file existing widget
+0. Create a new sidebar. Name it `Standards Sidebar`
+0. Create a new Wordpress page to display the standards. Before publishing this new page, click the blue icon labeled `Insert Sidebar ShortCode`. Select `Standards Sidebar` and then click "Insert". You may now save and publish the page.
+0. Add the `LR Interface Standards Browser` widget to `Standards Sidebar` 
+0. Configure the `LR Interface Standards Browser` widget
+  * To-do
+0. To-do
