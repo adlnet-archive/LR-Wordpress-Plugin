@@ -91,6 +91,7 @@ var BROWSER = (function () {
     // private methods
 
     var updateState = function (category, standard, grade) {
+
     state.category = category;
     state.standard = standard;
         if (grade) {
@@ -270,6 +271,8 @@ var BROWSER = (function () {
     var loadNodes = function ($query, data, callback) {
     var nodesUrl = serviceHost + '/nodes/';
     var $div = $('<div/>').addClass('children');
+	
+	data.grade = data.grade ? data.grade : state.grade;
 	console.log("Data sent to nodes: ", data);
 	
     $div.load(nodesUrl, data, function () {
