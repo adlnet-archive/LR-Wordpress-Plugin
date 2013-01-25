@@ -240,15 +240,15 @@ var BROWSER = (function () {
 										
 					for(var i = 0; i < data.length; i++){
 					
-						console.log("resource number: ", i);
 						if(data[i]){
+							//console.log("resource number: ", i, " data: ",  data);
 							data[i].description = (data[i].description == undefined) ? "" : data[i].description;
 							data[i].description = (data[i].description.length > 280) ? data[i].description.substr(0, 280) + "..." : data[i].description;
 							
 							data[i].title = (data[i].title == undefined) ? thisObj[i].attr("name") : data[i].title;
 							data[i].title = (data[i].title.length > 80) ? data[i].title.substr(0, 80) + "..." : data[i].title;
 							
-							image[i] = (data.hasScreenshot !== true) ? "/images/qmark.png" : serviceHost + "/screenshot/" + md5[i];
+							image[i] = (data.hasScreenshot !== true) ? qmarkUrl : serviceHost + "/screenshot/" + md5[i];
 							
 							thisObj[i].html(data[i].title);
 							$('.'+md5[i]).attr("src", image[i]);

@@ -3,7 +3,11 @@ td{
 	vertical-align: top !important;
 }
 
-.imageCell img{
+.imageCell td, .resultsTable td{
+	
+	min-width: 140px;
+}
+.imageCell img, .resultsTable img{
 
 	height: 101px;
 	width: 116px;
@@ -13,7 +17,7 @@ td{
 	margin-bottom: 25px;
 }
 
-.imageCell{
+.imageCell, .resultsTable{
 
 	padding-left: 10px !important;
 	padding-right: 10px !important;

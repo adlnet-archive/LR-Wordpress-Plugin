@@ -76,8 +76,7 @@ class LRInterfaceTimeline extends WP_Widget
 	
 	<div class="modal-timeline">
 		<table id="timeline-table" class="table table-striped">
-			<th data-bind="visible: $.inArray(temp.currentObject().url, tempBookmarksArray) == -1" ><a class="btn btn-info" id="bookmark">Bookmark Resource</a></th>
-			<th data-bind="visible: $.inArray(temp.currentObject().url, tempBookmarksArray) > -1" ><a class="btn btn-info disabled">Bookmark Resource</a></th>
+			<th data-bind="visible: $.inArray(temp.currentObject().url, tempBookmarksArray) == -1" ><button><a class="btn btn-info" id="bookmark">Bookmark Resource</a></button<</th>
 			<tbody data-bind="foreach: getReversedTimeline()">
 				<tr>
 					<td data-bind="style: { 'background-color': $index()%2 == 1 ? '#F9F9F9' : '#FFF', 'border-top': $index()==0 ? 'none' : '1px #DDD solid'}">
@@ -88,7 +87,7 @@ class LRInterfaceTimeline extends WP_Widget
 		</table>
 		
 		<div style="text-align: center;">
-			<span data-bind="if: checkTimelineLength(currentObject().timeline) == 0">{{^hideFrame}}Be the first to interact (below){{/hideFrame}}{{#hideFrame}}Paradata not found{{/hideFrame}}</span>
+			<span data-bind="if: checkTimelineLength(currentObject().timeline) == 0">Paradata not found</span>
 		</div>
 	</div>
 	
