@@ -610,9 +610,12 @@ var mainViewModel = function(resources){
 		displayObjectData(currentObjectMetadata);
 	};
 	
-	self.getShorterStr = function(obj){
+	self.getShorterStr = function(a, length){
 		
-		return (obj.title.length>55)? obj.title.substr(0, 55) + '...' : obj.title;
+		var obj = {};
+		obj.title = a.title ? a.title : a;
+		length = length ? length : 55;
+		return (obj.title.length>length)? obj.title.substr(0, length - 3) + '...' : obj.title;
 	};
 	
 	self.relatedTagSlice = function(e){

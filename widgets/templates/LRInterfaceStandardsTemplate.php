@@ -1,5 +1,3 @@
-
-	Standards Browser
 	<div class="result"></div>
 	
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/crumbs.js' , __FILE__ ) ?>"></script>

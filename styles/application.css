@@ -2,3 +2,33 @@ td{
 
 	vertical-align: top !important;
 }
+
+.imageCell img{
+
+	height: 101px;
+	width: 116px;
+	display: block;
+	float: left;
+	margin: 15px;
+	margin-bottom: 25px;
+}
+
+.imageCell{
+
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+
+.categoryUl  li{
+
+	display: inline !important;
+		text-decoration: none;
+	margin-right: 10px;
+	
+}
+.categoryUl{
+
+	font-weight: bold;
+	text-align: center;
+	font-size: 16px;
+}

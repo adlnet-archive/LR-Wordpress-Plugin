@@ -104,27 +104,26 @@
 	<?php if($type == "index"): ?>
 		<div class="row">
 			<div class="span12 activity">
-				<div>
-					<span class="searchHeader">Search Results</span>
-				</div>
 				<!-- ko if: results().length > 0 -->
 					<table class="table table-striped resultsTable">
 						<tbody data-bind="foreach:results">
 							<tr style="border-top:none;" data-bind="style: { 'background-color': $index()%2 == 1 ? '#F9F9F9' : '#FFF'}">
 								<td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">
-									<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
+									<div>
+										<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
 										<img data-bind="attr:{src:'<?php echo $host; ?>/screenshot/' + _id}" class="img-polaroid" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
 										<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" />
 										<!-- /ko -->
-									</a>
-								</td>
-								<td style="border-top:none;padding-top:15px;padding-bottom:15px;">
-									<a data-bind="text:$root.getShorterStr($data), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
-									<a data-bind="text:url, attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
-									<span data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></span>
+										</a>
+									</div>
+									<div>
+										<a data-bind="text:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
+										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
+										<span data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></span>
+									</div>
 								</td>
 							</tr>
 						</tbody>
