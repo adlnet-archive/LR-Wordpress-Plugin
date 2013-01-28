@@ -1,33 +1,25 @@
-	<div class="hide-frame">
-		<div class="innerTimelineContent giveBackground">
-			
-			
-			<div class="row-fluid" style="text-align: center;">
-				<h2 data-bind="text:currentObject().title"></h2>
-				<a href="#" data-bind="attr:{href:currentObject().url}">
-					<img style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
-				</a>
-					
-				<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p>
-					
-				<p data-bind="text:currentObject().description"></p>
-				<div style="margin-top: 10px; text-align:center;">
-					<button class="btn btn-info" data-bind="click: handleDataClick">View Metadata</button>
-					<a data-bind="attr:{href:doTransform(currentObject().url)}"><button>Go to resource</button></a>
-				</div>
+<div class="hide-frame">
+	<div class="innerTimelineContent giveBackground">
+		<div class="row-fluid" style="text-align: center;">
+			<h2 data-bind="text:currentObject().title"></h2>
+			<a href="#" data-bind="attr:{href:currentObject().url}">
+				<img style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
+			</a>
+				
+			<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p>
+				
+			<p data-bind="text:currentObject().description"></p>
+			<div style="margin-top: 10px; text-align:center;">
+				<button class="btn btn-info" data-bind="click: handleDataClick, visible: isMetadataHidden() || isMetadataHidden() == -1">View Metadata</button>
+				<button class="btn btn-info" data-bind="click: handleDataHideClick, visible: isMetadataHidden() == false">Close Metadata</button>
+				<a data-bind="attr:{href:doTransform(currentObject().url)}"><button>Go to resource</button></a>
 			</div>
 		</div>
-	</div>	
-
-
-<div class="modal" id="metadata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div style="height: 4%;" class="modal-header visualModal">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<div>
-			<span>View Data</span>
-		</div>
 	</div>
-	
+</div>	
+
+
+<div class="modal" id="metadata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bind="visible: ! isMetadataHidden()">
 	<div id="modal-data-view"></div>
 </div>
 	

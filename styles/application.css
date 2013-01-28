@@ -13,8 +13,8 @@ td{
 	width: 116px;
 	display: block;
 	float: left;
-	margin: 15px;
-	margin-bottom: 25px;
+	margin: 5px 15px;
+	
 }
 
 .imageCell, .resultsTable{
@@ -26,7 +26,7 @@ td{
 .categoryUl  li{
 
 	display: inline !important;
-		text-decoration: none;
+	text-decoration: none;
 	margin-right: 10px;
 	
 }
@@ -35,4 +35,9 @@ td{
 	font-weight: bold;
 	text-align: center;
 	font-size: 16px;
+}
+
+.modal{
+	
+	margin-top: 15px;
 }

@@ -24,7 +24,7 @@ font-weight:bold}
 .pun,.opn,.clo{color:#440}
 .tag{color:#006;font-weight:bold}
 .atn{color:#404}.atv{color:#060}}
-pre.prettyprint{border:none !important;height:94%;overflow: auto !important;}
+pre.prettyprint{border:none !important;height:94%;overflow: auto !important;word-wrap:break-word;}
 ol.linenums{margin-top:0;margin-bottom:0}
 li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}
 

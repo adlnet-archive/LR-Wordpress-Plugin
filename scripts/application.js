@@ -407,7 +407,7 @@ var displayObjectData = function(pmdata){
 
 		$("#modal-data-view").html(metadata + "</pre>");
 		prettyPrint();
-		$("#metadata").modal('show'); 
+		//$("#metadata").modal('show'); 
 };
 
 var getDate = function(dateStr){
@@ -515,6 +515,7 @@ var mainViewModel = function(resources){
     self.resultsNotFound = ko.observable(false);
 	self.saveResultsDisplay = ko.observableArray();
 	self.relatedResultsNodes = ko.observableArray();
+	self.isMetadataHidden = ko.observable(-1);
 	
 	self.notOnBlackList = function(url){
 		
@@ -605,9 +606,17 @@ var mainViewModel = function(resources){
 		}
 	};
 
+	self.handleDataHideClick = function(e){
+	
+		self.isMetadataHidden(true);
+	};
+	
 	self.handleDataClick = function(e){
 
-		displayObjectData(currentObjectMetadata);
+		if(self.isMetadataHidden() == -1)
+			displayObjectData(currentObjectMetadata);
+
+		self.isMetadataHidden(false);
 	};
 	
 	self.getShorterStr = function(a, length){
