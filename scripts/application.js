@@ -906,10 +906,9 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
 
                 // Use Microsoft XDR
                 xdr = new XDomainRequest();
-                console.log(JSON.stringify(options));
 				
-				
-                xdr.open(options.type, options.url);
+				var data = (options.data && options.type == "POST") ? "?" + options.data : "";	
+                xdr.open(options.type, options.url + data);
                 
                 xdr.onload = function() {
                     
@@ -936,7 +935,8 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
                     completeCallback(404, "error", ["The requested resource could not be found."]);
                 };
                 
-                xdr.send();
+				xdr.send();
+				
           },
           abort: function() {
               if(xdr)xdr.abort();
