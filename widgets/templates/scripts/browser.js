@@ -276,6 +276,7 @@ var BROWSER = (function () {
 	console.log("Data sent to nodes: ", data);
 	
     $div.load(nodesUrl, data, function () {
+	
         loadResources($div);
         $query.append($div);
         if (callback) callback();
@@ -298,7 +299,7 @@ var BROWSER = (function () {
 
         // load the list of all categories and standards
         $screen.load(serviceHost + '/standards/', function () {
-
+console.log("hi ie");
         $(window).bind( 'hashchange', function () {
             var hashParts = unescape(location.hash).split('/');
             

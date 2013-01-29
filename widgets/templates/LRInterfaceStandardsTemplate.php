@@ -11,8 +11,7 @@
 		var qmarkUrl = '<?php echo plugins_url( '/images/qmark.png' , __FILE__ ) ?>';
 		
 		$(document).ready(function(){
-			$.get(serviceHost + '/browser/?ajax', function(data) {
-			  $('.result').html(data);
-			});
+		
+			$('.result').load(serviceHost + '/browser/?ajax');
 		});
 	</script>
