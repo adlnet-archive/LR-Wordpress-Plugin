@@ -143,15 +143,15 @@ var BROWSER = (function () {
 
     var createGradeLink = function (category, standard) {
     var gradeFilterClone = $('#grade-filter-master').clone();
-    var grade = $(".grade-link").val() || $.cookie('grade-filter');
+    var grade =  $.cookie('grade-filter') || $(".grade-link").val();
 
     var link = gradeFilterClone.removeAttr('id');
 
     link.find('.grade-link').data('category', category);
     link.find('.grade-link').data('standard', standard);
-    //link.find('.grade-link').val(grade);
+    link.find('.grade-link').val(grade);
     link.show();
-
+	console.log("link", grade);
     return link;
     };
 
@@ -299,7 +299,6 @@ var BROWSER = (function () {
 
         // load the list of all categories and standards
         $screen.load(serviceHost + '/standards/', function () {
-console.log("hi ie");
         $(window).bind( 'hashchange', function () {
             var hashParts = unescape(location.hash).split('/');
             
