@@ -37,7 +37,7 @@ jQuery(document).ready(function($){
 	  if (prevent_bust > 0) {  
 		prevent_bust -= 2  
 		
-		window.top.location = '/frame'  
+		window.top.location = serviceHost + '/frame'  
 	  }  
 	}, 1);
 	

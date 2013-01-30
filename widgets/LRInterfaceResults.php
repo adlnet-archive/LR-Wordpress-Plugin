@@ -18,18 +18,18 @@ class LRInterfaceResults extends WP_Widget
 
 <p>
 		
-		<label for="<?php echo $this->get_field_id('type'); ?>">
-			Search Method:
-		</label>
-		<select class="widefat" id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
-			<option value="index" <?php echo attribute_escape($type) == "index" ? 'selected="selected"':'""'; ?>>Indexed Search</option>
-			<option value="slice" <?php echo attribute_escape($type) == "slice" ? 'selected="selected"':'""'; ?>>Slice</option>
-		</select>
-		<br/><br/>
-		<label>
-			WebService Endpoint:
-		</label>
-		<input class="widefat" id="<?php echo $this->get_field_id('host'); ?>" name="<?php echo $this->get_field_name('host'); ?>" type="text" value="<?php echo (attribute_escape($host))?attribute_escape($host):'http://12.109.40.31'; ?>" />
+	<label for="<?php echo $this->get_field_id('type'); ?>">
+		Search Method:
+	</label>
+	<select class="widefat" id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
+		<option value="index" <?php echo attribute_escape($type) == "index" ? 'selected="selected"':'""'; ?>>Indexed Search</option>
+		<option value="slice" <?php echo attribute_escape($type) == "slice" ? 'selected="selected"':'""'; ?>>Slice</option>
+	</select>
+	<br/><br/>
+	<label>
+		WebService Endpoint:
+	</label>
+	<input class="widefat" id="<?php echo $this->get_field_id('host'); ?>" name="<?php echo $this->get_field_name('host'); ?>" type="text" value="<?php echo (attribute_escape($host))?attribute_escape($host):'http://12.109.40.31'; ?>" />
 </p>
   
 <?php

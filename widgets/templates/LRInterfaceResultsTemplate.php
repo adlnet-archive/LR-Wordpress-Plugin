@@ -1,12 +1,12 @@
 	<div class="container">
 	
-	<?php if($type == "slice"): ?>
-			<div class="searchHeader visualModal">
+	<?php echo $type; if($type == "slice"): ?>
+		<div class="searchHeader visualModal">
 			<div>
 				<span style="display:none;" id="doc_list_header"></span> 
 			</div>
 		</div>
-		<div data-bind="visible: <?php echo "false"; ?>" class="resultParent" style="margin-top:15px;">
+		<div data-bind="visible: <?php echo "false"; //This would be enabled on "debug mode" ?>" class="resultParent" style="margin-top:15px;">
 			<div class="resultModal span4">
 				<table class="table table-striped" style="width:100%;">
 					<tbody data-bind="foreach: results">
@@ -55,23 +55,28 @@
 					<tbody data-bind="foreach: getResults()">
 								<tr style="border-top:none;" data-bind="style: { 'background-color': $index()%2 == 1 ? '#F9F9F9' : '#FFF'}">
 									<td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">
-										<a data-bind="attr:{href:'/timeline?query='+url}">
-											<!-- ko if: hasScreenshot -->
-											<img data-bind="attr:{src:'<?php echo $host; ?>/screenshot/' + _id}" class="img-polaroid" />
-											<!-- /ko -->
-											<!-- ko if: !hasScreenshot -->
-											<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" />
-											<!-- /ko -->
-										</a>
-									</td>
-									<td style="border-top:none;padding-top:15px;padding-bottom:15px;">
-										<a data-bind="text:title?title:$root.getShorterArr(keys, 5, true), attr:{href:'/timeline?query='+url, title:title}" class="title"></a><br/>
-										<a data-bind="text:url, attr:{href:'/timeline?query='+url}" class="fine"></a><br/>
-										<span data-bind="text:(description.length<280)? description:description.substr(0, 280)+'...'" class="fine"></span>
+										<div>
+											<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
+												<!-- ko if: hasScreenshot -->
+												<img data-bind="attr:{src:'<?php echo $host; ?>/screenshot/' + _id}" class="img-polaroid" />
+												<!-- /ko -->
+												<!-- ko if: !hasScreenshot -->
+												<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" />
+												<!-- /ko -->
+											</a>
+										</div>
+										<div>
+											<a data-bind="text:title?$root.getShorterStr(title, 50):$root.getShorterArr(keys, 5, true), 
+											attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
+											<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
+											<span data-bind="text:(description.length<280)? description:description.substr(0, 280)+'...'" class="fine"></span>
+										</div>
 									</td>
 								</tr>
 					</tbody>
 				</table>	
+				
+				
 			</div>
 			
 			<div class="span3" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
@@ -80,7 +85,15 @@
 			</div>
 			
 
+		</div>				
+		<div id="spinnerDiv"></div>
+		<div id="resultsNotFound" class="resultsPrompt" data-bind="visible:resultsNotFound">
+			<span>Results Not Found</span>
 		</div>
+		<div id="endOfResults" class="resultsPrompt">
+			<span>End of Results</span>
+		</div>
+		
 	<script type="text/javascript">
 		var globalSliceMax = 500;
 		var NODE_URL = "http://node01.public.learningregistry.net";
@@ -93,7 +106,7 @@
 	</script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.xml2json.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.eComboBox.js' , __FILE__ ) ?>"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo plugins_url( '/scripts/jit-yc.js' , __FILE__ ) ?>"></script>
+	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jit-yc.js' , __FILE__ ) ?>"></script>
 	
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/lrbrowser.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/paradata.js' , __FILE__ ) ?>"></script>
@@ -130,7 +143,7 @@
 					</table>
 					<button data-bind="click:loadNewPage" id="loadMore" class="btn">Load More</button>
 				<!-- /ko -->
-	<?php endif; ?>
+	
 	
 				<div id="spinnerDiv"></div>
 				<div id="resultsNotFound" class="resultsPrompt" data-bind="visible:resultsNotFound">
@@ -141,6 +154,7 @@
 				</div>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 	
 	
