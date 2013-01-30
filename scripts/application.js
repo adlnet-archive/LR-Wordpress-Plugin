@@ -216,11 +216,11 @@ var handleMainResourceModal = function(src, direct){
 	
 
 	console.log("This is the src we will be using to datra search: ", src);
-	$.ajax("https://node02.public.learningregistry.net/obtain?request_id="+src,{
+	$.ajax(NODE_URL + "obtain?request_id="+src,{
 		dataType : 'jsonp',
 		jsonp : 'callback'
 	}).success(function(data){
-
+		
 		//For each document found in data
 		var jsonData;
 		currentObjectMetadata = [];
@@ -527,14 +527,14 @@ var mainViewModel = function(resources){
 		return $.inArray(link.hostname, blackList) == -1;
 	};
 	
-	self.getReversedTimeline = function(){
+	self.getReversedTimeline = ko.computed(function(){
 		
 		if(self.currentObject == undefined)
 			return [];
 			
 		
 		return jQuery.extend(true, [], self.currentObject().timeline()).reverse();
-	};
+	});
 	
 	self.getResults = function(){
 			

@@ -19,20 +19,13 @@
 	</div>
 </div>	
 
-
 <div class="modal" id="metadata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bind="visible: ! isMetadataHidden()">
 	<div id="modal-data-view"></div>
 </div>
 	
 	<script type="text/javascript">
-		var globalSliceMax = 500;
-		var NODE_URL = "http://node01.public.learningregistry.net";
-		/*{{#server}}
-			var temp_NODE_URL = ["","http://node01.public.learningregistry.net","http://node02.public.learningregistry.net", "http://lrtest01.public.learningregistry.net",
-								 "http://sandbox.learningregistry.org/", "http://lrdev03.learningregistry.org", "http://lrdev05.learningregistry.org"];
-			NODE_URL = temp_NODE_URL[{{server}}];
-
-		{{/server}}*/
+		var globalSliceMax = <?php echo is_numeric($options['slice']) && $options['slice'] > 0 ? $options['slice'] : 500; ?>;
+		var NODE_URL = '<?php echo $options['node']; ?>';
 	</script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.xml2json.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.eComboBox.js' , __FILE__ ) ?>"></script>

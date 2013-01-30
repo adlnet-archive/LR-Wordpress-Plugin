@@ -3,8 +3,6 @@
 class LRInterfaceResults extends WP_Widget
 {
 
-   public $nodeArray = array("http://node01.public.learningregistry.net", "http://node02.public.learningregistry.net", "http://lrtest01.public.learningregistry.net", "http://sandbox.learningregistry.org/", "http://lrdev03.learningregistry.org", "http://lrdev05.learningregistry.org");
-
   function LRInterfaceResults()
   {
     $widget_ops = array('classname' => 'LRInterfaceResults', 'description' => 'Adds LR search results to a page' );
@@ -13,14 +11,11 @@ class LRInterfaceResults extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'host' => '', 'type' => '', 'numResults' => '', 'node' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'type' => '', 'numResults' => '') );
     $title = $instance['title'];
-	$host = $instance['host'];
 	$type = $instance['type'];
 	$numResults = $instance['numResults'];
-	$node = $instance['node'];
-	
-	//echo $nodeArray[0];
+
 ?>
 
 <p>
@@ -32,34 +27,13 @@ class LRInterfaceResults extends WP_Widget
 		<option value="index" <?php echo attribute_escape($type) == "index" ? 'selected="selected"':''; ?>>Indexed Search</option>
 		<option value="slice" <?php echo attribute_escape($type) == "slice" ? 'selected="selected"':''; ?>>Slice</option>
 	</select>
-	<br/><br/>	
-	
-	<label for="<?php echo $this->get_field_id('node'); ?>">
-		Learning Registry Node:
-	</label>
-	<select class="widefat" id="<?php echo $this->get_field_id('node'); ?>" name="<?php echo $this->get_field_name('node'); ?>">
-		
-		<?php $len = sizeof($this->nodeArray); for($i = 0; $i < $len; $i++): ?>
-		
-		
-			<option value="<?php echo $i; ?>" <?php echo attribute_escape($node) == $this->nodeArray[$i] ? 'selected="selected"':''; ?> ><?php echo $this->nodeArray[$i]; ?></option>
-		
-		<?php endfor; ?>
-	</select>
-	<span> [Note: Move to plugin settings page]</span>
-	<br/><br/>
-	
+	<br/><br/>		
 	<label>
 		Number of Results Per Page:
 	</label>
 	<input class="widefat" id="<?php echo $this->get_field_id('numResults'); ?>" name="<?php echo $this->get_field_name('numResults'); ?>" type="text" 
 	       value="<?php echo (attribute_escape($numResults))?attribute_escape($numResults):'50'; ?>" />
 	<br/><br/>
-	
-	<label>
-		WebService Endpoint:
-	</label>
-	<input class="widefat" id="<?php echo $this->get_field_id('host'); ?>" name="<?php echo $this->get_field_name('host'); ?>" type="text" value="<?php echo (attribute_escape($host))?attribute_escape($host):'http://12.109.40.31'; ?>" />
 </p>
   
 <?php
@@ -69,7 +43,6 @@ class LRInterfaceResults extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
-    $instance['host'] = $new_instance['host'];
     $instance['type'] = $new_instance['type'];
     $instance['numResults'] = (is_numeric($new_instance['numResults']) && $new_instance['numResults'] > 0)? $new_instance['numResults'] : 50;
     return $instance;
@@ -80,9 +53,11 @@ class LRInterfaceResults extends WP_Widget
     extract($args, EXTR_SKIP);
  
     echo $before_widget;
+	
+	$options = get_option('lr_options_object');
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	$type  = empty($instance['type']) ? "index" : $instance['type'];
-	$host  = empty($instance['host']) ? "http://12.109.40.31" : $instance['host'];
+	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
  
     if (!empty($title))
       echo $before_title . $after_title;;
