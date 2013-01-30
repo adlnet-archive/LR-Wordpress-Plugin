@@ -1,6 +1,6 @@
 	<div class="container">
 	
-	<?php echo $type; if($type == "slice"): ?>
+	<?php if($type == "slice"): ?>
 		<div class="searchHeader visualModal">
 			<div>
 				<span style="display:none;" id="doc_list_header"></span> 

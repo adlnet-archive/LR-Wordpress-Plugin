@@ -3,6 +3,7 @@ var temp = new mainViewModel([]), activeModalName = null, lastSearchCache = "";
 var iframeHidden = true;
 var tempBookmarksArray = [];
 handleMainResourceModal(query);
+var qmarkUrl = '<?php echo plugins_url( "/images/qmark.png" , dirname(__FILE__) ) ?>';
 
 for (var f in followed){
 	temp.followers.push({name:followed[f], content:[]});

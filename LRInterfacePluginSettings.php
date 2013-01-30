@@ -1,11 +1,11 @@
 <?php
 // create custom plugin settings menu
-add_action('admin_menu', 'baw_create_menu');
+add_action('admin_menu', 'lr_options_manager');
 
-function baw_create_menu() {
+function lr_options_manager() {
 
 	//create new top-level menu
-	add_menu_page('BAW Plugin Settings', 'LR Interface', 'administrator', __FILE__, 'baw_settings_page', plugins_url('/images/icon.png', __FILE__));
+	add_menu_page('LR Interface', 'LR Interface', 'administrator', __FILE__, 'lr_options_page', plugins_url('/images/icon.png', __FILE__));
 
 	//call register settings function
 	add_action( 'admin_init', 'register_mysettings' );
@@ -14,23 +14,27 @@ function baw_create_menu() {
 
 function register_mysettings() {
 	//register our settings
-	register_setting( 'baw-settings-group', 'new_option_name' );
-	register_setting( 'baw-settings-group', 'some_other_option' );
-	register_setting( 'baw-settings-group', 'option_etc' );
+	register_setting( 'lr-settings-group', 'lr_options_object' );
 }
 
-function baw_settings_page() {
+function lr_options_page() {
+
+	//$options = json_decode
+
+
 ?>
 <div class="wrap">
-<h2>Your Plugin Name</h2>
+<?php screen_icon(); ?>
+<h2>Learning Registry Interface Plugin</h2>
+
 
 <form method="post" action="options.php">
-    <?php //settings_fields( 'baw-settings-group' ); ?>
-    <?php// do_settings( 'baw-settings-group' ); ?>
+    <?php //settings_fields( 'lr-settings-group' ); ?>
+    <?php // do_settings( 'lr-settings-group' ); ?>
     <table class="form-table">
         <tr valign="top">
         <th scope="row">New Option Name</th>
-        <td><input type="text" name="new_option_name" value="<?php echo get_option('new_option_name'); ?>" /></td>
+        <td><input type="text" name="host" value="<?php echo get_option('host'); ?>" /></td>
         </tr>
          
         <tr valign="top">
@@ -44,7 +48,7 @@ function baw_settings_page() {
         </tr>
     </table>
     
-    <?php //submit_button(); ?>
+    <?php submit_button(); ?>
 
 </form>
 </div>

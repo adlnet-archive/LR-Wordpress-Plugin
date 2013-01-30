@@ -4,6 +4,7 @@
 			<h2 data-bind="text:currentObject().title"></h2>
 			<a href="#" data-bind="attr:{href:currentObject().url}">
 				<img style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
+				<img style="height: 150px; width: 150px;margin: 0 auto;" data-bind="visible: !currentObject().hasScreenshot, attr:{src:currentObject().image}" />
 			</a>
 				
 			<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p>
@@ -42,7 +43,7 @@
 	<link type="text/css" href="<?php echo plugins_url( '/styles/Hypertree.css' , __FILE__ ) ?>" rel="stylesheet" />
 	<link type="text/css" href="<?php echo plugins_url( '/styles/prettify.css' , __FILE__ ) ?>" rel="stylesheet" />
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/prettify.js' , __FILE__ ) ?>"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 		var serviceHost = "<?php echo $host; ?>";
 		<?php include_once('scripts/applicationPreview.php'); ?>
 	</script>
