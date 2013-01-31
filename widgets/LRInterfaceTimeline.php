@@ -42,7 +42,6 @@ class LRInterfaceTimeline extends WP_Widget
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
 ?>
 	
-	
 	<div class="modal-timeline">
 		<table id="timeline-table" class="table table-striped">
 			<tbody data-bind="foreach: getReversedTimeline()">
@@ -59,15 +58,13 @@ class LRInterfaceTimeline extends WP_Widget
 		</div>
 	</div>
 	
-	
-	
 	<script type="text/javascript" src="<?php echo plugins_url( '/templates/scripts/moment.min.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript">
 		var serviceHost = "<?php echo $host; ?>";
+		var NODE_URL = '<?php echo empty($options['node'])?"http://node01.public.learningregistry.net/":$options['node']; ?>';
 		<?php include_once('templates/scripts/applicationPreview.php'); ?>
 	</script>
 	<?php
     echo $after_widget;
   }
- 
 }

@@ -25,7 +25,8 @@
 	
 	<script type="text/javascript">
 		var globalSliceMax = <?php echo is_numeric($options['slice']) && $options['slice'] > 0 ? $options['slice'] : 500; ?>;
-		var NODE_URL = '<?php echo $options['node']; ?>';
+		var NODE_URL = '<?php echo empty($options['node'])?"http://node01.public.learningregistry.net/":$options['node']; ?>';
+		var serviceHost = "<?php echo $host; ?>";
 	</script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.xml2json.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.eComboBox.js' , __FILE__ ) ?>"></script>
@@ -37,6 +38,5 @@
 	<link type="text/css" href="<?php echo plugins_url( '/styles/prettify.css' , __FILE__ ) ?>" rel="stylesheet" />
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/prettify.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript">
-		var serviceHost = "<?php echo $host; ?>";
 		<?php include_once('scripts/applicationPreview.php'); ?>
 	</script>

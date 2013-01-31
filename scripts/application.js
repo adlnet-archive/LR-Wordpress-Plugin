@@ -526,14 +526,13 @@ var mainViewModel = function(resources){
 		return $.inArray(link.hostname, blackList) == -1;
 	};
 	
-	self.getReversedTimeline = ko.computed(function(){
+	self.getReversedTimeline = function(){
 		
 		if(self.currentObject == undefined)
 			return [];
-			
-		
+
 		return jQuery.extend(true, [], self.currentObject().timeline()).reverse();
-	});
+	};
 	
 	self.getResults = function(){
 			
