@@ -191,7 +191,6 @@ var handleMainResourceModal = function(src, direct){
 				currentObject.hasScreenshot = data.hasScreenshot;				
 				
 				self.currentObject(currentObject);
-				//console.log(data);
 			}
 		});
 	}

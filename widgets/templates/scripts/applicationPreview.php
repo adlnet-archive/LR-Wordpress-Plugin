@@ -152,6 +152,8 @@ jQuery(document).ready(function($){
 
 		$(".author-timeline").popover('hide');
 	};
+	
+	ko.applyBindings(temp);
 });
 
 var handleOnclickUserBar = function(obj){
