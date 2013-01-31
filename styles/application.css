@@ -3,18 +3,24 @@ td{
 	vertical-align: top !important;
 }
 
+.imageCell div{
+
+	height: 100%;
+	max-width: 70%;
+	padding-left: 10px;
+}
 .imageCell td, .resultsTable td{
 	
 	min-width: 140px;
 }
+
 .imageCell img, .resultsTable img{
 
-	height: 91px;
+	height: 91px; 
 	width: 106px;
 	display: block;
 	float: left;
 	margin: 5px 15px;
-	
 }
 
 .imageCell, .resultsTable{
@@ -40,4 +46,16 @@ td{
 .modal{
 	
 	margin-top: 15px;
+}
+
+.modal-timeline p{
+
+	padding: 10px;
+	margin-bottom: 0 !important;
+}
+
+.modal-timeline p span{
+
+	text-align: right;
+	float: right;
 }

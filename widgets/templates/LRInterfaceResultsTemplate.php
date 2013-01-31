@@ -122,7 +122,7 @@
 						<tbody data-bind="foreach:results">
 							<tr style="border-top:none;" data-bind="style: { 'background-color': $index()%2 == 1 ? '#F9F9F9' : '#FFF'}">
 								<td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">
-									<div>
+									<div style="float:left">
 										<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
 										<img data-bind="attr:{src:'<?php echo $host; ?>/screenshot/' + _id}" class="img-polaroid" />
@@ -132,7 +132,7 @@
 										<!-- /ko -->
 										</a>
 									</div>
-									<div>
+									<div style="float:left;">
 										<a data-bind="text:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
 										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
 										<span data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></span>

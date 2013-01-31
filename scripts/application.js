@@ -182,15 +182,23 @@ var handleMainResourceModal = function(src, direct){
 		
 			if(data[0]){
 				data = data[0];
+				
+				//This is done because observable.valueHasMutated wasn't working..
 				var currentObject = new resourceObject("Item", src);
 				currentObject.timeline = self.currentObject().timeline;
 				currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
 				currentObject.description = (data.description == undefined) ? "" : data.description;
 				
-				currentObject.image = (data.hasScreenshot !== true) ? qmarkUrl?qmarkUrl:"/images/qmark.png" : serviceHost + "/screenshot/" + md5;
+				currentObject.image = (data.hasScreenshot !== true) ? (qmarkUrl ? qmarkUrl:"/images/qmark.png") : serviceHost + "/screenshot/" + md5;
 				currentObject.hasScreenshot = data.hasScreenshot;				
 				
 				self.currentObject(currentObject);
+			}
+			
+			else{
+			console.log("qmarkUrl: ", qmarkUrl);
+				self.currentObject().image = (qmarkUrl ? qmarkUrl:"/images/qmark.png");
+				self.currentObject.valueHasMutated();
 			}
 		});
 	}

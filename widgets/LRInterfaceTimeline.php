@@ -47,7 +47,7 @@ class LRInterfaceTimeline extends WP_Widget
 			<tbody data-bind="foreach: getReversedTimeline()">
 				<tr>
 					<td data-bind="style: { 'background-color': $index()%2 == 1 ? '#F9F9F9' : '#FFF', 'border-top': $index()==0 ? 'none' : '1px #DDD solid'}">
-						<div data-bind="html: $root.generateParadataText($data, $index()), attr:{id: 'paradata' + $index() }"></div>
+						<p data-bind="html: $root.generateParadataText($data, $index()), attr:{id: 'paradata' + $index() }"></p>
 					</td>			   
 				</tr>
 			</tbody>
