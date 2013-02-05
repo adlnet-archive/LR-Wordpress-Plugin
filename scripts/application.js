@@ -189,15 +189,17 @@ var handleMainResourceModal = function(src, direct){
 				currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
 				currentObject.description = (data.description == undefined) ? "" : data.description;
 				
-				currentObject.image = (data.hasScreenshot !== true) ? (qmarkUrl ? qmarkUrl:"/images/qmark.png") : serviceHost + "/screenshot/" + md5;
+				console.log("qmarkUrl: ", qmarkUrl);
+				var imageUrl = (qmarkUrl ? qmarkUrl:"/images/qmark.png");
+				currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
 				currentObject.hasScreenshot = data.hasScreenshot;				
 				
 				self.currentObject(currentObject);
 			}
 			
 			else{
-			console.log("qmarkUrl: ", qmarkUrl);
-				self.currentObject().image = (qmarkUrl ? qmarkUrl:"/images/qmark.png");
+				console.log("qmarkUrl: ", qmarkUrl);
+				self.currentObject().image = qmarkUrl ? qmarkUrl:"/images/qmark.png";
 				self.currentObject.valueHasMutated();
 			}
 		});
@@ -231,7 +233,11 @@ var handleMainResourceModal = function(src, direct){
 		//For each document found in data
 		var jsonData;
 		currentObjectMetadata = [];
-		console.log(data);
+		console.log(JSON.stringify(data), "hi");
+		
+		if(data.documents.length == 0)
+			return;
+		
 		for(var i = 0; i < data.documents[0].document.length; i++){
 
 			if(data.documents[0].document[i].resource_data_type == "paradata"){

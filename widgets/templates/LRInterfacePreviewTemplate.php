@@ -27,6 +27,7 @@
 		var globalSliceMax = <?php echo is_numeric($options['slice']) && $options['slice'] > 0 ? $options['slice'] : 500; ?>;
 		var NODE_URL = '<?php echo empty($options['node'])?"http://node01.public.learningregistry.net/":$options['node']; ?>';
 		var serviceHost = "<?php echo $host; ?>";
+		var qmarkUrl = '<?php echo plugins_url( "/images/qmark.png" , dirname(__FILE__) ) ?>';
 	</script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.xml2json.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.eComboBox.js' , __FILE__ ) ?>"></script>

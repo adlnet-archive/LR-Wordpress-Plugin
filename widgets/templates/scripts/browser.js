@@ -20,7 +20,7 @@ var BROWSER = (function () {
     var state = {
     category: undefined,
     standard: undefined,
-    grade: $(".grade-link").val() || $.cookie('grade-filter'),
+    grade: $(".grade-link").val() || $.cookie('grade-filter') || 'K',
     nodes: []
     };
 
@@ -143,7 +143,7 @@ var BROWSER = (function () {
 
     var createGradeLink = function (category, standard) {
     var gradeFilterClone = $('#grade-filter-master').clone();
-    var grade =  $.cookie('grade-filter') || $(".grade-link").val();
+    var grade =  $.cookie('grade-filter') || $(".grade-link").val() || 'K';
 
     var link = gradeFilterClone.removeAttr('id');
 

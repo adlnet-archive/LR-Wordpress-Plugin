@@ -21,32 +21,34 @@ jQuery(document).ready(function($){
 	///////////////////////////////////////////
 	//An attempt to stop frame redirect      //
 	///////////////////////////////////////////
-	var prevent_bust = 0;
-	var bustHappened = 0;
-	
-	window.onbeforeunload = function() { 
+	if(iframeHidden !== true){
+		var prevent_bust = 0;
+		var bustHappened = 0;
+		
+		window.onbeforeunload = function() { 
 
-		prevent_bust++;
-		bustHappened++;
-		if(tInterval != "done" && bustHappened > 0)
-			return "";
-	};  
-	
-	var tInterval = setInterval(function() {  
+			prevent_bust++;
+			bustHappened++;
+			if(tInterval != "done" && bustHappened > 0)
+				return "";
+		};  
 		
-	  console.log(prevent_bust);
-	  if (prevent_bust > 0) {  
-		prevent_bust -= 2  
+		var tInterval = setInterval(function() {  
+			
+		  console.log(prevent_bust);
+		  if (prevent_bust > 0) {  
+			prevent_bust -= 2  
+			
+			window.top.location = serviceHost + '/frame'  
+		  }  
+		}, 1);
 		
-		window.top.location = serviceHost + '/frame'  
-	  }  
-	}, 1);
-	
-	setTimeout(function(){
-		
-		clearInterval(tInterval);
-		tInterval = "done";
-	}, 3000);
+		setTimeout(function(){
+			
+			clearInterval(tInterval);
+			tInterval = "done";
+		}, 3000);
+	}
 	/////////////////////////////////////////////
 	
 	$('input, textarea').placeholder();

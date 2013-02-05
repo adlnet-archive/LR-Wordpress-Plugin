@@ -132,7 +132,7 @@
 										<!-- /ko -->
 										</a>
 									</div>
-									<div style="float:left;">
+									<div style="float:right;text-align:left;width:75%;">
 										<a data-bind="text:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
 										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
 										<span data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></span>
