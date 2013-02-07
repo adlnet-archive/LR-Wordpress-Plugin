@@ -233,7 +233,7 @@ var handleMainResourceModal = function(src, direct){
 		//For each document found in data
 		var jsonData;
 		currentObjectMetadata = [];
-		console.log(JSON.stringify(data), "hi");
+		//console.log(JSON.stringify(data), "hi");
 		
 		if(data.documents.length == 0)
 			return;
@@ -426,8 +426,9 @@ var displayObjectData = function(pmdata){
 
 var getDate = function(dateStr){
 	
-	var date = new Date(dateStr);
-
+	var dateArr = dateStr.replace("-", "/");
+	var date = new Date(dateArr);
+	
 	//Not a valid date object
 	if(isNaN(date.getTime())){
 
@@ -436,9 +437,6 @@ var getDate = function(dateStr){
 			//This gets the timestamp within "/Date(x)/"
 			date = new Date(parseInt(dateStr.substr(6, dateStr.length - 8)));
 		}
-		
-		else
-			console.log("may not be working");
 	}
 	
 	return date;
@@ -706,7 +704,7 @@ var mainViewModel = function(resources){
 		/*
 		 * TO-DO: Finish coming up with a generalized solution for most paradata documents
 		 */
-
+		
 		var verb = e.activity.verb.action.toLowerCase();
 		var dateStr = (e.activity.verb.date === undefined) ? "" : e.activity.verb.date;
 		var content = (e.activity.content === undefined)? "hi" : e.activity.content;
@@ -719,7 +717,7 @@ var mainViewModel = function(resources){
 					e.activity.actor.displayName : e.activity.actor.description[0];
 
 		var date = getDate(dateStr);
-
+		
 		//console.log("Final content char: ",content[content.length-1]);
 		dateStr = moment(date.getTime()).format("M/D/YYYY"); //moment(date.getTime()).fromNow();
 
