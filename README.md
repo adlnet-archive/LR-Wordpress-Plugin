@@ -19,7 +19,10 @@ Some info about the plugin and its usage here.
 
 ### Displaying Search Results
 0. Create a new sidebar. Name it `Results Sidebar`
-0. [Create a new Wordpress page](http://codex.wordpress.org/Pages#Creating_Pages) to display the results. Before publishing this new page, click the blue icon labeled `Insert Sidebar ShortCode`. Select `Results Sidebar` and then click "Insert". You may now save and publish the page.
+0. [Create a new Wordpress page](http://codex.wordpress.org/Pages#Creating_Pages) to display the results.
+  * Before publishing this new page, click the blue icon labeled `Insert Sidebar ShortCode`. Select `Results Sidebar` and then click "Insert"
+  * You may now save and publish the page.
+  * Optional: It may be desirable to hide all direct links to this page. [Follow these steps](http://en.support.wordpress.com/menus/) to ensure the Results page doesn't appear in your main menu.
 0. Add the `LR Interface Results` widget to `Results Sidebar` 
    * [How to activate and configure widgets](http://en.support.wordpress.com/widgets/)
 0. Configure the `LR Interface Results` widget
