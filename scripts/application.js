@@ -15,7 +15,7 @@
         self.followers should contain an array of previewObjects
         self.organizations needs only to contain an array of strings that can be used to search against a node
 */
-var $ = jQuery;
+var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
 	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false;
 

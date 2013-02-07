@@ -120,8 +120,8 @@
 				<!-- ko if: results().length > 0 -->
 					<table class="table table-striped resultsTable">
 						<tbody data-bind="foreach:results">
-							<tr style="border-top:none;" data-bind="style: { 'background-color': $index()%2 == 1 ? '#F9F9F9' : '#FFF'}">
-								<td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">
+							<tr style="border-top:none;">
+								<td style="border-top:none;padding-top:15px;padding-bottom:15px;" data-bind="style: { 'border-bottom': $index() < $root.results().length - 1 ? '#ddd dotted 1px' : ''}" class="imageCell">
 									<div style="float:left">
 										<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
