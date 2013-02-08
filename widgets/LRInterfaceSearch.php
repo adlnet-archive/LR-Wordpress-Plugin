@@ -61,14 +61,18 @@ class LRInterfaceSearch extends WP_Widget
     echo $before_widget;
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
  
-    if (!empty($title))
-      echo $before_title . $title . $after_title;;
+    //if (!empty($title))
+    //  echo $before_title . $title . $after_title;;
 		
 	?>
-	<form method="get" id="LRsearchForm" action="<?php echo get_page_link( $instance['results'] ); ?>">
-		<input class="lrSearch" type="text" placeholder="<?php echo $instance['placeholder']; ?>" name="query" />
-		<input class="lrSubmit" type="submit" value="Search" />
-	</form>
+	
+		<form method="get" id="LRsearchForm" action="<?php echo get_page_link( $instance['results'] ); ?>">
+		<div class="lrSearchCombo">
+			<input class="lrSearch" type="text" placeholder="<?php echo $instance['placeholder']; ?>" name="query" />
+			<input class="lrSubmit" type="submit" value="Search" />
+			</div>
+		</form>
+	
 	
 	<script type="text/javascript">
 		jQuery(document).ready(function($){

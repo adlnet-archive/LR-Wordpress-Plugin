@@ -62,16 +62,33 @@ td{
 }
 
 .lrSubmit{
-	margin-right: 0 !important;
-	margin-left: 0 !important;
-	width: 22% !important;
-	float:left;
-	
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 24% !important;
+	float:right;
+	height: 31px;
+	border: none !important;
+	border-left: 1px #ddd solid !important;
+		
 }
 .lrSearch{
 	
-	margin-right: 0 !important;
-	margin-left: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
 	width: 70% !important;
 	float:left;
+	height: 31px;
+	outline: none;
+	border: none !important;
+	
+}
+
+.lrSearchCombo{
+
+	border: 1px solid #ccc;
+	border-radius: 3px;
+		display: block;
+		clear: both;
+		height: auto;
+	overflow:hidden;
 }
