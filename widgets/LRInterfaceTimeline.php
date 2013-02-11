@@ -46,7 +46,7 @@ class LRInterfaceTimeline extends WP_Widget
 	$options = get_option('lr_options_object');
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];	
 	extract($args, EXTR_SKIP);
-	echo $before_widget . 'Related';
+	echo $before_widget;
 	
 	if(!empty($_GET["query"]) && $type == "slice"){
 	
@@ -55,12 +55,6 @@ class LRInterfaceTimeline extends WP_Widget
 		<div class="span3" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
 			<a class="relatedList" data-bind="text:(name[0] == undefined)?'':name[0].toUpperCase() + name.substr(1, name.length-1), click:$root.relatedTagSlice"></a>
 		</div>
-		<script type="text/javascript">
-		
-
-				
-
-		</script>
 <?php 
 		return;
 	}	
