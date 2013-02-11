@@ -26,7 +26,6 @@ Some info about the plugin and its usage here.
 0. Add the `LR Interface Results` widget to `Results Sidebar` 
    * [How to activate and configure widgets](http://en.support.wordpress.com/widgets/)
 0. Configure the `LR Interface Results` widget
-  * `Search Method` is mandatory and is set to `Indexed Search` by defualt. Slice is also an option
   * `Number of Results Per Page` is mandatory and is set to `50` by defualt.
 
 ### Displaying a Search Bar
@@ -35,6 +34,7 @@ Note: This section is placed after displaying the results because the search bar
 0. Add the `LR Interface Search Bar` widget to a sidebar (will appear as a search box on your live site).
 0. Configure the `LR Interface Search Bar` widget
   * `Search placeholder` is optional and is displayed whenever the search bar is empty
+  * `Search Method` is mandatory and is set to `Indexed Search` by defualt. Slice is also an option
   * `Results` is mandatory and will determine where the search results are displayed
 0. To-do...
 
