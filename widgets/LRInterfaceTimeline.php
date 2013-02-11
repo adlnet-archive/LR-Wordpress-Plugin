@@ -37,23 +37,42 @@ class LRInterfaceTimeline extends WP_Widget
  
   function widget($args, $instance)
   {
-    extract($args, EXTR_SKIP);
- 
-    echo $before_widget;
-	
-	if(empty($_GET['lr_resource'])){
-		echo $after_widget;
+    $type = $_GET['type'];
+
+	if(empty($_GET['lr_resource']) && $type != "slice"){
 		return;
 	}
+	
+	$options = get_option('lr_options_object');
+	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];	
+	extract($args, EXTR_SKIP);
+	echo $before_widget . 'Related';
+	
+	if(!empty($_GET["query"]) && $type == "slice"){
+	
+?>
+		Hello!
+		<div class="span3" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
+			<a class="relatedList" data-bind="text:(name[0] == undefined)?'':name[0].toUpperCase() + name.substr(1, name.length-1), click:$root.relatedTagSlice"></a>
+		</div>
+		<script type="text/javascript">
+		
+
+				
+
+		</script>
+<?php 
+		return;
+	}	
+	
+	
+	
 	
     $title = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
  
     if (!empty($title))
       echo $before_title . $title .  $after_title;;
-	
-	$options = get_option('lr_options_object');
-	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
-?>
+?>	
 	
 	<div class="modal-timeline">
 		<table id="timeline-table" class="table table-striped">

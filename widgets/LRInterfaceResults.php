@@ -11,23 +11,15 @@ class LRInterfaceResults extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'type' => '', 'numResults' => '') );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'numResults' => '') );
     $title = $instance['title'];
-	$type = $instance['type'];
 	$numResults = $instance['numResults'];
 
 ?>
 
 <p>
 		
-	<label for="<?php echo $this->get_field_id('type'); ?>">
-		Search Method:
-	</label>
-	<select class="widefat" id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
-		<option value="index" <?php echo attribute_escape($type) == "index" ? 'selected="selected"':''; ?>>Indexed Search</option>
-		<option value="slice" <?php echo attribute_escape($type) == "slice" ? 'selected="selected"':''; ?>>Slice</option>
-	</select>
-	<br/><br/>		
+	
 	<label>
 		Number of Results Per Page:
 	</label>
@@ -43,7 +35,6 @@ class LRInterfaceResults extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
-    $instance['type'] = $new_instance['type'];
     $instance['numResults'] = (is_numeric($new_instance['numResults']) && $new_instance['numResults'] > 0)? $new_instance['numResults'] : 50;
     return $instance;
   }
@@ -56,7 +47,9 @@ class LRInterfaceResults extends WP_Widget
 	
 	$options = get_option('lr_options_object');
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-	$type  = empty($instance['type']) ? "index" : $instance['type'];
+	
+	
+	$type  = $_GET['type'] == 'index' || $_GET['type'] == 'slice'  ? $_GET['type'] : 'index';
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
  
     if (!empty($title))

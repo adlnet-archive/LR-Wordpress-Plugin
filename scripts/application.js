@@ -640,8 +640,8 @@ var mainViewModel = function(resources){
 	
 	self.relatedTagSlice = function(e){
 		
-		buildDocList(e);
 		console.log(e);
+		buildDocList(e);
 	};
 
     self.getShorterArr = function(str, length, url){

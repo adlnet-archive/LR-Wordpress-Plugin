@@ -69,6 +69,7 @@ td{
 	height: 31px;
 	border: none !important;
 	border-left: 1px #ddd solid !important;
+	cursor: pointer;
 		
 }
 .lrSearch{

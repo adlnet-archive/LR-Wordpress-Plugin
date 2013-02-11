@@ -53,8 +53,8 @@
 			<div class="span9 activity">
 				<table class="table table-striped resultsTable">
 					<tbody data-bind="foreach: getResults()">
-								<tr style="border-top:none;" data-bind="style: { 'background-color': $index()%2 == 1 ? '#F9F9F9' : '#FFF'}">
-									<td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">
+								<tr style="border-top:none;">
+									<td style="border-top:none;padding-top:15px;padding-bottom:15px;" data-bind="style: { 'border-bottom': $index() < $root.results().length - 1 ? '#ddd dotted 1px' : ''}" class="imageCell">
 										<div>
 											<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 												<!-- ko if: hasScreenshot -->
@@ -65,7 +65,7 @@
 												<!-- /ko -->
 											</a>
 										</div>
-										<div>
+										<div style="float:right;text-align:left;width:75%;">
 											<a data-bind="text:title?$root.getShorterStr(title, 50):$root.getShorterArr(keys, 5, true), 
 											attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
 											<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
@@ -78,13 +78,6 @@
 				
 				
 			</div>
-			
-			<div class="span3" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
-			
-				<a class="relatedList" data-bind="text:(name[0] == undefined)?'':name[0].toUpperCase() + name.substr(1, name.length-1), click:$root.relatedTagSlice"></a>
-			</div>
-			
-
 		</div>				
 		<div id="spinnerDiv"></div>
 		<div id="resultsNotFound" class="resultsPrompt" data-bind="visible:resultsNotFound">
@@ -97,12 +90,6 @@
 	<script type="text/javascript">
 		var globalSliceMax = 500;
 		var NODE_URL = "http://node01.public.learningregistry.net";
-		/*{{#server}}
-			var temp_NODE_URL = ["","http://node01.public.learningregistry.net","http://node02.public.learningregistry.net", "http://lrtest01.public.learningregistry.net",
-								 "http://sandbox.learningregistry.org/", "http://lrdev03.learningregistry.org", "http://lrdev05.learningregistry.org"];
-			NODE_URL = temp_NODE_URL[{{server}}];
-
-		{{/server}}*/
 	</script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.xml2json.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.eComboBox.js' , __FILE__ ) ?>"></script>
@@ -173,11 +160,11 @@
 		
 		totalSlice = 15;
 		newLoad = 15;
-		ko.applyBindings(temp);
 
 		jQuery(document).ready(function($){
 			
 			//if not in debug mode
+			ko.applyBindings(temp);
 			spinner = new Spinner(opts).spin($('#spinnerDiv')[0]);
 			
 			$("#endOfResults").hide();

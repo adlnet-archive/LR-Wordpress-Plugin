@@ -10,10 +10,11 @@ class LRInterfaceSearch extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'results' => '', 'placeholder'=>'' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'results' => '', 'placeholder'=>'', 'type' => '' ) );
     $title = $instance['title'];
 	$results = $instance['results'];
 	$placeholder = $instance['placeholder'];
+	$type = $instance['type'];
 ?>
 
 <p>
@@ -23,6 +24,14 @@ class LRInterfaceSearch extends WP_Widget
 	</label>
 	<input class="widefat" id="<?php echo $this->get_field_id('placeholder'); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo attribute_escape($placeholder); ?>" />
 	<br/><br/>
+	<label for="<?php echo $this->get_field_id('type'); ?>">
+		Search Method:
+	</label>
+	<select class="widefat" id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
+		<option value="index" <?php echo attribute_escape($type) == "index" ? 'selected="selected"':''; ?>>Indexed Search</option>
+		<option value="slice" <?php echo attribute_escape($type) == "slice" ? 'selected="selected"':''; ?>>Slice</option>
+	</select>
+	<br/><br/>	
 	
 	<label for="<?php echo $this->get_field_id('results'); ?>">
 		Results: 
@@ -51,6 +60,7 @@ class LRInterfaceSearch extends WP_Widget
     $instance['title'] = $new_instance['title'];
 	$instance['results'] = $new_instance['results'];
 	$instance['placeholder'] = $new_instance['placeholder'];
+	$instance['type'] = $new_instance['type'];
     return $instance;
   }
  
@@ -60,7 +70,8 @@ class LRInterfaceSearch extends WP_Widget
  
     echo $before_widget;
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
- 
+    $type = empty($instance['type']) ? 'index' : $instance['type'];
+
     //if (!empty($title))
     //  echo $before_title . $title . $after_title;;
 		
@@ -79,7 +90,8 @@ class LRInterfaceSearch extends WP_Widget
 		
 			$("#LRsearchForm").submit(function(e){
 				e.preventDefault();
-				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", $("#LRsearchForm input").val());
+				
+				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", $("#LRsearchForm input").val() + '&type=<?php echo $type; ?>');
 			});
 		});
 	</script>
