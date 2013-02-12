@@ -75,11 +75,10 @@ td{
 .lrSearch{
 	
 	margin: 0 !important;
-	padding: 0 !important;
-	padding-left: 5px !important;
+	padding: 6px 0 4px 5px !important;
 	width: 70% !important;
 	float:left;
-	height: 31px;
+	height: 21px;
 	outline: none;
 	border: none !important;
 	
@@ -89,8 +88,8 @@ td{
 
 	border: 1px solid #ccc;
 	border-radius: 3px;
-		display: block;
-		clear: both;
-		height: auto;
+	display: block;
+	clear: both;
+	height: auto;
 	overflow:hidden;
 }

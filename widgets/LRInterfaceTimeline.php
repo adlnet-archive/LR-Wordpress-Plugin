@@ -50,12 +50,16 @@ class LRInterfaceTimeline extends WP_Widget
 	
 	if(!empty($_GET["query"]) && $type == "slice"){
 	
+	    $title = apply_filters('widget_title', 'Related Tags');
+		echo $before_title . $title .  $after_title;;
 ?>
-		Hello!
-		<div class="span3" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
-			<a class="relatedList" data-bind="text:(name[0] == undefined)?'':name[0].toUpperCase() + name.substr(1, name.length-1), click:$root.relatedTagSlice"></a>
-		</div>
+		<ul class="relatedTerms" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
+			<li>
+				<a style="cursor:pointer;" class="relatedList" data-bind="text:(name[0] == undefined)?'':name[0].toUpperCase() + name.substr(1, name.length-1), click:$root.relatedTagSlice, clickBubble: false"></a>
+			</li>
+		</ul>
 <?php 
+		echo $after_widget;
 		return;
 	}	
 	

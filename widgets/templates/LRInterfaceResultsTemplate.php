@@ -50,7 +50,7 @@
 		</div>
 		<div class="row" data-bind="visible:results().length > 0">
 
-			<div class="span9 activity">
+			<div class="span12 activity">
 				<table class="table table-striped resultsTable">
 					<tbody data-bind="foreach: getResults()">
 								<tr style="border-top:none;">
@@ -79,7 +79,7 @@
 				
 			</div>
 		</div>				
-		<div id="spinnerDiv"></div>
+		<div id="spinnerDiv" style="height: 25px;"></div>
 		<div id="resultsNotFound" class="resultsPrompt" data-bind="visible:resultsNotFound">
 			<span>Results Not Found</span>
 		</div>
