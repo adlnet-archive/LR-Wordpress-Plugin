@@ -2,7 +2,7 @@
 	<div class="innerTimelineContent giveBackground">
 		<div class="row-fluid" style="text-align: center;">
 			<h2 data-bind="text:currentObject().title"></h2>
-			<a href="#" data-bind="attr:{href:currentObject().url}">
+			<a href="#" data-bind="attr:{href:doTransform(currentObject().url)}">
 				<img style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
 				<img style="height: 150px; width: 150px;margin: 0 auto;" data-bind="visible: !currentObject().hasScreenshot, attr:{src:currentObject().image}" />
 			</a>

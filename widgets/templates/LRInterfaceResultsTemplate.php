@@ -58,10 +58,10 @@
 										<div>
 											<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 												<!-- ko if: hasScreenshot -->
-												<img data-bind="attr:{src:'<?php echo $host; ?>/screenshot/' + _id}" class="img-polaroid" />
+												<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" />
 												<!-- /ko -->
 												<!-- ko if: !hasScreenshot -->
-												<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" />
+												<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" class="img-polaroid" />
 												<!-- /ko -->
 											</a>
 										</div>
@@ -112,7 +112,7 @@
 									<div style="float:left">
 										<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
-										<img data-bind="attr:{src:'<?php echo $host; ?>/screenshot/' + _id}" class="img-polaroid" />
+										<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
 										<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" />

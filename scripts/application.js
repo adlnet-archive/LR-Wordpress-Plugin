@@ -21,16 +21,22 @@ var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = ""
 
 var urlTransform = {
 
-    "3dr.adlnet.gov" : function(urlObj){
+    "3dr.adlnet.gov" : function(urlObj, screenUrl){
 
         //After splitting, this is the index of the most important part of the URL (the id)
         var idIndex = 2;
 
         var temp = (urlObj.pathname[0] == "/") ? urlObj.pathname.substr(1, urlObj.pathname.length - 1) : urlObj.pathname;
         var id = temp.split("/")[idIndex];
-        //console.log(urlObj.pathname);
-
-        return (id == undefined) ? urlObj.href : "http://3dr.adlnet.gov/Public/Model.aspx?ContentObjectID=" + id;
+		
+		if(screenUrl !== undefined){
+			return (id == undefined) ? screenUrl : "http://3dr.adlnet.gov/Public/Serve.ashx?pid="+id+"&mode=GetScreenshot";
+		}
+		
+		
+		else{
+			return (id == undefined) ? urlObj.href : "http://3dr.adlnet.gov/Public/Model.aspx?ContentObjectID=" + id;
+		}
     }
 };
 
@@ -91,10 +97,10 @@ var genParadataDoc = function(jobTitle, id, action, detail, date){
 };
 
 //This may need to be refactored for memory efficiency. Not sure how createElement handles memory.
-var getLocation = function(href) {
+var getLocation = function(href, hostname) {
     var l = document.createElement("a");
     l.href = href;
-    return l;
+    return (hostname === true) ? l.hostname : l;
 };
 
 var scrollbarFix = function(obj){
@@ -166,6 +172,8 @@ var handleMainResourceModal = function(src, direct){
 	src = (typeof src == "string")? src : $(this).attr("name");
 	var tempUrl = getLocation(src);
 	var md5 = hex_md5(src);
+	
+	var saveSrc = src;
 	src = (urlTransform[tempUrl.hostname] !== undefined ) ? urlTransform[tempUrl.hostname](tempUrl) : src;
 
 
@@ -191,16 +199,23 @@ var handleMainResourceModal = function(src, direct){
 				
 				console.log("qmarkUrl: ", qmarkUrl);
 				var imageUrl = (qmarkUrl ? qmarkUrl:"/images/qmark.png");
+				
+				
 				currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
-				currentObject.hasScreenshot = data.hasScreenshot;				
+				currentObject.image = self.getImageSrc(saveSrc, currentObject.image);
+				currentObject.hasScreenshot = currentObject.image != imageUrl;				
 				
 				self.currentObject(currentObject);
 			}
 			
 			else{
-				console.log("qmarkUrl: ", qmarkUrl);
-				self.currentObject().image = qmarkUrl ? qmarkUrl:"/images/qmark.png";
-				self.currentObject.valueHasMutated();
+				
+				var imageUrl = qmarkUrl ? qmarkUrl:"/images/qmark.png";
+				var currentObject = new resourceObject("Item", src);
+				currentObject.image = self.getImageSrc(saveSrc, imageUrl);
+				currentObject.hasScreenshot = currentObject.image != imageUrl;		
+				
+				self.currentObject(currentObject);
 			}
 		});
 	}
@@ -217,10 +232,7 @@ var handleMainResourceModal = function(src, direct){
 	}
 	
 	if(reverseTransform[tempUrl.hostname] !== undefined){
-
-		console.log("BEFORE TRANSFORM: ", src);
 		src = reverseTransform[tempUrl.hostname](getLocation(src));
-		console.log("REVERSE TRANSFORM: ", src);
 	}
 	
 
@@ -824,6 +836,14 @@ var mainViewModel = function(resources){
         enableModal();
     };
 
+	self.getImageSrc = function(url, screen){
+		
+		var u = getLocation(url);
+
+		return urlTransform[u.hostname] ? urlTransform[u.hostname](u, screen) : screen;
+		
+	};
+	
     self.deleteResource = function(){
 
         /* Add jQuery/socket.io call here*/
