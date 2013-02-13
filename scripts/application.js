@@ -165,6 +165,35 @@ var doTransform = function(src){
 	return (urlTransform[tempUrl.hostname] !== undefined ) ? urlTransform[tempUrl.hostname](tempUrl) : src;
 };
 
+var fetchLiveParadata = function(src){
+
+	$.ajax(NODE_URL + "obtain?request_id="+src, {dataType: 'jsonp', jsonp: 'callback'}).success(function(data){
+		
+		//For each document found in data
+		var jsonData;
+		currentObjectMetadata = [];
+
+		if(data.documents.length == 0)
+			return;
+			
+		for(var i = 0; i < data.documents[0].document.length; i++){
+			if(data.documents[0].document[i].resource_data_type == "paradata"){
+
+				jsonData = (typeof data.documents[0].document[i].resource_data == "string") ?
+							$.parseJSON( data.documents[0].document[i].resource_data ) : data.documents[0].document[i].resource_data;
+
+				self.currentObject().timeline.push(jsonData);
+			}
+			else if(data.documents[0].document[i].resource_data_type == "metadata"){
+
+				currentObjectMetadata.push(data.documents[0].document[i]);
+			}
+		}
+		
+		temp.currentObject().timeline.sort(sortTimeline);
+	});
+};
+
 var handleMainResourceModal = function(src, direct){
 
 	//src should either be the URL, or a jQuery object whose name attribute is the URL
@@ -172,7 +201,6 @@ var handleMainResourceModal = function(src, direct){
 	var tempUrl = getLocation(src);
 	var md5 = hex_md5(src);
 	
-	var saveSrc = src;
 	src = (urlTransform[tempUrl.hostname] !== undefined ) ? urlTransform[tempUrl.hostname](tempUrl) : src;
 
 
@@ -185,23 +213,25 @@ var handleMainResourceModal = function(src, direct){
 	if(iframeHidden){
 
 		//Workaround to get 'hasScreenshot' property
-		$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent(JSON.stringify([md5])),function(data){					
+		$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent(JSON.stringify([src])),function(data){					
 		
 			if(data[0]){
 				data = data[0];
+				src = data.url;
 				
 				//This is done because observable.valueHasMutated wasn't working..
 				var currentObject = new resourceObject("Item", src);
 				currentObject.timeline = self.currentObject().timeline;
 				currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
 				currentObject.description = (data.description == undefined) ? "" : data.description;
+				currentObject.url = (data.url == undefined) ? "" : data.url;
 				
 				console.log("qmarkUrl: ", qmarkUrl);
 				var imageUrl = (qmarkUrl ? qmarkUrl:"/images/qmark.png");
 				
 				
 				currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
-				currentObject.image = self.getImageSrc(saveSrc, currentObject.image);
+				currentObject.image = self.getImageSrc(data.url, currentObject.image);
 				currentObject.hasScreenshot = currentObject.image != imageUrl;				
 				
 				self.currentObject(currentObject);
@@ -209,18 +239,22 @@ var handleMainResourceModal = function(src, direct){
 			
 			else{
 				
+				src = data.url;
 				var imageUrl = qmarkUrl ? qmarkUrl:"/images/qmark.png";
 				var currentObject = new resourceObject("Item", src);
-				currentObject.image = self.getImageSrc(saveSrc, imageUrl);
+				currentObject.image = self.getImageSrc(data.url, imageUrl);
 				currentObject.hasScreenshot = currentObject.image != imageUrl;		
 				
 				self.currentObject(currentObject);
 			}
+			
+			fetchLiveParadata(data.url);
 		});
 	}
 	
 	else{
-	
+		
+		//This will not work unless we gain access to the actual URL and not the hashed version
 		generateContentFrame(src);
 
 		/*
@@ -229,46 +263,6 @@ var handleMainResourceModal = function(src, direct){
 			self.currentObject().timeline.push(NEW ENTRIES);
 		*/
 	}
-	
-	if(reverseTransform[tempUrl.hostname] !== undefined){
-		src = reverseTransform[tempUrl.hostname](getLocation(src));
-	}
-	
-
-	console.log("This is the src we will be using to datra search: ", src);
-	$.ajax(NODE_URL + "obtain?request_id="+src,{
-		dataType : 'jsonp',
-		jsonp : 'callback'
-	}).success(function(data){
-		
-		//For each document found in data
-		var jsonData;
-		currentObjectMetadata = [];
-		//console.log(JSON.stringify(data), "hi");
-		
-		if(data.documents.length == 0)
-			return;
-		
-		for(var i = 0; i < data.documents[0].document.length; i++){
-
-			if(data.documents[0].document[i].resource_data_type == "paradata"){
-
-				jsonData = (typeof data.documents[0].document[i].resource_data == "string") ?
-							$.parseJSON( data.documents[0].document[i].resource_data ) : data.documents[0].document[i].resource_data;
-
-				self.currentObject().timeline.push(jsonData);
-			}
-
-			else if(data.documents[0].document[i].resource_data_type == "metadata"){
-
-				currentObjectMetadata.push(data.documents[0].document[i]);
-			}
-		}
-		console.log("Timeline: ", self.currentObject().timeline());
-		console.log("Loaded Data: ", currentObjectMetadata);
-		
-		temp.currentObject().timeline.sort(sortTimeline);
-	});
 
 	if(spinner !== null){
 
@@ -916,8 +910,9 @@ var mainViewModel = function(resources){
     };
 	
 	self.wordpressLinkTransform = function(link, query){
-	
-		return link.replace("LRreplaceMe", query);
+		
+		
+		return link.replace("LRreplaceMe", hex_md5(query));
 	};
 };
 
