@@ -52,7 +52,7 @@ class LRInterfaceTimeline extends WP_Widget
 	
 	if(!empty($_GET["query"]) && $type == "slice"){
 	
-	    $title = apply_filters('widget_title', 'Related Tags');
+	    $title = apply_filters('widget_title', 'Filter');
 		echo $before_title . $title .  $after_title;;
 ?>
 		<ul class="relatedTerms" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
