@@ -12,6 +12,8 @@ class LRInterfaceTimeline extends WP_Widget
   {
     $instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
     $title = empty($instance['title']) ? "Paradata" : $instance['title'];
+	
+
 ?>
 
 

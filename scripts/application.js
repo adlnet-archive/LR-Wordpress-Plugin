@@ -33,7 +33,6 @@ var urlTransform = {
 			return (id == undefined) ? screenUrl : "http://3dr.adlnet.gov/Public/Serve.ashx?pid="+id+"&mode=GetScreenshot";
 		}
 		
-		
 		else{
 			return (id == undefined) ? urlObj.href : "http://3dr.adlnet.gov/Public/Model.aspx?ContentObjectID=" + id;
 		}
