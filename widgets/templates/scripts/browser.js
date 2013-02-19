@@ -169,103 +169,104 @@ var BROWSER = (function () {
     };
 
     var loadResources = function ($div, callback) {
-    $div.find('.resources').each( function (i, e) {
-        var $resourceDiv  = $(e);
-        var $resourceLink = $resourceDiv.find('.resource-count');
-        
-        var id = $resourceLink.data('id');
-        
-        $resourceLink.text( 'loading...' );
-        
-        $.ajax(serviceHost + '/resources', {
-        data: {discriminator: id},
-                dataType: 'json',
-        success: function (resources) {
-            var count = resources.documents.length;
-            
-            // remove element if no resources
-            if (count === 0) {
-            $resourceLink.text( 'no resources found' );
-            return;
-            }
-            
-            // get resource/s depending on how many
-            var pluralText = count === 1 ? 'resource' : 'resources';
-            
-            var div = $('<div/>');
-            //$('<h2 />').text('Resources').appendTo(div);
-            
-            var appendUsing = '<table class="table table-striped resultsTable"><tbody>';
-			var md5 = "", url = "", wordpressUrl = "", urlShow = "", line1 = "", line2 = "", line3 = "", line4 = "";
-            $.each( resources.documents, function(i, doc) {
-				
-				url = doc.result_data.resource;
-				urlShow = (url.length > 40) ? url.substr(0, 40) + "..." : url;
-				wordpressUrl = permalink.replace("LRreplaceMe", url);
-				
-				if(notOnBlackList(url)){
-					md5 = hex_md5(url);
-					
-					line1 = '<tr style="border-top:none;"><td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">';
-					line2 = '<a href="'+wordpressUrl+'"><img height="180" width="180" src="'+qmarkUrl+'" name="'+url+'" class="img-polaroid '+md5+'" />';
-					line3 = '</a></td><td style="border-top:none;padding-top:15px;padding-bottom:15px;"><a name="'+url+'" href="'+wordpressUrl+'" class="title getTitle">'+urlShow+'</a><br/>';
-					line4 = '<a href="'+wordpressUrl+'" class="fine">'+urlShow+'</a><br/><span id="'+md5+'" class="fine getDescription"></span></td></tr>';
-					appendUsing += line1 + line2 +line3 +line4;
-				}	
-            });
-            
-            appendUsing += '</tbody></table>';
-            div.html(appendUsing);
-            
-            var $newResourceLink = $('<a/>')
-            .attr('href', '#').text( count + ' ' + pluralText );
-            
-            $newResourceLink.click( function (event) {
-				event.preventDefault();
-				$(this).parents(".resources").append(div);
-				
-				var thisObj = [{}],  md5 = [], image = [];
-				$(".getTitle").each( function(i, doc) {
-				
-					console.log(i);
-					
-					thisObj[i] = $(this);
-					md5[i] = hex_md5($(this).attr('name'));
-
-					//http://12.109.40.31/screenshot/'+md5+'
-				});
-				
-				var keys = encodeURIComponent(JSON.stringify(md5));
-				$.getJSON(serviceHost + '/data/?keys=' + keys, function(data){
-										
-					for(var i = 0; i < data.length; i++){
-					
-						if(data[i]){
-							//console.log("resource number: ", i, " data: ",  data);
-							data[i].description = (data[i].description == undefined) ? "" : data[i].description;
-							data[i].description = (data[i].description.length > 280) ? data[i].description.substr(0, 280) + "..." : data[i].description;
-							
-							data[i].title = (data[i].title == undefined) ? thisObj[i].attr("name") : data[i].title;
-							data[i].title = (data[i].title.length > 80) ? data[i].title.substr(0, 80) + "..." : data[i].title;
-							
-							image[i] = (data.hasScreenshot !== true) ? qmarkUrl : serviceHost + "/screenshot/" + md5[i];
-							
-							thisObj[i].html(data[i].title);
-							$('.'+md5[i]).attr("src", image[i]);
-							$('#'+md5[i]).html(data[i].description);
-						}
-					}
-				});
-				
-				console.log("RESOURCE CLICK");
-				//return false;
+		$div.find('.resources').each( function (i, e) {
+			var $resourceDiv  = $(e);
+			var $resourceLink = $resourceDiv.find('.resource-count');
 			
-            });
-            
-            $resourceLink.replaceWith($newResourceLink);
-        }
-        });
-       });
+			var id = $resourceLink.data('id');
+			
+			$resourceLink.text( 'loading...' );
+			
+			$.ajax(serviceHost + '/resources', {
+				data: {discriminator: id},
+						dataType: 'json',
+				success: function (resources) {
+					var count = resources.documents.length;
+					
+					// remove element if no resources
+					if (count === 0) {
+					$resourceLink.text( 'no resources found' );
+					return;
+					}
+					
+					// get resource/s depending on how many
+					var pluralText = count === 1 ? 'resource' : 'resources';
+					
+					var div = $('<div/>');
+					//$('<h2 />').text('Resources').appendTo(div);
+					
+					var appendUsing = '<table class="table table-striped resultsTable"><tbody>';
+					var md5 = "", url = "", wordpressUrl = "", urlShow = "", line1 = "", line2 = "", line3 = "", line4 = "";
+					$.each( resources.documents, function(i, doc) {
+						
+						url = doc.result_data.resource;
+
+						
+						if(notOnBlackList(url)){
+							md5 = hex_md5(url);
+							urlShow = (url.length > 40) ? url.substr(0, 40) + "..." : url;
+							wordpressUrl = permalink.replace("LRreplaceMe", md5);
+							
+							line1 = '<tr style="border-top:none;"><td style="border-top:none;padding-top:15px;padding-bottom:15px;" class="imageCell">';
+							line2 = '<a href="'+wordpressUrl+'"><img height="180" width="180" src="'+qmarkUrl+'" name="'+md5+'" class="img-polaroid '+md5+'" />';
+							line3 = '</a></td><td style="border-top:none;padding-top:15px;padding-bottom:15px;"><a name="'+md5+'" href="'+wordpressUrl+'" class="title getTitle">'+urlShow+'</a><br/>';
+							line4 = '<a href="'+wordpressUrl+'" class="fine">'+urlShow+'</a><br/><span id="'+md5+'" class="fine getDescription"></span></td></tr>';
+							appendUsing += line1 + line2 +line3 +line4;
+						}	
+					});
+					
+					appendUsing += '</tbody></table>';
+					div.html(appendUsing);
+					
+					var $newResourceLink = $('<a/>')
+					.attr('href', '#').text( count + ' ' + pluralText );
+					
+					$newResourceLink.click( function (event) {
+						event.preventDefault();
+						$(this).parents(".resources").append(div);
+						
+						var thisObj = [{}],  md5 = [], image = [];
+						$(".getTitle").each( function(i, doc) {
+						
+							console.log(i);
+							
+							thisObj[i] = $(this);
+							md5[i] = hex_md5($(this).attr('name'));
+
+							//http://12.109.40.31/screenshot/'+md5+'
+						});
+						
+						var keys = encodeURIComponent(JSON.stringify(md5));
+						$.getJSON(serviceHost + '/data/?keys=' + keys, function(data){
+												
+							for(var i = 0; i < data.length; i++){
+							
+								if(data[i]){
+									//console.log("resource number: ", i, " data: ",  data);
+									data[i].description = (data[i].description == undefined) ? "" : data[i].description;
+									data[i].description = (data[i].description.length > 280) ? data[i].description.substr(0, 280) + "..." : data[i].description;
+									
+									data[i].title = (data[i].title == undefined) ? thisObj[i].attr("name") : data[i].title;
+									data[i].title = (data[i].title.length > 80) ? data[i].title.substr(0, 80) + "..." : data[i].title;
+									
+									image[i] = (data.hasScreenshot !== true) ? qmarkUrl : serviceHost + "/screenshot/" + md5[i];
+									
+									thisObj[i].html(data[i].title);
+									$('.'+md5[i]).attr("src", image[i]);
+									$('#'+md5[i]).html(data[i].description);
+								}
+							}
+						});
+						
+						console.log("RESOURCE CLICK");
+						//return false;
+					
+					});
+					
+					$resourceLink.replaceWith($newResourceLink);
+				}
+			});
+		});
     };
 
     var loadNodes = function ($query, data, callback) {
