@@ -197,12 +197,7 @@ var fetchLiveParadata = function(src){
 var handleMainResourceModal = function(src, direct){
 
 	//src should either be the URL, or a jQuery object whose name attribute is the URL
-	src = (typeof src == "string")? src : $(this).attr("name");
-	var tempUrl = getLocation(src);
-	var md5 = hex_md5(src);
-	
-	src = (urlTransform[tempUrl.hostname] !== undefined ) ? urlTransform[tempUrl.hostname](tempUrl) : src;
-
+	src = (typeof src == "string")? src : hex_md5($(this).attr("name"));
 
 	var target = document.getElementById('spinnerDiv');
 	self.currentObject(new resourceObject("Item", src));
@@ -214,7 +209,8 @@ var handleMainResourceModal = function(src, direct){
 
 		//Workaround to get 'hasScreenshot' property
 		$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent(JSON.stringify([src])),function(data){					
-		
+			
+			var md5 = src;
 			if(data[0]){
 				data = data[0];
 				src = data.url;
@@ -227,8 +223,7 @@ var handleMainResourceModal = function(src, direct){
 				currentObject.url = (data.url == undefined) ? "" : data.url;
 				
 				console.log("qmarkUrl: ", qmarkUrl);
-				var imageUrl = (qmarkUrl ? qmarkUrl:"/images/qmark.png");
-				
+				var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
 				
 				currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
 				currentObject.image = self.getImageSrc(data.url, currentObject.image);
@@ -240,7 +235,7 @@ var handleMainResourceModal = function(src, direct){
 			else{
 				
 				src = data.url;
-				var imageUrl = qmarkUrl ? qmarkUrl:"/images/qmark.png";
+				var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
 				var currentObject = new resourceObject("Item", src);
 				currentObject.image = self.getImageSrc(data.url, imageUrl);
 				currentObject.hasScreenshot = currentObject.image != imageUrl;		

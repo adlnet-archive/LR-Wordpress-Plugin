@@ -49,34 +49,31 @@
 			</div>
 		</div>
 		<div class="row" data-bind="visible:results().length > 0">
-
 			<div class="span12 activity">
 				<table class="table table-striped resultsTable">
 					<tbody data-bind="foreach: getResults()">
-								<tr style="border-top:none;">
-									<td style="border-top:none;padding-top:15px;padding-bottom:15px;" data-bind="style: { 'border-bottom': $index() < $root.results().length - 1 ? '#ddd dotted 1px' : ''}" class="imageCell">
-										<div>
-											<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
-												<!-- ko if: hasScreenshot -->
-												<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" />
-												<!-- /ko -->
-												<!-- ko if: !hasScreenshot -->
-												<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" class="img-polaroid" />
-												<!-- /ko -->
-											</a>
-										</div>
-										<div style="float:right;text-align:left;width:75%;">
-											<a data-bind="text:title?$root.getShorterStr(title, 50):$root.getShorterArr(keys, 5, true), 
-											attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
-											<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
-											<span data-bind="text:(description.length<280)? description:description.substr(0, 280)+'...'" class="fine"></span>
-										</div>
-									</td>
-								</tr>
+						<tr style="border-top:none;">
+							<td style="border-top:none;padding-top:15px;padding-bottom:15px;" data-bind="style: { 'border-bottom': $index() < $root.results().length - 1 ? '#ddd dotted 1px' : ''}" class="imageCell">
+								<div>
+									<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
+										<!-- ko if: hasScreenshot -->
+										<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" />
+										<!-- /ko -->
+										<!-- ko if: !hasScreenshot -->
+										<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" class="img-polaroid" />
+										<!-- /ko -->
+									</a>
+								</div>
+								<div style="float:right;text-align:left;width:75%;">
+									<a data-bind="text:title?$root.getShorterStr(title, 50):$root.getShorterArr(keys, 5, true), 
+									attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
+									<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
+									<span data-bind="text:(description.length<280)? description:description.substr(0, 280)+'...'" class="fine"></span>
+								</div>
+							</td>
+						</tr>
 					</tbody>
 				</table>	
-				
-				
 			</div>
 		</div>				
 		<div id="spinnerDiv" style="height: 25px;"></div>
@@ -147,7 +144,7 @@
 	
 	
 	<script type="text/javascript">
-		var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo $_GET['query']; ?>";
+		var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo sanitize_lr($_GET['query'], ' '); ?>";
 				var temp = new mainViewModel([]), activeModalName = null, lastSearchCache = "";
 		for (var f in followed){
 			temp.followers.push({name:followed[f], content:[]});

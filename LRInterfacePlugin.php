@@ -8,6 +8,11 @@ Version: 1
 Author URI: http://adlnet.gov/
 */
 
+function sanitize_lr($str, $opt){
+
+	return preg_replace('/[^a-zA-Z0-9'.$opt.']+/', '', $str);
+}
+
 //Load the individual widgets
 include_once('widgets/LRInterfaceSearch.php');
 include_once('widgets/LRInterfaceResults.php');

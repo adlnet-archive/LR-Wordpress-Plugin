@@ -1,4 +1,4 @@
-var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo empty($_GET['lr_resource'])?$_GET['query']:$_GET['lr_resource']; ?>";
+var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo empty($_GET['lr_resource'])?sanitize_lr($_GET['query'], ' '):sanitize_lr($_GET['lr_resource'], ''); ?>";
 var temp = new mainViewModel([]), activeModalName = null, lastSearchCache = "";
 var iframeHidden = true;
 var tempBookmarksArray = [];
