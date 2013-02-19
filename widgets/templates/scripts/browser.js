@@ -231,7 +231,7 @@ var BROWSER = (function () {
 							console.log(i);
 							
 							thisObj[i] = $(this);
-							md5[i] = hex_md5($(this).attr('name'));
+							md5[i] = $(this).attr('name');
 
 							//http://12.109.40.31/screenshot/'+md5+'
 						});
