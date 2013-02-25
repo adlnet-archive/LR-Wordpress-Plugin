@@ -30,7 +30,9 @@ var urlTransform = {
         var id = temp.split("/")[idIndex];
 		
 		if(screenUrl !== undefined){
-			return (id == undefined) ? screenUrl : "http://3dr.adlnet.gov/Public/Serve.ashx?pid="+id+"&mode=GetScreenshot";
+		
+			return screenUrl;
+			//return (id == undefined) ? screenUrl : "http://3dr.adlnet.gov/Public/Serve.ashx?pid="+id+"&mode=GetScreenshot";
 		}
 		
 		else{
@@ -528,6 +530,7 @@ var mainViewModel = function(resources){
 	self.saveResultsDisplay = ko.observableArray();
 	self.relatedResultsNodes = ko.observableArray();
 	self.isMetadataHidden = ko.observable(-1);
+	self.featuredResource = ko.observable({title:'r', url: 'r'});
 	
 	self.notOnBlackList = function(url){
 		
@@ -826,7 +829,7 @@ var mainViewModel = function(resources){
 
 	self.getImageSrc = function(url, screen){
 		
-		var u = getLocation(url);
+		var u = (url)?getLocation(url) : {hostname:'void'};
 
 		return urlTransform[u.hostname] ? urlTransform[u.hostname](u, screen) : screen;
 		
@@ -905,7 +908,6 @@ var mainViewModel = function(resources){
     };
 	
 	self.wordpressLinkTransform = function(link, query){
-		
 		
 		return link.replace("LRreplaceMe", hex_md5(query));
 	};

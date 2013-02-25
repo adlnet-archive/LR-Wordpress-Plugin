@@ -18,6 +18,7 @@ include_once('widgets/LRInterfaceSearch.php');
 include_once('widgets/LRInterfaceResults.php');
 include_once('widgets/LRInterfaceStandards.php');
 include_once('widgets/LRInterfaceTimeline.php');
+include_once('widgets/LRInterfaceFeatured.php');
 include_once('LRInterfacePluginSettings.php');
 
 function registerWidgets(){
@@ -26,6 +27,7 @@ function registerWidgets(){
 	register_widget("LRInterfaceResults");
 	register_widget("LRInterfaceTimeline");
 	register_widget("LRInterfaceStandards");
+	register_widget("LRInterfaceFeatured");
 }
 
 function lr_enqueue_script(){
