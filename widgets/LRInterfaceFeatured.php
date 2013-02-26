@@ -42,8 +42,13 @@ class LRInterfaceFeatured extends WP_Widget
   
    function display_rand_resource($arr, $host)
   {
-  
-	$i = rand(0, sizeof($arr) - 1);
+	if(sizeof($arr) == 1 && trim($arr[0]) == trim($_GET['lr_resource']))
+		return false;
+
+	do{
+		$i = rand(0, sizeof($arr) - 1);
+	} while(trim($arr[$i]) == trim($_GET['lr_resource']));
+	
 	?>
 	<script type="text/javascript">
 		var serviceHost = "<?php echo $host; ?>";
@@ -103,6 +108,8 @@ class LRInterfaceFeatured extends WP_Widget
 	</a>
 
 	<?php
+	
+	return true;
   }
  
   function widget($args, $instance)
@@ -116,12 +123,13 @@ class LRInterfaceFeatured extends WP_Widget
     $resources = empty($instance['resources']) ? array('') : explode(';', $instance['resources']);
     $host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
 
-    if (!empty($title))
-      echo $before_title . $title . $after_title;
-		
-	$this->display_rand_resource($resources, $host);
+    if (!empty($title) && $this->display_rand_resource($resources, $host) != false){
+    
+	  echo $before_title . $title . $after_title;
+	  echo $after_widget;
+	}
 
-    echo $after_widget;
+    
   }
   
 
