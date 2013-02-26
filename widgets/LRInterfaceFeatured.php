@@ -40,11 +40,15 @@ class LRInterfaceFeatured extends WP_Widget
     return $instance;
   }
   
-   function display_rand_resource($arr, $host)
+   function display_rand_resource($arr, $host, $title, $args)
   {
 	if(sizeof($arr) == 1 && trim($arr[0]) == trim($_GET['lr_resource']))
 		return false;
-
+	
+	extract($args, EXTR_SKIP);
+	echo $before_widget;
+	echo $before_title . $title . $after_title;
+	
 	do{
 		$i = rand(0, sizeof($arr) - 1);
 	} while(trim($arr[$i]) == trim($_GET['lr_resource']));
@@ -116,36 +120,15 @@ class LRInterfaceFeatured extends WP_Widget
   {
     extract($args, EXTR_SKIP);
  
-    echo $before_widget;
 	$options = get_option('lr_options_object');
 	
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
     $resources = empty($instance['resources']) ? array('') : explode(';', $instance['resources']);
     $host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
 
-    if (!empty($title) && $this->display_rand_resource($resources, $host) != false){
-    
-	  echo $before_title . $title . $after_title;
+    if (!empty($title) && $this->display_rand_resource($resources, $host, $title, $args) != false){
+	
 	  echo $after_widget;
 	}
-
-    
   }
-  
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 }
