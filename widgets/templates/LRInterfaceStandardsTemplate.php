@@ -8,7 +8,7 @@
 		
 		var serviceHost = "<?php echo $host; ?>";
 		var permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
-		var qmarkUrl = '<?php echo plugins_url( '/images/qmark.png' , __FILE__ ) ?>';
+		var qmarkUrl = '<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ) ?>';
 		
 		$(document).ready(function(){
 		

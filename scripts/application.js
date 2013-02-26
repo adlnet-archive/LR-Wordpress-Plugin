@@ -530,7 +530,7 @@ var mainViewModel = function(resources){
 	self.saveResultsDisplay = ko.observableArray();
 	self.relatedResultsNodes = ko.observableArray();
 	self.isMetadataHidden = ko.observable(-1);
-	self.featuredResource = ko.observable({title:'r', url: 'r'});
+	self.featuredResource = ko.observableArray();
 	
 	self.notOnBlackList = function(url){
 		
