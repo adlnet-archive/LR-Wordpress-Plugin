@@ -61,16 +61,19 @@ td{
 	float: right;
 }
 
+.lrSubmit:hover{
+
+	background-color: #eaeaea;
+}
 .lrSubmit{
 	margin: 0 !important;
 	padding: 0 !important;
-	width: 24% !important;
+	width: 20% !important;
 	float:right;
 	height: 31px;
 	border: none !important;
-	border-left: 1px #ddd solid !important;
+	border-left: 1px #d9d9d9 solid !important;
 	cursor: pointer;
-		
 }
 .lrSearch{
 	
@@ -92,4 +95,5 @@ td{
 	clear: both;
 	height: auto;
 	overflow:hidden;
+	margin-bottom: 20px;
 }
