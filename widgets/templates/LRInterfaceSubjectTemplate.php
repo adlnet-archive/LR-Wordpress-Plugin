@@ -5,6 +5,7 @@
 		<!-- ko if: children.length > 0 -->
 			<a href="#" data-bind="text: '[ + ] '" class="standard-plus" />
 			<a href="#" data-bind="text: name" class="standard-link" /><br/><br/>
+			<div class="saveOpen"></div>
 			<div style="padding-left: 50px;" data-bind="template:{name: 'subject-template', foreach: children}, attr:{class:'standard-div standard-' + children.length }"/>
 		<!-- /ko -->
 		
@@ -33,7 +34,7 @@
 			
 
 			$(".standard-div").hide();
-			$(".standard-link").click(function(){
+			$(".standard-link, .standard-plus").click(function(){
 				
 				//This element has no children.. start search
 				if($(this).siblings(".noChildren").length == 1){
@@ -42,23 +43,24 @@
 					return;
 				}
 				
-				var isOpen = $(this).data("isOpen");
+				var isOpen = $(this).siblings(".saveOpen").data("isOpen");
 				if(isOpen == undefined){
 					isOpen = true;
-					$(this).data("isOpen", true);
+					$(this).siblings(".saveOpen").data("isOpen", true);
 					$(this).siblings(".standard-div").show();
-					$(this).siblings(".standard-plus").text("[ - ] ");
+					
+					$(this).parent().children(".standard-plus").text("[ - ] ");
 					return;
 				}
 				else
-					$(this).data("isOpen", ! isOpen);
+					$(this).siblings(".saveOpen").data("isOpen", ! isOpen);
 				
 				if(isOpen){
-					$(this).siblings(".standard-plus").text("[ + ] ");
+					$(this).parent().children(".standard-plus").text("[ + ] ");
 					$(this).siblings(".standard-div").hide();
 				}
 				else{
-					$(this).siblings(".standard-plus").text("[ - ] ");
+					$(this).parent().children(".standard-plus").text("[ - ] ");
 					$(this).siblings(".standard-div").show();
 				}
 			});
