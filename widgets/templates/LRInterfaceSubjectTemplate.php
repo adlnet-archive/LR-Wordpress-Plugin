@@ -18,7 +18,7 @@
 	</span>
 </script>
 
-<span data-bind="template:{name: 'subject-template', foreach: children}"/>
+<span id="subject-map" data-bind="template:{name: 'subject-template', foreach: children}"/>
 <script type="text/javascript">
 	
 	
@@ -27,11 +27,8 @@
 	$(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
 			console.log(data);
-			ko.applyBindings(data);
+			ko.applyBindings(data, $("#subject-map")[0]);
 
-			
-
-			
 
 			$(".standard-div").hide();
 			$(".standard-link, .standard-plus").click(function(){
