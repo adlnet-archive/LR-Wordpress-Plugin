@@ -68,7 +68,6 @@ class LRInterfaceFeatured extends WP_Widget
   
    function display_rand_resource($arr, $host, $title, $total, $args)
   {
-	echo $total;
 	if($total > sizeof($arr) || (sizeof($arr) == 1 && trim($arr[0]) == trim($_GET['lr_resource'])))
 		return false;
 	
@@ -82,16 +81,6 @@ class LRInterfaceFeatured extends WP_Widget
 	while($g < $total){
 	
 		$temp = rand(0, sizeof($arr) - 1);
-		
-		
-		echo $temp;
-		if(in_array(trim($arr[$temp]), $save_arr)){
-		
-			echo ': in! ';
-		}
-		
-		else echo ': not! ';
-		
 		if(trim($arr[$temp]) == trim($_GET['lr_resource']) || in_array(trim($arr[$temp]), $save_arr)){
 		
 			continue;
@@ -108,7 +97,6 @@ class LRInterfaceFeatured extends WP_Widget
 	<script type="text/javascript">
 		var serviceHost = "<?php echo $host; ?>";
 		var NODE_URL = '<?php echo empty($options['node'])?"http://node01.public.learningregistry.net/":$options['node']; ?>';
-
 		var qmarkUrl = '<?php echo plugins_url( "/images/qmark.png" , dirname(__FILE__) ) ?>';
 		
 		<?php if(empty($_GET['query'])){
@@ -117,51 +105,38 @@ class LRInterfaceFeatured extends WP_Widget
 		
 		$(document).ready(function(){
 			$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent('<?php echo json_encode($save_arr); ?>'),function(data){		
-			
-				return; 
-				var md5 = '<?php echo trim($arr[$i]); ?>';
-				
-				if(data[0]){
-					data = data[0];
+				$.each(data, function(i, data){
+					
 					var src = data.url;
+					var md5 = data._id;
+					var currentObject = new resourceObject("Item", src);
+					var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
 					
 					//This is done because observable.valueHasMutated wasn't working..
-					var currentObject = new resourceObject("Item", src);
-					currentObject.timeline = self.currentObject().timeline;
 					currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
 					currentObject.description = (data.description == undefined) ? "" : data.description;
 					currentObject.url = (data.url == undefined) ? "" : data.url;
 					
-					console.log("qmarkUrl: ", qmarkUrl);
-					var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
-					
 					currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
-					currentObject.image = self.getImageSrc(data.url, currentObject.image);
+					
+					currentObject.image = self.getImageSrc(null, currentObject.image);
 					currentObject.hasScreenshot = currentObject.image != imageUrl;				
 					
 					self.featuredResource.push(currentObject);
-				}
-				
-				else{
 					
-					src = data.url;
-					var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
-					var currentObject = new resourceObject("Item", src);
-					currentObject.image = self.getImageSrc(data.url, imageUrl);
-					currentObject.hasScreenshot = currentObject.image != imageUrl;		
-					
-					self.featuredResource.push(currentObject);
-				}
+				});
 			});
 		});
 	</script>
-	<div style="margin-bottom: 10px;">
-		<a data-bind="text:getShorterStr(featuredResource().title, 45), attr:{href:wordpressLinkTransform(permalink,featuredResource().url), title:featuredResource().title}" class="title"></a><br/>
+	
+	<div data-bind="foreach: featuredResource">
+		<div data-bind="attr:{style:$index()>0?'margin: 40px auto 10px auto;' : 'margin: auto auto 10px auto'}">
+			<a style="font-size: 16px;" data-bind="text:$root.getShorterStr(title, 40), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
+		</div>
+		<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="title">
+			<img data-bind="attr:{src:image}" class="img-polaroid" />
+		</a>
 	</div>
-	<a data-bind="attr:{href:wordpressLinkTransform(permalink,featuredResource().url)}" class="title">
-		<img data-bind="attr:{src:$root.getImageSrc(false, serviceHost + '/screenshot/<?php echo trim($arr[$i]); ?>')}" class="img-polaroid" />
-	</a>
-
 	<?php
 	
 	return true;
