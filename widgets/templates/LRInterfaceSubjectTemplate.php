@@ -25,8 +25,9 @@
 	var permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
 	$(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
-			console.log(data);
-			ko.applyBindings(data, $("#subject-map")[0]);
+
+			self.children = data.children;
+			ko.applyBindings(self);
 
 
 			$(".standard-div").hide();
