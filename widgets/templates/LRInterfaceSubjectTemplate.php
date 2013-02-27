@@ -30,7 +30,9 @@
 
 
 			$(".standard-div").hide();
-			$(".standard-link, .standard-plus").click(function(){
+			$(".standard-link, .standard-plus").click(function(e){
+				
+				e.preventDefault();
 				
 				//This element has no children.. start search
 				if($(this).siblings(".noChildren").length == 1){
