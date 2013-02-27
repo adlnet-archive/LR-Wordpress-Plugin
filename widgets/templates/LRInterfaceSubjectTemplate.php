@@ -1,4 +1,3 @@
-<div class="result"></div>
 <script type="text/html" id="subject-template">
 	<span>
 		
