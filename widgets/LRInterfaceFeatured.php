@@ -31,16 +31,9 @@ class LRInterfaceFeatured extends WP_Widget
 	
 	<select class="widefat" id="<?php echo $this->get_field_id('total'); ?>" name="<?php echo $this->get_field_name('total'); ?>" type="text">
 	
-	 <?php
-		
-		for($g = 1; $g < 6; $g++):
-	 ?>
-	 
+	 <?php for($g = 1; $g < 6; $g++): ?>
 			<option value="<?php echo $g; ?>" <?php echo $total == $g ? 'selected="selected"' : ''; ?>><?php echo $g; ?></option>
-	 <?php
-	 
-		endfor;
-	 ?>
+	 <?php endfor; ?>
 	
 	</select>
 	
@@ -68,6 +61,7 @@ class LRInterfaceFeatured extends WP_Widget
   
    function display_rand_resource($arr, $host, $title, $total, $args)
   {
+	
 	if($total > sizeof($arr) || (sizeof($arr) == 1 && trim($arr[0]) == trim($_GET['lr_resource'])))
 		return false;
 	
@@ -76,10 +70,15 @@ class LRInterfaceFeatured extends WP_Widget
 	echo $before_title . $title . $after_title;
 	
 	$g = 0;
+	$totalTimes = 0;
 	$save_arr = array();
 
 	while($g < $total){
-	
+		
+		$totalTimes++;
+		if($totalTimes > 20)
+			break;
+			
 		$temp = rand(0, sizeof($arr) - 1);
 		if(trim($arr[$temp]) == trim($_GET['lr_resource']) || in_array(trim($arr[$temp]), $save_arr)){
 		
