@@ -27,7 +27,7 @@
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
 
 			self.children = data.children;
-			ko.applyBindings(self);
+			ko.applyBindings(self, $("#subject-map")[0]);
 
 
 			$(".standard-div").hide();
