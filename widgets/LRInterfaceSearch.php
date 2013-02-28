@@ -10,11 +10,12 @@ class LRInterfaceSearch extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'results' => '', 'placeholder'=>'', 'type' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'results' => '', 'placeholder'=>'', 'type' => '', 'hide' => '' ) );
     $title = $instance['title'];
 	$results = $instance['results'];
 	$placeholder = $instance['placeholder'];
 	$type = $instance['type'];
+	$hide = $instance['hide'];
 ?>
 
 <p>
@@ -47,7 +48,13 @@ class LRInterfaceSearch extends WP_Widget
 				echo $option;
 			}
 		?>
-	</select>
+	</select><br/><br/>
+	
+	<label for="<?php echo $this->get_field_id('hide'); ?>">
+		Check to show this widget only on results and preview pages: 
+	</label>
+	<input class="widefat" <?php echo $hide == 'on' ? 'checked' : ''; ?> id="<?php echo $this->get_field_id('hide'); ?>" name="<?php echo $this->get_field_name('hide'); ?>" type="checkbox" />
+	<br/><br/>
 	
 </p>
   
@@ -61,12 +68,16 @@ class LRInterfaceSearch extends WP_Widget
 	$instance['results'] = $new_instance['results'];
 	$instance['placeholder'] = $new_instance['placeholder'];
 	$instance['type'] = $new_instance['type'];
+	$instance['hide'] = $new_instance['hide'];
     return $instance;
   }
  
   function widget($args, $instance)
   {
     extract($args, EXTR_SKIP);
+ 
+	if($instance['hide'] == 'on' && (empty($_GET['query']) && empty($_GET['lr_resource'])))
+		return;
  
     echo $before_widget;
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);

@@ -10,10 +10,11 @@ class LRInterfaceFeatured extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '', 'hide' => '' ) );
     $title = $instance['title'];
     $resources = $instance['resources'];
     $total = $instance['total'];
+    $hide = $instance['hide'];
 ?>
 
 <p>
@@ -45,6 +46,12 @@ class LRInterfaceFeatured extends WP_Widget
 	</label>
 	<textarea class="widefat" rows="10" id="<?php echo $this->get_field_id('resources'); ?>" name="<?php echo $this->get_field_name('resources'); ?>" type="text"><?php echo attribute_escape($resources); ?></textarea>
 	<br/><br/>
+	
+	<label for="<?php echo $this->get_field_id('hide'); ?>">
+		Check to hide this widget on results and preview pages: 
+	</label>
+	<input class="widefat" <?php echo $hide == 'on' ? 'checked' : ''; ?> id="<?php echo $this->get_field_id('hide'); ?>" name="<?php echo $this->get_field_name('hide'); ?>" type="checkbox" />
+	<br/><br/>
 </p>
   
 <?php
@@ -56,6 +63,7 @@ class LRInterfaceFeatured extends WP_Widget
     $instance['title'] = trim($new_instance['title']);
     $instance['resources'] = trim($new_instance['resources']);
     $instance['total'] = $new_instance['total'];
+    $instance['hide'] = $new_instance['hide'];
     return $instance;
   }
   
@@ -144,6 +152,9 @@ class LRInterfaceFeatured extends WP_Widget
   function widget($args, $instance)
   {
     extract($args, EXTR_SKIP);
+	
+	if($instance['hide'] == 'on' && (! empty($_GET['query']) || ! empty($_GET['lr_resource'])))
+		return;
  
 	$options = get_option('lr_options_object');
 	

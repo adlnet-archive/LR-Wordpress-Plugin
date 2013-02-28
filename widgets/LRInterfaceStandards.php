@@ -10,14 +10,36 @@ class LRInterfaceStandards extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '') );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'results' => '') );
     $title = $instance['title'];
+    $results = $instance['results'];
+	
+	?>
+	
+		<label for="<?php echo $this->get_field_id('results'); ?>">
+			Results: 
+		</label>
+		<select class="widefat" id="<?php echo $this->get_field_id('results'); ?>" name="<?php echo $this->get_field_name('results'); ?>"> 
+			<option value=""><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
+			<?php 
+				$pages = get_pages(); 
+				foreach ( $pages as $page ) {
+					$option = ($page->ID == attribute_escape($results)) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
+					$option .= $page->post_title;
+					$option .= '</option>';
+					echo $option;
+				}
+			?>
+		</select>
+	
+	<?php
   }
  
   function update($new_instance, $old_instance)
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
+    $instance['results'] = $new_instance['results'];
     return $instance;
   }
  
