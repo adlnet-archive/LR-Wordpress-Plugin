@@ -11,8 +11,10 @@
 				
 			<p data-bind="text:currentObject().description"></p>
 			<div style="margin-top: 10px; text-align:center;">
-				<button class="btn btn-info" data-bind="click: handleDataClick, visible: isMetadataHidden() || isMetadataHidden() == -1">View Metadata</button>
-				<button class="btn btn-info" data-bind="click: handleDataHideClick, visible: isMetadataHidden() == false">Close Metadata</button>
+				<?php if(empty($options['metadata'])): ?>
+					<button class="btn btn-info" data-bind="click: handleDataClick, visible: isMetadataHidden() || isMetadataHidden() == -1">View Metadata</button>
+					<button class="btn btn-info" data-bind="click: handleDataHideClick, visible: isMetadataHidden() == false">Close Metadata</button>
+				<?php endif; ?>
 				<a data-bind="attr:{href:doTransform(currentObject().url)}"><button>Go to resource</button></a>
 			</div>
 		</div>

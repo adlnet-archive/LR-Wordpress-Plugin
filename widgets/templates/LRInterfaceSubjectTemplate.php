@@ -15,10 +15,11 @@
 			<!-- /ko -->
 		</div>
 </script>
-<div style="clear:both; overflow:hidden; margin: 25px auto; width: 100%;">
+<div style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;">
 	<div id="subject-map-left" style="width: 40%; float: left; padding-left:10%;" data-bind="'template':{'name': 'subject-template', 'foreach': children.slice(0, children.length * .5)}"></div>
 	<div id="subject-map-right" style="width: 40%; float: right;" data-bind="'template':{'name': 'subject-template', 'foreach': children.slice(children.length * .5, children.length)}"></div>
 </div>
+<div style="clear:both; overflow:hidden; margin-bottom: 20px; width: 100%;"></div>
 <script type="text/javascript">
 	
 	

@@ -20,6 +20,7 @@ function register_mysettings() {
 function lr_options_page() {
 
 $options = get_option('lr_options_object');
+
 $nodeArray = array("http://node01.public.learningregistry.net/", "http://node02.public.learningregistry.net/", "http://lrtest01.public.learningregistry.net/", "http://sandbox.learningregistry.org/", "http://lrdev03.learningregistry.org/", "http://lrdev05.learningregistry.org/");
 
 ?>
@@ -55,6 +56,10 @@ $nodeArray = array("http://node01.public.learningregistry.net/", "http://node02.
 		<tr valign="top">
 			<th scope="row">Maximum Slice:</th>
 			<td><input type="text" name="lr_options_object[slice]" value="<?php echo $options['slice']?$options['slice']:500; ?>" /></td>
+        </tr>		
+		<tr valign="top">
+			<th scope="row">Check to hide metadata:</th>
+			<td><input type="checkbox" name="lr_options_object[metadata]" <?php echo !empty($options['metadata'])?' checked ':''; ?> /></td>
         </tr>
     </table>
     

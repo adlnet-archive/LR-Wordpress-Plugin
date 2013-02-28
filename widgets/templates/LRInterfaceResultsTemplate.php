@@ -121,13 +121,13 @@
 									<div style="float:right;text-align:left;width:75%;">
 										<a data-bind="text:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
 										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
-										<span data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></span>
+										<p data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></p>
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<button data-bind="click:loadNewPage" id="loadMore" class="btn">Load More</button>
+					<button data-bind="click:loadNewPage" id="loadMore" style="float:right; border: 1px solid #d9d9d9 !important;" class="btn lrSubmit">Show More</button>
 				<!-- /ko -->
 	
 	
