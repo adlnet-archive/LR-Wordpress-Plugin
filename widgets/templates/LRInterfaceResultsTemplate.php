@@ -99,9 +99,11 @@
 	
 	<?php endif; ?>
 	<?php if($type == "index"): ?>
+		<div class="row" style="width: 100%; overflow: hidden; clear:both;height:80px;"><h2><?php echo $text; ?></h2></div>
 		<div class="row">
 			<div class="span12 activity">
 				<!-- ko if: results().length > 0 -->
+				
 					<table class="table table-striped resultsTable">
 						<tbody data-bind="foreach:results">
 							<tr style="border-top:none;">

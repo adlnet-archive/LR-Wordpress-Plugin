@@ -11,9 +11,10 @@ class LRInterfaceResults extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'numResults' => '') );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'numResults' => '', 'text' => '') );
     $title = $instance['title'];
 	$numResults = $instance['numResults'];
+	$text = $instance['text'];
 
 ?>
 
@@ -25,6 +26,12 @@ class LRInterfaceResults extends WP_Widget
 	</label>
 	<input class="widefat" id="<?php echo $this->get_field_id('numResults'); ?>" name="<?php echo $this->get_field_name('numResults'); ?>" type="text" 
 	       value="<?php echo (attribute_escape($numResults))?attribute_escape($numResults):'50'; ?>" />
+	<br/><br/>	
+	
+	<label>
+		Results page text - '$query' is replaced with the user's search terms:
+	</label>
+	<input class="widefat" id="<?php echo $this->get_field_id('text'); ?>" name="<?php echo $this->get_field_name('text'); ?>" type="text" value="<?php echo $text; ?>" />
 	<br/><br/>
 </p>
   
@@ -35,6 +42,7 @@ class LRInterfaceResults extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
+    $instance['text'] = $new_instance['text'];
     $instance['numResults'] = (is_numeric($new_instance['numResults']) && $new_instance['numResults'] > 0)? $new_instance['numResults'] : 50;
     return $instance;
   }
@@ -46,8 +54,11 @@ class LRInterfaceResults extends WP_Widget
     echo $before_widget;
 	
 	$options = get_option('lr_options_object');
-    $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	
+	$text = str_ireplace( '$query', $_GET['query'], $instance['text']);
+	
+    $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+	echo $_GET['query'];
 	
 	$type  = $_GET['type'] == 'index' || $_GET['type'] == 'slice'  ? $_GET['type'] : 'index';
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];

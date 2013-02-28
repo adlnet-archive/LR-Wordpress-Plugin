@@ -32,17 +32,19 @@
 			ko.applyBindings(self, $("#subject-map-right")[0]);
 
 			$(".standard-div").hide();
-			$(".standard-link, .standard-plus").click(function(e){
-				
+			$(".standard-link").click(function(e){
+			
 				e.preventDefault();
 				e.stopPropagation();
 				
-				//This element has no children.. start search
-				if($(this).siblings(".noChildren").length == 1){
-				
-					window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", $(this).text());
+				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text()));
 					return false;
-				}
+			});
+			
+			$(".standard-plus").click(function(e){
+				
+				e.preventDefault();
+				e.stopPropagation();
 				
 				var isOpen = $(this).siblings(".saveOpen").data("isOpen");
 				if(isOpen == undefined){
