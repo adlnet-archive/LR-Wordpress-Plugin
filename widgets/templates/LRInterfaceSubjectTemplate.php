@@ -26,12 +26,8 @@
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
 
 			self.children = data.children;
-			self.totalRootSections = data.children.length;
-			self.currentLevel = 0;
-			self.currentCount = 1;
 			ko.applyBindings(self, $("#subject-map-left")[0]);
 			ko.applyBindings(self, $("#subject-map-right")[0]);
-
 
 			$(".standard-div").hide();
 			$(".standard-link, .standard-plus").click(function(e){
