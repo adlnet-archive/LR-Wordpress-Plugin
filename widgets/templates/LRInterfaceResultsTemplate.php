@@ -119,9 +119,11 @@
 										</a>
 									</div>
 									<div style="float:right;text-align:left;width:75%;">
+									
 										<a data-bind="text:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
-										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
+										<span data-bind="text: 'Source: ' + publisher, visible: publisher ? true : false"></span>
 										<p data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></p>
+										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine" style="float:right;"></a><br/>
 									</div>
 								</td>
 							</tr>
