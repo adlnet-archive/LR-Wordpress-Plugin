@@ -10,11 +10,12 @@ class LRInterfaceFeatured extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '', 'hide' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '', 'hide' => '', 'results' => '' ) );
     $title = $instance['title'];
     $resources = $instance['resources'];
     $total = $instance['total'];
     $hide = $instance['hide'];
+    $results = $instance['results'];
 ?>
 
 <p>
@@ -47,6 +48,22 @@ class LRInterfaceFeatured extends WP_Widget
 	<textarea class="widefat" rows="10" id="<?php echo $this->get_field_id('resources'); ?>" name="<?php echo $this->get_field_name('resources'); ?>" type="text"><?php echo attribute_escape($resources); ?></textarea>
 	<br/><br/>
 	
+	<label for="<?php echo $this->get_field_id('results'); ?>">
+		Results: 
+	</label>
+	<select class="widefat" id="<?php echo $this->get_field_id('results'); ?>" name="<?php echo $this->get_field_name('results'); ?>"> 
+		<option value=""><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
+		<?php 
+			$pages = get_pages(); 
+			foreach ( $pages as $page ) {
+				$option = ($page->ID == attribute_escape($results)) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
+				$option .= $page->post_title;
+				$option .= '</option>';
+				echo $option;
+			}
+		?>
+	</select><br/><br/>
+	
 	<label for="<?php echo $this->get_field_id('hide'); ?>">
 		Check to hide this widget on results and preview pages: 
 	</label>
@@ -64,10 +81,11 @@ class LRInterfaceFeatured extends WP_Widget
     $instance['resources'] = trim($new_instance['resources']);
     $instance['total'] = $new_instance['total'];
     $instance['hide'] = $new_instance['hide'];
+    $instance['results'] = $new_instance['results'];
     return $instance;
   }
   
-   function display_rand_resource($arr, $host, $title, $total, $args)
+   function display_rand_resource($arr, $host, $title, $total, $results, $args)
   {
 	
 	if($total > sizeof($arr) || (sizeof($arr) == 1 && trim($arr[0]) == trim($_GET['lr_resource'])))
@@ -142,7 +160,7 @@ class LRInterfaceFeatured extends WP_Widget
 		<div data-bind="attr:{style:$index()>0?'margin: 40px auto 10px auto;' : 'margin: auto auto 10px auto'}">
 			<a style="font-size: 16px;" data-bind="text:$root.getShorterStr(title, 40), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
 		</div>
-		<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="title">
+		<a data-bind="attr:{href:$root.wordpressLinkTransform('<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe"), get_page_link( $results));?>',url)}" class="title">
 			<img data-bind="attr:{src:image}" class="img-polaroid" />
 		</a>
 	</div>
@@ -164,8 +182,9 @@ class LRInterfaceFeatured extends WP_Widget
     $resources = empty($instance['resources']) ? array('') : explode(';', $instance['resources']);
     $host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
     $total  = empty($instance['total']) ? 1 : $instance['total'];
+    $results  = empty($instance['results']) ? '' : $instance['results'];
 
-    if (!empty($title) && $this->display_rand_resource($resources, $host, $title, $total, $args) != false){
+    if (!empty($title) && $this->display_rand_resource($resources, $host, $title, $total, $results, $args) != false){
 	
 	  echo $after_widget;
 	}
