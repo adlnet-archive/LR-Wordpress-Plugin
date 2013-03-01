@@ -958,7 +958,9 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
                     completeCallback(404, "error", ["The requested resource could not be found."]);
                 };
                 
-				xdr.send();
+				setTimeout(function () {
+					xdr.send();
+				}, 0);
 				
           },
           abort: function() {
