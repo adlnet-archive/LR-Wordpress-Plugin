@@ -949,6 +949,8 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
                     }
 
                 };
+				
+				xdr.onprogress = function () { };
                 
                 xdr.ontimeout = function(){
                     completeCallback(408, "error", ["The request timed out."]);
@@ -960,11 +962,12 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
                 
 				setTimeout(function () {
 					xdr.send();
-				}, 500);
+				}, 0);
 				
           },
           abort: function() {
               if(xdr)xdr.abort();
+			  console.log("abort!");
           }
         };
       }
