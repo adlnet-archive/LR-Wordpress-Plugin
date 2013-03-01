@@ -960,7 +960,7 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
                 
 				setTimeout(function () {
 					xdr.send();
-				}, 0);
+				}, 500);
 				
           },
           abort: function() {
