@@ -134,7 +134,7 @@
 	
 	
 				<div id="spinnerDiv"></div>
-				<div id="resultsNotFound" class="resultsPrompt" data-bind="visible:resultsNotFound">
+				<div id="resultsNotFound" class="resultsPrompt" style="margin: 10px auto; width: 30%;" data-bind="visible:resultsNotFound">
 					<span>Results Not Found</span>
 				</div>
 				<div id="endOfResults" class="resultsPrompt">

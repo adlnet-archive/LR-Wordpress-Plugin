@@ -3,14 +3,14 @@
 			<!-- ko if: children.length > 0 -->
 				<a href="#" data-bind="text: '[ + ] '" class="standard-plus"></a>
 				<a href="#" data-bind="text: name" class="standard-link"></a>
-				<span class="childrenResourceNumber" data-bind="text: ' ( ' + children.length + ' )' "></span><br/><br/>
+				<!--<span class="childrenResourceNumber" data-bind="text: ' ( ' + children.length + ' )' "></span>--><br/><br/>
 				<div class="saveOpen"></div>
 				<div style="padding-left: 40px;" data-bind="'template':{'name': 'subject-template', 'foreach': children}, 'attr':{'class':'standard-div standard-' + children.length}"></div>
 			<!-- /ko -->
 			
 			<!-- ko if: children.length == 0 -->
 				<a href="#" data-bind="text: name" class="standard-link"></a>
-				<span class="childrenResourceNumber" > ( 0 )</span><br/><br/>
+				<!--<span class="childrenResourceNumber" > ( 0 )</span>--><br/><br/>
 				<div class="noChildren"></div>
 			<!-- /ko -->
 		</div>

@@ -613,7 +613,10 @@ var mainViewModel = function(resources){
 				
 				handlePerfectSize();
 			}).fail(function(error){
-				console.error(error);
+				console.log(error);
+				$('#spinnerDiv').hide();
+				$('#spinnerDiv').css("margin-top", "50px");
+				temp.resultsNotFound(true);
 			});
 			
 			loadIndex++;
