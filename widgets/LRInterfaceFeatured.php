@@ -158,7 +158,7 @@ class LRInterfaceFeatured extends WP_Widget
 	
 	<div data-bind="foreach: featuredResource">
 		<div data-bind="attr:{style:$index()>0?'margin: 40px auto 10px auto;' : 'margin: auto auto 10px auto'}">
-			<a style="font-size: 16px;" data-bind="text:$root.getShorterStr(title, 40), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
+			<a style="font-size: 16px;" data-bind="text:$root.getShorterStr(title, 40), attr:{href:$root.wordpressLinkTransform('<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe"), get_page_link( $results));?>',url), title:title}" class="title"></a><br/>
 		</div>
 		<a data-bind="attr:{href:$root.wordpressLinkTransform('<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe"), get_page_link( $results));?>',url)}" class="title">
 			<img data-bind="attr:{src:image}" class="img-polaroid" />
