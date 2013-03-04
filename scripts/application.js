@@ -962,8 +962,11 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
                 };
                 
                 xdr.onerror = function(){
+					alert("IE ERROR");
                     completeCallback(404, "error", ["The requested resource could not be found."]);
                 };
+				
+				xdr.timeout = 5000;
                 
 				setTimeout(function () {
 					xdr.send();

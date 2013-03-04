@@ -59,6 +59,15 @@ td{
 
 	background-color: #eaeaea;
 }
+.lrSubmitNoFloat{
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 20% !important;
+	height: 31px;
+	border: none !important;
+	border-left: 1px #d9d9d9 solid !important;
+	cursor: pointer;
+}
 .lrSubmit{
 	margin: 0 !important;
 	padding: 0 !important;
