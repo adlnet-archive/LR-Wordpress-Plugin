@@ -16,17 +16,11 @@ td{
 
 .imageCell img, .resultsTable img{
 
-	height: 91px !important; 
-	width: 106px !important;
+	height: 106px !important; 
+	width: 120px !important;
 	display: block;
 	float: left;
 	margin: 5px 15px;
-}
-
-.imageCell, .resultsTable{
-
-	padding-left: 10px !important;
-	padding-right: 10px !important;
 }
 
 .categoryUl  li{
