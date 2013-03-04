@@ -10,7 +10,7 @@
 				
 			<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p><br/>
 			<div style="padding-top:5px;">
-				<span style="color: #888;" data-bind="text: 'Source: ' + currentObject().publisher, visible: currentObject().publisher != undefined "></span>
+				<span style="color: #888;line-height:16px;" data-bind="text: 'Source: ' + currentObject().publisher, visible: currentObject().publisher != undefined "></span>
 			</div>
 			<p style="margin: 2.4rem auto" data-bind="text:currentObject().description"></p>
 			<div style="margin-top: 10px; text-align:center;">
