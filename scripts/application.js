@@ -223,6 +223,7 @@ var handleMainResourceModal = function(src, direct){
 				currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
 				currentObject.description = (data.description == undefined) ? "" : data.description;
 				currentObject.url = (data.url == undefined) ? "" : data.url;
+				currentObject.publisher = (data.publisher == undefined) ? "" : data.publisher;
 				
 				console.log("qmarkUrl: ", qmarkUrl);
 				var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
@@ -532,6 +533,7 @@ var mainViewModel = function(resources){
 	self.isMetadataHidden = ko.observable(-1);
 	self.featuredResource = ko.observableArray();
 	self.children = [];
+	self.standards = [];
 	
 	self.notOnBlackList = function(url){
 		

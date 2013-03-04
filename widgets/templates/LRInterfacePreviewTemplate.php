@@ -2,14 +2,17 @@
 	<div class="innerTimelineContent giveBackground">
 		<div class="row-fluid" style="text-align: center;">
 			<h2 data-bind="text:currentObject().title"></h2>
+			
 			<a href="#" data-bind="attr:{href:doTransform(currentObject().url)}">
 				<img style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
 				<img style="height: 150px; width: 150px;margin: 0 auto;" data-bind="visible: !currentObject().hasScreenshot, attr:{src:currentObject().image}" />
 			</a>
 				
-			<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p>
-				
-			<p data-bind="text:currentObject().description"></p>
+			<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p><br/>
+			<div style="padding-top:5px;">
+				<span style="color: #888;" data-bind="text: 'Source: ' + currentObject().publisher, visible: currentObject().publisher != undefined "></span>
+			</div>
+			<p style="margin: 2.4rem auto" data-bind="text:currentObject().description"></p>
 			<div style="margin-top: 10px; text-align:center;">
 				<?php if(empty($options['metadata'])): ?>
 					<button class="btn btn-info" data-bind="click: handleDataClick, visible: isMetadataHidden() || isMetadataHidden() == -1">View Metadata</button>

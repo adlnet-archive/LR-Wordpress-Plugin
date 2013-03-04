@@ -17,6 +17,35 @@ var initialGraphBuild = false;
 totalSlice = 15;
 newLoad = 15;
 
+$(document).on("click", ".standard-plus", function(e){
+	
+	e.preventDefault();
+	e.stopPropagation();
+	
+	var isOpen = $(this).siblings(".saveOpen").data("isOpen");
+	if(isOpen == undefined){
+		isOpen = true;
+		$(this).siblings(".saveOpen").data("isOpen", true);
+		$(this).siblings(".standard-div").show();
+		
+		$(this).parent().children(".standard-plus").text("[ - ] ");
+		return;
+	}
+	else
+		$(this).siblings(".saveOpen").data("isOpen", ! isOpen);
+	
+	if(isOpen){
+		$(this).parent().children(".standard-plus").text("[ + ] ");
+		$(this).siblings(".standard-div").hide();
+	}
+	else{
+		$(this).parent().children(".standard-plus").text("[ - ] ");
+		$(this).siblings(".standard-div").show();
+	}
+	
+	return false;
+});
+
 jQuery(document).ready(function($){
 
 	///////////////////////////////////////////
