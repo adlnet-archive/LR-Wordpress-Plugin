@@ -10,7 +10,7 @@
 				
 			<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p><br/>
 			<div style="padding-top:5px;">
-				<span style="color: #888;line-height:16px;" data-bind="text: 'Source: ' + currentObject().publisher, visible: currentObject().publisher != undefined "></span>
+				<span style="color: #888;line-height:16px;" data-bind="text: 'Source: ' + currentObject().publisher, visible: currentObject().publisher != undefined && currentObject().publisher != '' "></span>
 			</div>
 			<p style="margin: 2.4rem auto" data-bind="text:currentObject().description"></p>
 			<div style="margin-top: 10px; text-align:center;">
@@ -18,7 +18,9 @@
 				<button class="btn btn-info lrSubmitNoFloat" tyle="border: 1px solid #d9d9d9 !important;" data-bind="click: handleDataClick, visible: isMetadataHidden() || isMetadataHidden() == -1">View Metadata</button>
 				<button class="btn btn-info lrSubmitNoFloat" tyle="border: 1px solid #d9d9d9 !important;" data-bind="click: handleDataHideClick, visible: isMetadataHidden() == false">Close Metadata</button>
 				<?php endif; ?>
-				<a data-bind="attr:{href:doTransform(currentObject().url)}"><button style="border: 1px solid #d9d9d9 !important;" class="btn lrSubmitNoFloat">Go to resource</button></a>
+				<a data-bind="attr:{href:doTransform(currentObject().url)}">
+					<button style="border: 1px solid #d9d9d9 !important;" class="btn lrSubmitNoFloat">Go to resource</button>
+				</a>
 			</div>
 		</div>
 	</div>
