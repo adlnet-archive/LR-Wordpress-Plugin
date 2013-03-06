@@ -10,9 +10,8 @@ class LRInterfaceSearch extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'results' => '', 'placeholder'=>'', 'type' => '', 'hide' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'placeholder'=>'', 'type' => '', 'hide' => '' ) );
     $title = $instance['title'];
-	$results = $instance['results'];
 	$placeholder = $instance['placeholder'];
 	$type = $instance['type'];
 	$hide = $instance['hide'];
@@ -34,22 +33,6 @@ class LRInterfaceSearch extends WP_Widget
 	</select>
 	<br/><br/>	
 	
-	<label for="<?php echo $this->get_field_id('results'); ?>">
-		Results: 
-	</label>
-	<select class="widefat" id="<?php echo $this->get_field_id('results'); ?>" name="<?php echo $this->get_field_name('results'); ?>"> 
-		<option value=""><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
-		<?php 
-			$pages = get_pages(); 
-			foreach ( $pages as $page ) {
-				$option = ($page->ID == attribute_escape($results)) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
-				$option .= $page->post_title;
-				$option .= '</option>';
-				echo $option;
-			}
-		?>
-	</select><br/><br/>
-	
 	<label for="<?php echo $this->get_field_id('hide'); ?>">
 		Check to show this widget only on results and preview pages: 
 	</label>
@@ -65,7 +48,6 @@ class LRInterfaceSearch extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
-	$instance['results'] = $new_instance['results'];
 	$instance['placeholder'] = $new_instance['placeholder'];
 	$instance['type'] = $new_instance['type'];
 	$instance['hide'] = $new_instance['hide'];
@@ -82,13 +64,14 @@ class LRInterfaceSearch extends WP_Widget
     echo $before_widget;
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
     $type = empty($instance['type']) ? 'index' : $instance['type'];
+	$options = get_option('lr_options_object');
 
     //if (!empty($title))
     //  echo $before_title . $title . $after_title;;
 		
 	?>
 	
-		<form method="get" id="LRsearchForm" action="<?php echo get_page_link( $instance['results'] ); ?>">
+		<form method="get" id="LRsearchForm" action="<?php echo get_page_link( $options['results'] ); ?>">
 		<div class="lrSearchCombo">
 			<input class="lrSearch" type="text" placeholder="<?php echo $instance['placeholder']; ?>" name="query" />
 			<input class="lrSubmit" type="submit" value="Search" />
@@ -102,7 +85,7 @@ class LRInterfaceSearch extends WP_Widget
 			$("#LRsearchForm").submit(function(e){
 				e.preventDefault();
 				
-				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", $("#LRsearchForm input").val() + '&type=<?php echo $type; ?>');
+				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", $("#LRsearchForm input").val() + '&type=<?php echo $type; ?>');
 			});
 		});
 	</script>

@@ -10,12 +10,11 @@ class LRInterfaceFeatured extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '', 'hide' => '', 'results' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '', 'hide' => '') );
     $title = $instance['title'];
     $resources = $instance['resources'];
     $total = $instance['total'];
     $hide = $instance['hide'];
-    $results = $instance['results'];
 ?>
 
 <p>
@@ -48,22 +47,6 @@ class LRInterfaceFeatured extends WP_Widget
 	<textarea class="widefat" rows="10" id="<?php echo $this->get_field_id('resources'); ?>" name="<?php echo $this->get_field_name('resources'); ?>" type="text"><?php echo attribute_escape($resources); ?></textarea>
 	<br/><br/>
 	
-	<label for="<?php echo $this->get_field_id('results'); ?>">
-		Results: 
-	</label>
-	<select class="widefat" id="<?php echo $this->get_field_id('results'); ?>" name="<?php echo $this->get_field_name('results'); ?>"> 
-		<option value=""><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
-		<?php 
-			$pages = get_pages(); 
-			foreach ( $pages as $page ) {
-				$option = ($page->ID == attribute_escape($results)) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
-				$option .= $page->post_title;
-				$option .= '</option>';
-				echo $option;
-			}
-		?>
-	</select><br/><br/>
-	
 	<label for="<?php echo $this->get_field_id('hide'); ?>">
 		Check to hide this widget on results and preview pages: 
 	</label>
@@ -81,7 +64,6 @@ class LRInterfaceFeatured extends WP_Widget
     $instance['resources'] = trim($new_instance['resources']);
     $instance['total'] = $new_instance['total'];
     $instance['hide'] = $new_instance['hide'];
-    $instance['results'] = $new_instance['results'];
     return $instance;
   }
   
@@ -183,7 +165,7 @@ class LRInterfaceFeatured extends WP_Widget
     $resources = empty($instance['resources']) ? array('') : explode(';', $instance['resources']);
     $host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
     $total  = empty($instance['total']) ? 1 : $instance['total'];
-    $results  = empty($instance['results']) ? '' : $instance['results'];
+    $results  = empty($options['results']) ? '' : $options['results'];
 
     if (!empty($title) && $this->display_rand_resource($resources, $host, $title, $total, $results, $args) != false){
 	

@@ -60,6 +60,23 @@ $nodeArray = array("http://node01.public.learningregistry.net/", "http://node02.
 		<tr valign="top">
 			<th scope="row">Check to hide metadata:</th>
 			<td><input type="checkbox" name="lr_options_object[metadata]" <?php echo !empty($options['metadata'])?' checked ':''; ?> /></td>
+        </tr>	
+		<tr valign="top">
+			<th scope="row">Results: </th>
+			<td>
+				<select name="lr_options_object[results]"> 
+					<option><?php echo esc_attr( __( 'Select a results page' ) ); ?></option> 
+					<?php 
+						$pages = get_pages(); 
+						foreach ( $pages as $page ) {
+							$option = ($page->ID == $options['results']) ? '<option selected="selected" value="' . $page->ID . '">' : '<option value="' . $page->ID . '">';
+							$option .= $page->post_title;
+							$option .= '</option>';
+							echo $option;
+						}
+					?>
+				</select>
+			</td>
         </tr>
     </table>
     

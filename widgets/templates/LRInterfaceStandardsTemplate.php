@@ -10,13 +10,12 @@
 			<!-- /ko -->
 			
 			<!-- ko if: $data && $data.children == undefined -->
-				<a href="#" data-bind="html: title, attr:{name: id}" class="standard-link"></a>
+				<a style="text-decoration:none;" href="#" data-bind="html: title, attr:{name: id}" class="standard-link"></a>
 				<br/><br/>
 				<div class="noChildren"></div>
 			<!-- /ko -->
 		</div>
 </script>
-
 <div id="standardsMapContainer" class="loading" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;">
 	<div id="standards-map-left" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': standards[0]}"></div>
 	<div id="standards-map-right" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': standards[1]}"></div>
@@ -47,7 +46,7 @@
 				console.log(data, self);
 				ko.applyBindings(self, $("#standards-map-left")[0]);
 				ko.applyBindings(self, $("#standards-map-right")[0]);
-				$(".standard-div").hide();
+				$("#standardsMapContainer .standard-div").hide();
 				
 				
 				$("#standardsMapContainer .standard-link").click(function(e){
@@ -56,7 +55,7 @@
 					e.stopPropagation();
 					
 					window.location.href = 
-					'<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).attr("name")));
+					'<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).attr("name")));
 						return false;
 				});
 				

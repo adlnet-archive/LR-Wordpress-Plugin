@@ -607,7 +607,7 @@ var mainViewModel = function(resources){
 
 				for(var i = startIndex; i < data.length; i++)
 					self.results.push(data[i]);
-					
+			
 				self.results.remove(function(item){
 					
 					return !self.notOnBlackList(item.url);

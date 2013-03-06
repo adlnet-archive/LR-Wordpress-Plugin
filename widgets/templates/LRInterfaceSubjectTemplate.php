@@ -31,18 +31,18 @@
 	
 	$(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
-
+			console.log("Data: ", data);
 			self.children = data.children;
 			ko.applyBindings(self, $("#subject-map-left")[0]);
 			ko.applyBindings(self, $("#subject-map-right")[0]);
 
-			$(".standard-div").hide();
+			$("#subjectMapContainer .standard-div").hide();
 			$("#subjectMapContainer .standard-link").click(function(e){
 			
 				e.preventDefault();
 				e.stopPropagation();
 				
-				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $instance['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text()));
+				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text()));
 					return false;
 			});
 		});
