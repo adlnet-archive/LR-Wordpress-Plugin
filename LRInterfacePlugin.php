@@ -19,6 +19,7 @@ include_once('widgets/LRInterfaceResults.php');
 include_once('widgets/LRInterfaceStandards.php');
 include_once('widgets/LRInterfaceTimeline.php');
 include_once('widgets/LRInterfaceFeatured.php');
+include_once('widgets/LRInterfaceFeaturedSearch.php');
 include_once('widgets/LRInterfaceSubject.php');
 include_once('widgets/LRInterfaceCount.php');
 include_once('LRInterfacePluginSettings.php');
@@ -32,6 +33,7 @@ function registerWidgets(){
 	register_widget("LRInterfaceFeatured");
 	register_widget("LRInterfaceSubject");
 	register_widget("LRInterfaceCount");
+	register_widget("LRInterfaceFeaturedSearch");
 }
 
 function lr_enqueue_script(){
