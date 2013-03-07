@@ -35,7 +35,7 @@ class LRInterfaceCount extends WP_Widget
 	$instance['count'] = $new_instance['count'];
     return $instance;
   }
- 
+
   function widget($args, $instance)
   {
     extract($args, EXTR_SKIP);
@@ -52,13 +52,34 @@ class LRInterfaceCount extends WP_Widget
 	</div>
 	
 	<script type="text/javascript">
+		var addDecimal = function(num){
+			var newStr = '';
+			do {
+				temp = parseInt(num/1000)
+				if(temp >= 1){
+					newStr = ',' + num % 1000 + newStr;
+				}
+				
+				else{		
+					newStr = parseInt(num) + newStr;
+				}
+				
+				num = temp;
+				
+			} while(temp >= 1);
+			
+			return newStr;
+		};
+		
 		jQuery(document).ready(function($){
 		
 			$.getJSON('<?php echo $host; ?>/data',function(data){	
-				
-				$("#LR_resourceCount").html('<?php echo $count; ?>'.replace('$count', data['doc_count']));
+							
+				$("#LR_resourceCount").html('<?php echo $count; ?>'.replace('$count', addDecimal(data['doc_count'])));
 			});
 		});
+		
+		
 	</script>
 	<?php
     echo $after_widget;
