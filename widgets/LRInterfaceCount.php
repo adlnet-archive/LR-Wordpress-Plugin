@@ -54,6 +54,8 @@ class LRInterfaceCount extends WP_Widget
 	<script type="text/javascript">
 		var addDecimal = function(num){
 			var newStr = '';
+			var temp = 0;
+			
 			do {
 				temp = parseInt(num/1000)
 				if(temp >= 1){
