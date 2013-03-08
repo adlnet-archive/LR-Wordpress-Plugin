@@ -534,6 +534,7 @@ var mainViewModel = function(resources){
 	self.featuredResource = ko.observableArray();
 	self.children = [];
 	self.standards = [];
+	self.images = ko.observableArray();
 	
 	self.notOnBlackList = function(url){
 		

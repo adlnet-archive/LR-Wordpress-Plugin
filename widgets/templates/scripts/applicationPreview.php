@@ -208,5 +208,3 @@ var handleOnclickUserBar = function(obj){
 	displayObjectData(self.getReversedTimeline()[test]);
 
 }
-
-ko.applyBindings(temp);

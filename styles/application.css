@@ -129,3 +129,23 @@ td{
 
 	height: 100px;
 }
+
+
+#lr_featured_search{
+
+	margin: 30px auto;
+	width: 98%;
+}
+
+#lr_featured_search a{ 
+	text-decoration:none;
+	overflow:hidden;
+}
+#lr_featured_search img{ 
+	height: 140px;
+	width:140px;
+	background:none;
+	border:none;
+	padding:0;
+}
+
