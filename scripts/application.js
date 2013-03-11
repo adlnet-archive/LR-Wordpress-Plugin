@@ -588,6 +588,8 @@ var mainViewModel = function(resources){
 				},
 			}).done(function(data){
 				
+				console.log("data: ", data);
+				
 				if(data.responseText)
 					data = $.parseJSON(data.responseText);
 					
