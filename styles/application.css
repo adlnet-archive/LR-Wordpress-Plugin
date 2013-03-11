@@ -8,6 +8,7 @@ td{
 	height: 100%;
 	max-width: 70%;
 	padding-left: 5px;
+	overflow: hidden;
 }
 .imageCell td, .resultsTable td{
 	
