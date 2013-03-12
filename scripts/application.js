@@ -15,6 +15,10 @@
         self.followers should contain an array of previewObjects
         self.organizations needs only to contain an array of strings that can be used to search against a node
 */
+
+//IE9 Fix. 
+if (!(window.console && console.log)) { (function() { var noop = function() {}; var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn']; var length = methods.length; var console = window.console = {}; while (length--) { console[methods[length]] = noop; } }()); }
+
 var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
 	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false;
