@@ -110,7 +110,7 @@
 							<!-- ko if: hasScreenshot -->
 							<tr style="border-top:none;">
 								<td style="border-top:none;padding-top:15px;padding-bottom:15px;" data-bind="style: { 'border-bottom': $index() < $root.results().length - 1 ? '#ddd dotted 1px' : ''}" class="imageCell">
-									<div style="float:left">
+									<div style="float:left;width: 140px;min-width:140px;text-align:center;">
 										<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
 										<img data-bind="attr:{src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" />
