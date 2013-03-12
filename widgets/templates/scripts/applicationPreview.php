@@ -2,6 +2,8 @@ var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo emp
 var temp = new mainViewModel([]), activeModalName = null, lastSearchCache = "";
 var iframeHidden = true;
 var tempBookmarksArray = [];
+
+
 handleMainResourceModal(query);
 var qmarkUrl = qmarkUrl?qmarkUrl:'<?php echo plugins_url( "templates/images/qmark.png" , dirname(__FILE__) ) ?>';
 temp.permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';

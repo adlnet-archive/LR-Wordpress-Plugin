@@ -214,44 +214,45 @@ var handleMainResourceModal = function(src, direct){
 	if(iframeHidden){
 
 		//Workaround to get 'hasScreenshot' property
-		$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent(JSON.stringify([src])),function(data){					
-			
-			var md5 = src;
-			if(data[0]){
-				data = data[0];
-				src = data.url;
+		if(src){
+			$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent(JSON.stringify([src])),function(data){
+				var md5 = src;
+				if(data[0]){
+					data = data[0];
+					src = data.url;
+					
+					//This is done because observable.valueHasMutated wasn't working.. so assign each property to a new object individually and update self
+					var currentObject = new resourceObject("Item", src);
+					currentObject.timeline = self.currentObject().timeline;
+					currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
+					currentObject.description = (data.description == undefined) ? "" : data.description;
+					currentObject.url = (data.url == undefined) ? "" : data.url;
+					currentObject.publisher = (data.publisher == undefined) ? "" : data.publisher;
+					
+					console.log("qmarkUrl: ", qmarkUrl);
+					var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
+					
+					currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
+					currentObject.image = self.getImageSrc(data.url, currentObject.image);
+					currentObject.hasScreenshot = currentObject.image != imageUrl;				
+					
+					self.currentObject(currentObject);
+				}
 				
-				//This is done because observable.valueHasMutated wasn't working..
-				var currentObject = new resourceObject("Item", src);
-				currentObject.timeline = self.currentObject().timeline;
-				currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
-				currentObject.description = (data.description == undefined) ? "" : data.description;
-				currentObject.url = (data.url == undefined) ? "" : data.url;
-				currentObject.publisher = (data.publisher == undefined) ? "" : data.publisher;
+				else{
+					
+					src = data.url;
+					var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
+					var currentObject = new resourceObject("Item", src);
+					currentObject.image = self.getImageSrc(data.url, imageUrl);
+					currentObject.hasScreenshot = currentObject.image != imageUrl;		
+					
+					self.currentObject(currentObject);
+				}
 				
-				console.log("qmarkUrl: ", qmarkUrl);
-				var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
-				
-				currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
-				currentObject.image = self.getImageSrc(data.url, currentObject.image);
-				currentObject.hasScreenshot = currentObject.image != imageUrl;				
-				
-				self.currentObject(currentObject);
-			}
-			
-			else{
-				
-				src = data.url;
-				var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
-				var currentObject = new resourceObject("Item", src);
-				currentObject.image = self.getImageSrc(data.url, imageUrl);
-				currentObject.hasScreenshot = currentObject.image != imageUrl;		
-				
-				self.currentObject(currentObject);
-			}
-			
-			fetchLiveParadata(data.url);
-		});
+				fetchLiveParadata(data.url);
+			});
+		}
 	}
 	
 	else{
