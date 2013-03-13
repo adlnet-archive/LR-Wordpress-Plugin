@@ -26,7 +26,7 @@
 	var serviceHost = "<?php echo $host; ?>";
 	var permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
 	<?php if(empty($_GET['query']) && empty($_GET['lr_interface'])){
-			@include_once('templates/scripts/applicationPreview.php'); 
+			@include_once('scripts/applicationPreview.php'); 
 	} ?>
 	
 	$(function(){

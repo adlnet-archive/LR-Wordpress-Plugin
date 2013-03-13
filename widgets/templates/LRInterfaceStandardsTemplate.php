@@ -29,7 +29,7 @@
 		var qmarkUrl = '<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ) ?>';
 
 		<?php if(empty($_GET['query']) && empty($_GET['lr_interface'])){
-			@include_once('templates/scripts/applicationPreview.php'); 
+			@include_once('scripts/applicationPreview.php'); 
 		} ?>
 		
 		$(document).ready(function(){
