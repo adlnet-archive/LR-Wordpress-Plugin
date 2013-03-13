@@ -1,18 +1,23 @@
 <script type="text/html" id="subject-template">
 		<div>
 			<!-- ko if: children.length > 0 -->
+
 				<a href="#" data-bind="text: '[ + ] '" class="standard-plus"></a>
-				<a href="#" data-bind="text: name" class="standard-link"></a>
-				<!--<span class="childrenResourceNumber" data-bind="text: ' ( ' + children.length + ' )' "></span>--><br/><br/>
+				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
+				<a href="#" data-bind="text: name, attr:{name:$data.name}" class="standard-link"></a><br/><br/>
 				<div class="saveOpen"></div>
+				<!-- ko if: $root.levelTracker.push(0) --><!-- /ko -->
 				<div style="padding-left: 40px;" data-bind="'template':{'name': 'subject-template', 'foreach': children}, 'attr':{'class':'standard-div standard-' + children.length}"></div>
+				<!-- ko if: $root.levelTracker.pop() --><!-- /ko -->
 			<!-- /ko -->
 			
 			<!-- ko if: children.length == 0 -->
-				<a href="#" data-bind="text: name" class="standard-link"></a>
-				<!--<span class="childrenResourceNumber" > ( 0 )</span>--><br/><br/>
+				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
+				<a href="#" data-bind="text: name, attr:{name:$data.name}" class="standard-link"></a><br/><br/>
 				<div class="noChildren"></div>
 			<!-- /ko -->
+			
+			<!-- ko if: $root.levelTracker[$root.levelTracker.length-1]++ --><!-- /ko -->
 		</div>
 </script>
 <div id="subjectMapContainer" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;">
@@ -42,7 +47,10 @@
 				e.preventDefault();
 				e.stopPropagation();
 				
-				window.location.href = '<?php echo add_query_arg(array('query'=>'LRreplaceMe', 'subject'=>'LRsubjectReplace'), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text()));
+				console.log($(this).attr("name"));
+				//return;
+				
+				window.location.href = '<?php echo add_query_arg(array('query'=>'LRreplaceMe', 'subject'=>'LRsubjectReplace'), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text())).replace("LRsubjectReplace", encodeURIComponent($(this).siblings(".levelTracker").attr('name')));
 					return false;
 			});
 		});

@@ -540,6 +540,8 @@ var mainViewModel = function(resources){
 	self.children = [];
 	self.standards = [];
 	self.images = ko.observableArray();
+	self.featuredResultsHelper = ko.observableArray();
+	self.levelTracker = [0];
 	
 	self.notOnBlackList = function(url){
 		

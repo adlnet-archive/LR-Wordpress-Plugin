@@ -152,16 +152,8 @@
 	
 	
 	<script type="text/javascript">
-		var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo sanitize_lr($_GET['query'], ' '); ?>";
-				var temp = new mainViewModel([]), activeModalName = null, lastSearchCache = "";
-		for (var f in followed){
-			temp.followers.push({name:followed[f], content:[]});
-		}
 		
-		var handlePerfectSize = function(){};
-		var serviceHost = "<?php echo $host; ?>";
-		var initialGraphBuild = false;
-		temp.permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
+		<?php @include_once('scripts/applicationPreview.php'); ?>
 		
 		totalSlice = 15;
 		newLoad = 15;
@@ -169,7 +161,6 @@
 		jQuery(document).ready(function($){
 			
 			//if not in debug mode
-			ko.applyBindings(temp);
 			spinner = new Spinner(opts).spin($('#spinnerDiv')[0]);
 			
 			$("#endOfResults").hide();

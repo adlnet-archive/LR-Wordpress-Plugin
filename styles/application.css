@@ -132,17 +132,28 @@ td{
 }
 
 
-#lr_featured_search{
-
+.lr_free_images{
+	
+	display: block;
 	margin: 30px auto;
 	width: 98%;
+	overflow: hidden;
 }
 
-#lr_featured_search a{ 
+.lr_free_images div{
+	
+	display: block;
+	width: 23%;
+	overflow: hidden;
+	float: left;
+	margin: auto 5px;
+}
+
+.lr_free_images a{ 
 	text-decoration:none;
 	overflow:hidden;
 }
-#lr_featured_search img{ 
+.lr_free_images img{ 
 	height: 140px;
 	width:140px;
 	background:none;
