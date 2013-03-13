@@ -33,7 +33,7 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 </p>
   
   <script type="text/javascript">
-
+	(function(){
 		var file_frame;
 		var ids = '<?php echo $ids; ?>' ? JSON.parse('<?php echo $ids; ?>') : '';
 		var setText = function(){
@@ -84,7 +84,7 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 				file_frame.open();
 		});
 			// "mca_tray_button" is the ID of my button that opens the Media window 
-
+	})();
 </script>
   
 <?php

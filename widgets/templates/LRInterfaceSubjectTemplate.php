@@ -42,7 +42,7 @@
 				e.preventDefault();
 				e.stopPropagation();
 				
-				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text()));
+				window.location.href = '<?php echo add_query_arg(array('query'=>'LRreplaceMe', 'subject'=>'LRsubjectReplace'), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text()));
 					return false;
 			});
 		});
