@@ -21,34 +21,40 @@ var initialGraphBuild = false;
 totalSlice = 15;
 newLoad = 15;
 
-$(document).on("click", ".standard-plus", function(e){
+var standardPlusCollapse = function(e, self){
 	
 	e.preventDefault();
 	e.stopPropagation();
 	
-	var isOpen = $(this).siblings(".saveOpen").data("isOpen");
+	self = self ? self : this;
+	
+	console.log("TESTING", $(self));
+	
+	var isOpen = $(self).siblings(".saveOpen").data("isOpen");
 	if(isOpen == undefined){
 		isOpen = true;
-		$(this).siblings(".saveOpen").data("isOpen", true);
-		$(this).siblings(".standard-div").show();
+		$(self).siblings(".saveOpen").data("isOpen", true);
+		$(self).siblings(".standard-div").show();
 		
-		$(this).parent().children(".standard-plus").text("[ - ] ");
+		$(self).parent().children(".standard-plus").text("[ - ] ");
 		return;
 	}
 	else
-		$(this).siblings(".saveOpen").data("isOpen", ! isOpen);
+		$(self).siblings(".saveOpen").data("isOpen", ! isOpen);
 	
 	if(isOpen){
-		$(this).parent().children(".standard-plus").text("[ + ] ");
-		$(this).siblings(".standard-div").hide();
+		$(self).parent().children(".standard-plus").text("[ + ] ");
+		$(self).siblings(".standard-div").hide();
 	}
 	else{
-		$(this).parent().children(".standard-plus").text("[ - ] ");
-		$(this).siblings(".standard-div").show();
+		$(self).parent().children(".standard-plus").text("[ - ] ");
+		$(self).siblings(".standard-div").show();
 	}
 	
 	return false;
-});
+};
+
+$(document).on("click", ".standard-plus", standardPlusCollapse);
 
 jQuery(document).ready(function($){
 

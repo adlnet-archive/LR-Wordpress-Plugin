@@ -2,7 +2,7 @@
 		<div>
 			<!-- ko if: $data && $data.children !== undefined -->
 				<a href="#" data-bind="text: '[ + ] '" class="standard-plus"></a>
-				<a href="#" data-bind="html: title[0].toUpperCase() + title.slice(1, title.length), attr:{name:$data.id!=undefined?$data.id:title}" class="standard-link"></a>
+				<a href="#" data-bind="html: title[0].toUpperCase() + title.slice(1, title.length), attr:{name:$data.id!=undefined?$data.id:title}" class="standard-link-collapse"></a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $data.count + ' )': ''"></span>
 				<br/><br/>
 				<div class="saveOpen"></div>
@@ -10,9 +10,13 @@
 			<!-- /ko -->
 			
 			<!-- ko if: $data && $data.children == undefined -->
-				<a style="text-decoration:none;" href="#" data-bind="html: title, attr:{name: id}" class="standard-link"></a>
-				<br/><br/>
-				<div class="noChildren"></div>
+				<div style="border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7;" >
+					<a style="text-decoration:none;" href="#" data-bind="html: title, attr:{name: id}" class="standard-link"></a>
+					<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $data.count + ' )': ''"></span>
+					
+					<div class="noChildren"></div>
+				</div>
+					<br/><br/>
 			<!-- /ko -->
 		</div>
 </script>
@@ -48,6 +52,11 @@
 				ko.applyBindings(self, $("#standards-map-right")[0]);
 				$("#standardsMapContainer .standard-div").hide();
 				
+				
+				$("#standardsMapContainer .standard-link-collapse").click(function(e){
+				
+					standardPlusCollapse(e, this);
+				});
 				
 				$("#standardsMapContainer .standard-link").click(function(e){
 			
