@@ -1,7 +1,7 @@
 <div class="lr_free_images" id="lr_featured_results_helper" data-bind="foreach:featuredResultsHelper">
 	<div>
-		<a data-bind="text:title, attr:{href:caption}"></a><br/>
 		<a data-bind="attr:{href:caption}">
+			<span style="padding-bottom: 5px;display:block;" data-bind="text:title"></span>
 			<img data-bind="attr:{src:url}" />
 		</a>
 	</div>
@@ -14,13 +14,6 @@
 		
 		$(document).ready(function(){
 			var ids = '<?php echo $instance['ids']; ?>' ? JSON.parse('<?php echo $instance['ids']; ?>') : '';
-			
-			console.log(ids);
-			for(var i = 0; i < ids.length; i++){
-				
-				ids[i].caption = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
-			}
-			
 			var indexLocation = [<?php echo $_GET['subject']; ?>];
 			
 			$.getJSON(serviceHost + "/data/sitemap", function(data){
@@ -40,7 +33,8 @@
 				for(var i = 0; i < ids.length; i++){
 				
 					if($.inArray(ids[i].title.toLowerCase(), names) >= 0){
-					
+						
+						ids[i].caption = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
 						temp.featuredResultsHelper.push(ids[i]);
 					}
 				}

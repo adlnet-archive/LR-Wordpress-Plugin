@@ -94,7 +94,10 @@ class LRInterfaceSubjectResults extends WP_Widget
   function widget($args, $instance)
   {
     extract($args, EXTR_SKIP);
- 
+	
+	if(!empty($_GET['lr_resource']))
+		return;
+	
     echo $before_widget;
     /*$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
  
