@@ -2,7 +2,7 @@
 		<div>
 			<!-- ko if: $data && $data.children !== undefined -->
 				<a href="#" data-bind="text: '[ + ] '" class="standard-plus"></a>
-				<a href="#" data-bind="html: title[0].toUpperCase() + title.slice(1, title.length), attr:{name:$data.id!=undefined?$data.id:title}" class="standard-link-collapse"></a>
+				<a href="#" data-bind="html: title[0].toUpperCase() + title.slice(1, title.length), attr:{name:$data.id!=undefined?$data.id:title}" class="standard-link-collapse" style="line-height:21px;"></a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $data.count + ' )': ''"></span>
 				<br/><br/>
 				<div class="saveOpen"></div>
