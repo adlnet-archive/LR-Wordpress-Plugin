@@ -29,12 +29,19 @@
 				for(var i = 0; i < data.children.length; i++){
 					names.push(data.children[i].name.toLowerCase());
 				}
-
-				for(var i = 0; i < ids.length; i++){
 				
-					if($.inArray(ids[i].title.toLowerCase(), names) >= 0){
+				var currentIndex = 0;
+				for(var i = 0; i < ids.length; i++){
+					
+					currentIndex = $.inArray(ids[i].title.toLowerCase(), names);
+					if(currentIndex >= 0){
 						
-						ids[i].caption = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
+						indexLocation.push(currentIndex);
+						
+						ids[i].caption = '<?php echo add_query_arg(array("query"=>"LRreplaceMe","subject"=>"LRsubjectReplace"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title)).replace("LRsubjectReplace", indexLocation);
+						
+						indexLocation.pop();
+						
 						temp.featuredResultsHelper.push(ids[i]);
 					}
 				}
