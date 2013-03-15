@@ -4,7 +4,7 @@ var iframeHidden = true;
 var tempBookmarksArray = [];
 
 
-handleMainResourceModal(query);
+handleMainResourceModal(<?php echo empty($_GET['lr_resource']) ? 'false' : 'query'; ?>);
 
 
 var qmarkUrl = qmarkUrl?qmarkUrl:'<?php echo plugins_url( "templates/images/qmark.png" , dirname(__FILE__) ) ?>';
