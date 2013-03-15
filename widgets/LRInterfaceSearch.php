@@ -81,7 +81,16 @@ class LRInterfaceSearch extends WP_Widget
 	
 	<script type="text/javascript">
 		jQuery(document).ready(function($){
-		
+			
+			$('.lrSearch').data('holder',$('.lrSearch').attr('placeholder'));
+			
+			$('.lrSearch').focusin(function(){
+				$(this).attr('placeholder','');
+			});
+			$('.lrSearch').focusout(function(){
+				$(this).attr('placeholder',$(this).data('holder'));
+			});
+			
 			$("#LRsearchForm").submit(function(e){
 				e.preventDefault();
 				
