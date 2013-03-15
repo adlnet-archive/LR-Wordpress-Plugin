@@ -104,7 +104,7 @@
 		<?php endif; ?>
 		<?php if(!empty($_GET['standard'])): ?>
 			<div class="row" style="width: 100%; overflow: hidden; clear:both; border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7; margin-bottom:15px;">
-				<span data-bind="text:standardDescription"></span><br/><br/>
+				<span style="line-height:19px;" data-bind="text:standardDescription"></span><br/><br/>
 				<a class="childrenResourceNumber" href="<?php echo $_GET['query']; ?>" style="float:right;"><?php echo $_GET['query']; ?></a>
 			</div>
 		<?php endif; ?>
