@@ -99,7 +99,16 @@
 	
 	<?php endif; ?>
 	<?php if($type == "index"): ?>
-		<div class="row" style="width: 100%; overflow: hidden; clear:both;height:80px;"><h2><?php echo $text; ?></h2></div>
+		<?php if(empty($_GET['standard'])): ?>
+			<div class="row" style="width: 100%; overflow: hidden; clear:both;height:80px;"><h2><?php echo $text; ?></h2></div>
+		<?php endif; ?>
+		<?php if(!empty($_GET['standard'])): ?>
+			<div class="row" style="width: 100%; overflow: hidden; clear:both; border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7; margin-bottom:15px;">
+				<span data-bind="text:standardDescription"></span><br/><br/>
+				<a class="childrenResourceNumber" href="<?php echo $_GET['query']; ?>" style="float:right;"><?php echo $_GET['query']; ?></a>
+			</div>
+		<?php endif; ?>
+		
 		<div class="row">
 			<div class="span12 activity">
 				<!-- ko if: results().length > 0 -->
@@ -157,6 +166,11 @@
 		
 		totalSlice = 15;
 		newLoad = 15;
+		
+		<?php if(!empty($_GET['standard'])): ?>
+		
+			self.standardDescription = Base64.decode('<?php echo $_GET['standard']; ?>');
+ 		<?php endif; ?>
 
 		jQuery(document).ready(function($){
 			

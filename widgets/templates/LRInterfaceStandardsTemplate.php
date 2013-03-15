@@ -11,7 +11,7 @@
 			
 			<!-- ko if: $data && $data.children == undefined -->
 				<div style="border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7;" >
-					<a style="text-decoration:none;" href="#" data-bind="html: title, attr:{name: id}" class="standard-link"></a>
+					<a style="text-decoration:none;" href="#" data-bind="html: title, click:$root.handleStandardsClick" class="standard-link"></a>
 					<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $data.count + ' )': ''"></span>
 					
 					<div class="noChildren"></div>
@@ -27,14 +27,16 @@
 
 	<script type="text/javascript">
 		
-		
+
 		var serviceHost = "<?php echo $host; ?>";
 		var permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
 		var qmarkUrl = '<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ) ?>';
-
+		
 		<?php if(empty($_GET['query']) && empty($_GET['lr_interface'])){
 			@include_once('scripts/applicationPreview.php'); 
 		} ?>
+		
+		
 		
 		$(document).ready(function(){
 			
@@ -58,7 +60,7 @@
 					standardPlusCollapse(e, this);
 				});
 				
-				$("#standardsMapContainer .standard-link").click(function(e){
+				/*$("#standardsMapContainer .standard-link").click(function(e){
 			
 					e.preventDefault();
 					e.stopPropagation();
@@ -66,7 +68,7 @@
 					window.location.href = 
 					'<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).attr("name")));
 						return false;
-				});
+				});*/
 				
 			});
 		});

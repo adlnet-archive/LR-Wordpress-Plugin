@@ -21,6 +21,19 @@ var initialGraphBuild = false;
 totalSlice = 15;
 newLoad = 15;
 
+
+temp.handleStandardsClick = function(item, e){
+	
+		
+		e.stopImmediatePropagation();
+		var baseEncoded = Base64.encode(item.title);
+		
+		window.location.href = '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(item.id)).replace("LRstandardReplaceMe", baseEncoded);
+		
+		return;
+};
+
+
 var standardPlusCollapse = function(e, self){
 	
 	e.preventDefault();
