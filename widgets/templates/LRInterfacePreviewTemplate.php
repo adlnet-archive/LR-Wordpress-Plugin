@@ -1,7 +1,7 @@
 <div class="hide-frame">
 	<div class="innerTimelineContent giveBackground">
 		<div class="row-fluid" style="text-align: center;">
-			<h2 data-bind="text:currentObject().title"></h2>
+			<h2 data-bind="html:currentObject().title"></h2>
 			
 			<a href="#" data-bind="attr:{href:doTransform(currentObject().url)}">
 				<img style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" />
@@ -12,7 +12,7 @@
 			<div style="padding-top:5px;">
 				<span style="color: #888;line-height:16px;" data-bind="text: 'Source: ' + currentObject().publisher, visible: currentObject().publisher != undefined && currentObject().publisher != '' "></span>
 			</div>
-			<p style="margin: 2.4rem auto" data-bind="text:currentObject().description"></p>
+			<p style="margin: 2.4rem auto" data-bind="html:currentObject().description"></p>
 			<div style="margin-top: 10px; text-align:center;">
 				<?php if(empty($options['metadata'])): ?>
 				<button class="btn btn-info lrSubmitNoFloat" style="border: 1px solid #d9d9d9 !important;" data-bind="click: handleDataClick, visible: isMetadataHidden() || isMetadataHidden() == -1">View Metadata</button>

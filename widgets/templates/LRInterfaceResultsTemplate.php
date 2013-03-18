@@ -86,7 +86,7 @@
 		
 	<script type="text/javascript">
 		var globalSliceMax = 500;
-		var NODE_URL = "http://node01.public.learningregistry.net";
+		var NODE_URL = '<?php echo empty($options['node'])?"http://node01.public.learningregistry.net/":$options['node']; ?>';
 	</script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.xml2json.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript" src="<?php echo plugins_url( '/scripts/jquery.eComboBox.js' , __FILE__ ) ?>"></script>
@@ -99,7 +99,7 @@
 	
 	<?php endif; ?>
 	<?php if($type == "index"): ?>
-		<?php if(empty($_GET['standard'])): ?>
+		<?php if(empty($_GET['standard']) && ! empty($text)): ?>
 			<div class="row" style="width: 100%; overflow: hidden; clear:both;height:80px;"><h2><?php echo $text; ?></h2></div>
 		<?php endif; ?>
 		<?php if(!empty($_GET['standard'])): ?>

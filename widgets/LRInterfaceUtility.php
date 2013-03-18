@@ -1,11 +1,11 @@
 <?php
 
-class LRInterfaceTimeline extends WP_Widget
+class LRInterfaceUtility extends WP_Widget
 {
-  function LRInterfaceTimeline()
+  function LRInterfaceUtility()
   {
-    $widget_ops = array('classname' => 'LRInterfaceTimeline', 'description' => 'Automatically adds an LR paradata timeline to a resource preview page' );
-    $this->WP_Widget('LRInterfaceTimeline', 'LR Interface Paradata Timeline', $widget_ops);
+    $widget_ops = array('classname' => 'LRInterfaceUtility', 'description' => 'Controls paradata timeline, slice filter, and index filter' );
+    $this->WP_Widget('LRInterfaceUtility', 'LR Interface Sidebar Utility', $widget_ops);
   }
  
   function form($instance)
