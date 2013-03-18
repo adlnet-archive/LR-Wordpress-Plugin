@@ -42,16 +42,10 @@
 			ko.applyBindings(self, $("#subject-map-right")[0]);
 
 			$("#subjectMapContainer .standard-div").hide();
-			$("#subjectMapContainer .standard-link").click(function(e){
-			
-				e.preventDefault();
-				e.stopPropagation();
+			$("#subjectMapContainer .standard-link").each(function(){
 				
-				console.log($(this).attr("name"));
-				//return;
+				$(this).attr('href', '<?php echo add_query_arg(array('query'=>'LRreplaceMe', 'subject'=>'LRsubjectReplace'), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text())).replace("LRsubjectReplace", encodeURIComponent($(this).siblings(".levelTracker").attr('name'))));
 				
-				window.location.href = '<?php echo add_query_arg(array('query'=>'LRreplaceMe', 'subject'=>'LRsubjectReplace'), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text())).replace("LRsubjectReplace", encodeURIComponent($(this).siblings(".levelTracker").attr('name')));
-					return false;
 			});
 		});
 	});	
