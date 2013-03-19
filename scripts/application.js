@@ -21,7 +21,7 @@ if (!(window.console && console.log)) { (function() { var noop = function() {}; 
 
 var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
-	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false;
+	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, filterSearchTerms = '';
 
 var urlTransform = {
 
@@ -546,6 +546,19 @@ var mainViewModel = function(resources){
 	self.levelTracker = [0];
 	self.handleStandardsClick = function(item, e){};
 	self.standardDescription = '';
+	self.getFilterSections = ko.computed(function(){
+	
+		var returnArr = [];
+		
+		//Get different results
+		for(var i = 0; i < self.results().length; i++){
+			
+			if(self.results()[i].publisher && $.inArray(self.results()[i].publisher, returnArr) == -1)
+				returnArr.push(self.results()[i].publisher);			
+		}
+
+		return returnArr;
+	});
 	
 	self.notOnBlackList = function(url){
 		
@@ -578,7 +591,7 @@ var mainViewModel = function(resources){
 		addFullDescriptions();
 	};
 	
-	self.loadNewPage = function(isVisual){
+	self.loadNewPage = function(isVisual, startOver){
 		
 		$('#spinnerDiv').show();
 		$("#loadMore").hide();
@@ -589,14 +602,15 @@ var mainViewModel = function(resources){
 		}
 		
 		else {
-			console.log(query);
+			
+			loadIndex = (startOver === true) ? 1 : loadIndex;
+			var data = {terms: query, page: loadIndex-1, filter:filterSearchTerms};
+			console.log("Load index: ", loadIndex, query, data);
+			
 			$.ajax(serviceHost + '/search',{
 				dataType : 'json',
 				jsonp : 'callback',
-				data: {
-					terms: query,
-					page: loadIndex-1,
-				},
+				data: data,
 			}).done(function(data){
 				
 				console.log("data: ", data);

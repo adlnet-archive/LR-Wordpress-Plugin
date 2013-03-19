@@ -41,7 +41,7 @@ class LRInterfaceUtility extends WP_Widget
   {
     $type = $_GET['type'];
 
-	if(empty($_GET['lr_resource']) && $type != "slice"){
+	if(empty($_GET['lr_resource']) && $type != "slice" && empty($_GET["query"])){
 		return;
 	}
 	
@@ -50,22 +50,57 @@ class LRInterfaceUtility extends WP_Widget
 	extract($args, EXTR_SKIP);
 	echo $before_widget;
 	
+	
+	//If the user is doing a slice
 	if(!empty($_GET["query"]) && $type == "slice"){
 	
 	    $title = apply_filters('widget_title', 'Filter');
 		echo $before_title . $title .  $after_title;;
-?>
+	?>
 		<ul class="relatedTerms" style="padding-top:10px;" data-bind="foreach: relatedResultsNodes">
 			<li>
 				<a style="cursor:pointer;" class="relatedList" data-bind="text:(name[0] == undefined)?'':name[0].toUpperCase() + name.substr(1, name.length-1), click:$root.relatedTagSlice, clickBubble: false"></a>
 			</li>
 		</ul>
-<?php 
+	<?php 
 		echo $after_widget;
 		return;
-	}	
+	}
 	
+	if(!empty($_GET["query"])){
+		$title = apply_filters('widget_title', 'Filter');
+		echo $before_title . $title .  $after_title;;
+	?>
+
+		<div data-bind="foreach: getFilterSections">
+		
+			<a class="filterPublisher" href="#" data-bind="html:$data, attr:{href: '#',name:$data}"></a><br/><br/>
+		</div>
+		<script type="text/javascript">
+			<?php include_once('templates/scripts/applicationPreview.php'); ?>
+		</script>
+		<script type="text/javascript">
+		
+			console.log("Testing utility.. ", self);
+			$(document).ready(function(){
+			
+				$(document).on("click", ".filterPublisher", function(e){
+					
+					e.preventDefault();
+					console.log("click");
+					
+					self.results.removeAll();
+					
+					filterSearchTerms = $(this).attr("name");
+					self.loadNewPage(false, true);
+				});
+			});
+		</script>
 	
+	<?php
+		echo $after_widget;
+		return;
+	}
 	
 	
     $title = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
