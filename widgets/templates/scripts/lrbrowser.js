@@ -862,7 +862,7 @@ function buildListing(doc_id) {
 		display_url =(url.length<51)? url : url.substring(0, 50) + "...";
 		
 		var obtain_url = NODE_URL + '/obtain?by_doc_ID=true&request_id=' + doc_id
-		var output = '<h3><a href="#">' + display_url + '</a></h3>';
+		var output = '<a href="#"><h3>' + display_url + '</h3></a>';
 		output += '<div id="' + doc_id + '">';
 		output += '<a href="' + url + '" target="_blank">View resource</a>'
 		//output += ' | <a href="' + obtain_url + '" target="_blank">View Full Learning Registry entry</a><br>';
