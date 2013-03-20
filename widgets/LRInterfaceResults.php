@@ -62,9 +62,6 @@ class LRInterfaceResults extends WP_Widget
 	$type  = $_GET['type'] == 'index' || $_GET['type'] == 'slice'  ? $_GET['type'] : 'index';
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
  
-    if (!empty($title))
-      echo $before_title . $after_title;;
- 
 	if(!empty($_GET['lr_resource']))
 		include_once("templates/LRInterfacePreviewTemplate.php");
 	else
