@@ -144,7 +144,7 @@ class LRInterfaceFeatured extends WP_Widget
 			<span class="childrenResourceNumber" data-bind="text: 'Source: ' + source, visible: $data.source != undefined && $data.source != ''"></span>
 		</div>
 		<a data-bind="attr:{href:$root.wordpressLinkTransform('<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe"), get_page_link( $results));?>',url)}" class="title">
-			<img alt="Featured Resource" src="" style="border: 1px solid #ddd;padding: 1px 1px;" data-bind="attr:{src:image}" class="img-polaroid" />
+			<img alt="Featured Resource" src="<?php echo plugins_url( "templates/images/qmark.png" , dirname(__FILE__) ); ?>" style="border: 1px solid #ddd;padding: 1px 1px;" data-bind="attr:{src:image}" class="img-polaroid" />
 		</a>
 	</div>
 	<?php
