@@ -548,16 +548,16 @@ var mainViewModel = function(resources){
 	self.standardDescription = '';
 	self.getFilterSections = ko.computed(function(){
 	
-		var returnArr = [];
+		var returnObj = {contentTypes: ['Videos', 'Primary Docs', 'Animations', 'Photos'], publishers: []};
 		
 		//Get different results
 		for(var i = 0; i < self.results().length; i++){
 			
-			if(self.results()[i].publisher && $.inArray(self.results()[i].publisher, returnArr) == -1)
-				returnArr.push(self.results()[i].publisher);			
+			if(self.results()[i].publisher && $.inArray(self.results()[i].publisher, returnObj.publishers) == -1)
+				returnObj.publishers.push(self.results()[i].publisher);			
 		}
 
-		return returnArr;
+		return returnObj;
 	});
 	
 	self.notOnBlackList = function(url){
@@ -595,6 +595,7 @@ var mainViewModel = function(resources){
 		
 		$('#spinnerDiv').show();
 		$("#loadMore").hide();
+		temp.resultsNotFound(false);
 		//var query = $("#s").val();
 		if(isVisual === true){
 			
@@ -604,7 +605,13 @@ var mainViewModel = function(resources){
 		else {
 			
 			loadIndex = (startOver === true) ? 1 : loadIndex;
-			var data = {terms: query, page: loadIndex-1, filter:filterSearchTerms};
+			var data = {terms: query, page: loadIndex-1};
+			
+			
+			if(filterSearchTerms)
+				data.filter = filterSearchTerms;
+				
+				
 			console.log("Load index: ", loadIndex, query, data);
 			
 			$.ajax(serviceHost + '/search',{

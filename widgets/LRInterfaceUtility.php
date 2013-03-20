@@ -72,9 +72,22 @@ class LRInterfaceUtility extends WP_Widget
 		echo $before_title . $title .  $after_title;;
 	?>
 
-		<div data-bind="foreach: getFilterSections">
-		
-			<a class="filterPublisher" href="#" data-bind="html:$data, attr:{href: '#',name:$data}"></a><br/><br/>
+		<div data-bind="with: getFilterSections">
+			By content type:
+			<div data-bind="foreach:$data.contentTypes">	
+				<a class="filterPublisher" href="#" data-bind="html:$data, attr:{href: '#',name:$data}"></a><br/><br/>
+			</div>
+			
+			
+			<!-- ko if: $data.publishers.length > 0 -->
+				By publisher:
+				<select class="filterPublisherSelect" style="width:90%;" data-bind="foreach:$data.publishers">	
+					<!-- ko if: $index() == 0 && $parent.publishers.length > 1 -->
+						<option data-bind="html:'All publishers', attr:{value:'false'}"></option>
+					<!-- /ko -->
+					<option data-bind="html:$root.getShorterStr($data, 40), attr:{value:$data}"></option>
+				</select>
+			<!-- /ko -->
 		</div>
 		<script type="text/javascript">
 			<?php include_once('templates/scripts/applicationPreview.php'); ?>
@@ -84,6 +97,20 @@ class LRInterfaceUtility extends WP_Widget
 			console.log("Testing utility.. ", self);
 			$(document).ready(function(){
 			
+				$(document).on("change", ".filterPublisherSelect", function(e){
+
+					self.results.removeAll();
+					
+					var cacheJobj = $(this).find("option:selected");
+					filterSearchTerms = cacheJobj.val();
+					
+					if(filterSearchTerms == 'false'){
+						filterSearchTerms = '';
+					}
+					
+					console.log(filterSearchTerms);
+					self.loadNewPage(false, true);
+				});
 				$(document).on("click", ".filterPublisher", function(e){
 					
 					e.preventDefault();
