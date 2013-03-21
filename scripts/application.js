@@ -21,7 +21,7 @@ if (!(window.console && console.log)) { (function() { var noop = function() {}; 
 
 var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
-	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, filterSearchTerms = '';
+	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, filterSearchTerms = [];
 
 var urlTransform = {
 
@@ -546,6 +546,41 @@ var mainViewModel = function(resources){
 	self.levelTracker = [0];
 	self.handleStandardsClick = function(item, e){};
 	self.standardDescription = '';
+	self.savePublisherObj = {};
+	
+	self.handlePublisherClick = function(data, obj){
+		
+		var target = obj.target;
+		
+		var storeOnData = self.savePublisherObj[data];
+		if(! storeOnData){
+		
+			$(".filterPublisher").not(target).data("filterPublisherOn", false);
+			$(target).data("filterPublisherOn", true);
+			storeOnData = "ADD TO FILTER";
+			
+			filterSearchTerms[1] = $(target).attr("name");
+		}
+		
+		//Undo what was done
+		else if(storeOnData == true){
+			
+			//Set every publisher's on switch to false
+			$(".filterPublisher").data("filterPublisherOn", false);
+			filterSearchTerms[1] = '';
+			storeOnData = "REMOVE FROM FILTER";
+		}					
+			
+
+		console.log("click: ", storeOnData);
+		
+		self.results.removeAll();
+
+		self.loadNewPage(false, true);
+		return;
+
+	};
+	
 	self.getFilterSections = ko.computed(function(){
 	
 		var returnObj = {contentTypes: ['Videos', 'Primary Docs', 'Animations', 'Photos'], publishers: []};
@@ -557,6 +592,13 @@ var mainViewModel = function(resources){
 				returnObj.publishers.push(self.results()[i].publisher);			
 		}
 
+		
+		if(returnObj.publishers.length > 1){
+			var tempArray = ["All publishers"];
+			tempArray.push.apply(tempArray, returnObj.publishers);
+			returnObj.publishers = tempArray;
+		}
+				
 		return returnObj;
 	});
 	
@@ -605,11 +647,19 @@ var mainViewModel = function(resources){
 		else {
 			
 			loadIndex = (startOver === true) ? 1 : loadIndex;
+			
 			var data = {terms: query, page: loadIndex-1};
-			
-			
-			if(filterSearchTerms)
-				data.filter = filterSearchTerms;
+			if(filterSearchTerms.length > 0){
+				
+				var newArr = [];
+				for(var i = 0; i < filterSearchTerms.length; i++){
+				  if(filterSearchTerms[i]){
+					newArr.push(filterSearchTerms[i]);
+				  }
+				}	
+				
+				data.filter = newArr.join(";");
+			}
 				
 				
 			console.log("Load index: ", loadIndex, query, data);
@@ -654,6 +704,8 @@ var mainViewModel = function(resources){
 				$('#spinnerDiv').hide();
 				$('#spinnerDiv').css("margin-top", "50px");
 				temp.resultsNotFound(true);
+				
+				
 			});
 			
 			loadIndex++;

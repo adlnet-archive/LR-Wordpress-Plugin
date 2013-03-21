@@ -56,10 +56,25 @@ td{
 	float: right;
 }
 
-.lrSubmit:hover{
+.filterPublisher, .filterPublisherOn{
 
+border: 1px solid #d9d9d9 !important;
+width:40% !important;
+height: 31px;
+clear:both;
+
+margin: 3px auto;
+text-align: center;
+
+padding: 0 !important;
+cursor: pointer;
+}
+
+
+.lrSubmit:hover, .lrSubmitNoFloat:hover, .filterPublisher:hover, .filterPublisherOn{
 	background-color: #eaeaea;
 }
+
 .lrSubmitNoFloat{
 	margin: 0 !important;
 	padding: 0 !important;

@@ -74,25 +74,21 @@ class LRInterfaceUtility extends WP_Widget
 
 		<div data-bind="with: getFilterSections">
 			By content type:
-			<div data-bind="foreach:$data.contentTypes">	
-				<a class="filterPublisher" href="#" data-bind="html:$data, attr:{href: '#',name:$data}"></a><br/><br/>
+			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">	
+				<button class="filterPublisher btn" data-bind="html:$data, attr:{href: '#',name:$data}, click:$root.handlePublisherClick" style=""></button>
 			</div>
 			
 			
-			<!-- ko if: $data.publishers.length > 0 -->
+
+			<div data-bind="visible: $data.publishers.length > 0">
 				By publisher:
 				<select class="filterPublisherSelect" style="width:90%;" data-bind="foreach:$data.publishers">	
-					<!-- ko if: $index() == 0 && $parent.publishers.length > 1 -->
-						<option data-bind="html:'All publishers', attr:{value:'false'}"></option>
-					<!-- /ko -->
-					<option data-bind="html:$root.getShorterStr($data, 40), attr:{value:$data}"></option>
+					<option data-bind="'html': $root.getShorterStr($data, 40), 'attr':{'value':$data}"></option>
 				</select>
-			<!-- /ko -->
+			</div>
 		</div>
 		<script type="text/javascript">
 			<?php include_once('templates/scripts/applicationPreview.php'); ?>
-		</script>
-		<script type="text/javascript">
 		
 			console.log("Testing utility.. ", self);
 			$(document).ready(function(){
@@ -102,25 +98,15 @@ class LRInterfaceUtility extends WP_Widget
 					self.results.removeAll();
 					
 					var cacheJobj = $(this).find("option:selected");
-					filterSearchTerms = cacheJobj.val();
+					filterSearchTerms[0] = cacheJobj.val();
 					
-					if(filterSearchTerms == 'false'){
-						filterSearchTerms = '';
+					if(filterSearchTerms[0] == 'All publishers'){
+						filterSearchTerms[0] = '';
 					}
 					
 					console.log(filterSearchTerms);
 					self.loadNewPage(false, true);
-				});
-				$(document).on("click", ".filterPublisher", function(e){
-					
-					e.preventDefault();
-					console.log("click");
-					
-					self.results.removeAll();
-					
-					filterSearchTerms = $(this).attr("name");
-					self.loadNewPage(false, true);
-				});
+				});		
 			});
 		</script>
 	
