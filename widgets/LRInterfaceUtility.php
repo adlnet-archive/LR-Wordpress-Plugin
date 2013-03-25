@@ -94,7 +94,9 @@ class LRInterfaceUtility extends WP_Widget
 		
 			console.log("Testing utility.. ", self);
 			$(document).ready(function(){
-			
+				
+				$(".filterPublisherSelect").val("All Publishers");
+				
 				$(document).on("change", ".filterPublisherSelect", function(e){
 
 					self.results.removeAll();

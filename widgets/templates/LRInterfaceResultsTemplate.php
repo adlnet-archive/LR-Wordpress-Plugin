@@ -57,10 +57,10 @@
 								<div>
 									<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
-										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource screenshot" />
+										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{alt:title,src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource screenshot" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
-										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" alt="Screenshot not found" class="img-polaroid" />
+										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" alt="Question mark image" class="img-polaroid" />
 										<!-- /ko -->
 									</a>
 								</div>
@@ -122,10 +122,10 @@
 									<div style="float:left;width: 140px;min-width:140px;text-align:center;">
 										<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
-										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__ ); ?>" data-bind="attr:{src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource Screenshot" />
+										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__ ); ?>" data-bind="attr:{alt:title, src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource Screenshot" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
-										<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" alt="Screenshot not found" />
+										<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" alt="Question mark image" />
 										<!-- /ko -->
 										</a>
 									</div>

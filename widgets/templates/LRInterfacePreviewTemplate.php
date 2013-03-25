@@ -4,8 +4,8 @@
 			<h2 data-bind="html:currentObject().title">Loading...</h2>
 			
 			<a href="#" data-bind="attr:{href:doTransform(currentObject().url)}">
-				<img src="<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ); ?>" style="height: 300px; width: 400px;margin: 0 auto;" data-bind="visible: currentObject().hasScreenshot, attr:{src:currentObject().image}" alt="Resource Screenshot"/>
-				<img src="<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ); ?>" style="height: 150px; width: 150px;margin: 0 auto;" data-bind="visible: !currentObject().hasScreenshot, attr:{src:currentObject().image}" alt="Screenshot not found"/>
+				<img src="<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ); ?>" style="height: 300px; width: 400px;margin: 0 auto;" data-bind="'visible': currentObject().hasScreenshot, 'attr':{'alt':currentObject().title, src:currentObject().image}" alt="Resource Screenshot"/>
+				<img src="<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ); ?>" style="height: 150px; width: 150px;margin: 0 auto;" data-bind="'visible': !currentObject().hasScreenshot, 'attr':{'src':currentObject().image}" alt="Question mark image"/>
 			</a>
 				
 			<p data-bind="visible:!currentObject().hasScreenshot" class="notFound">Screenshot not found</p><br/>
