@@ -21,7 +21,7 @@ if (!(window.console && console.log)) { (function() { var noop = function() {}; 
 
 var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
-	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, filterSearchTerms = [];
+	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false;
 
 var urlTransform = {
 
@@ -546,39 +546,19 @@ var mainViewModel = function(resources){
 	self.levelTracker = [0];
 	self.handleStandardsClick = function(item, e){};
 	self.standardDescription = '';
-	self.savePublisherObj = {};
+	self.filterSearchTerms = ko.observableArray();
 	
 	self.handlePublisherClick = function(data, obj){
 		
 		var target = obj.target;
 		
-		var storeOnData = self.savePublisherObj[data];
-		if(! storeOnData){
+		self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == $(target).attr("name")) ? '' : $(target).attr("name");		
 		
-			$(".filterPublisher").not(target).data("filterPublisherOn", false);
-			$(target).data("filterPublisherOn", true);
-			storeOnData = "ADD TO FILTER";
-			
-			filterSearchTerms[1] = $(target).attr("name");
-		}
-		
-		//Undo what was done
-		else if(storeOnData == true){
-			
-			//Set every publisher's on switch to false
-			$(".filterPublisher").data("filterPublisherOn", false);
-			filterSearchTerms[1] = '';
-			storeOnData = "REMOVE FROM FILTER";
-		}					
-			
-
-		console.log("click: ", storeOnData);
-		
+		console.log("click: ", self.filterSearchTerms()[1], $(target).attr("name"));
 		self.results.removeAll();
-
 		self.loadNewPage(false, true);
+		
 		return;
-
 	};
 	
 	self.getFilterSections = ko.computed(function(){
@@ -649,15 +629,17 @@ var mainViewModel = function(resources){
 			loadIndex = (startOver === true) ? 1 : loadIndex;
 			
 			var data = {terms: query, page: loadIndex-1};
-			if(filterSearchTerms.length > 0){
+			if(self.filterSearchTerms().length > 0){
 				
 				var newArr = [];
-				for(var i = 0; i < filterSearchTerms.length; i++){
-				  if(filterSearchTerms[i]){
-					newArr.push(filterSearchTerms[i]);
+				for(var i = 0; i < self.filterSearchTerms().length; i++){
+
+				  if(self.filterSearchTerms()[i]){
+					newArr.push(self.filterSearchTerms()[i]);
 				  }
 				}	
 				
+				//Joining to help simplify server side processing
 				data.filter = newArr.join(";");
 			}
 				

@@ -75,6 +75,10 @@ cursor: pointer;
 	background-color: #eaeaea;
 }
 
+.filterPublisherOn{
+	border-color: #8d8d8d !important;
+}
+
 .lrSubmitNoFloat{
 	margin: 0 !important;
 	padding: 0 !important;

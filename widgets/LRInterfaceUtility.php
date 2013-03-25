@@ -74,8 +74,10 @@ class LRInterfaceUtility extends WP_Widget
 
 		<div data-bind="with: getFilterSections">
 			By content type:
+			
 			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">	
-				<button class="filterPublisher btn" data-bind="html:$data, attr:{href: '#',name:$data}, click:$root.handlePublisherClick" style=""></button>
+
+				<button class="filterPublisher btn" data-bind="'html':$data, 'attr':{'href': '#','name':$data, 'class':$data==$root.filterSearchTerms()[1]?'filterPublisherOn':'filterPublisher'}, 'click':$root.handlePublisherClick" style=""></button>
 			</div>
 			
 			
@@ -98,13 +100,13 @@ class LRInterfaceUtility extends WP_Widget
 					self.results.removeAll();
 					
 					var cacheJobj = $(this).find("option:selected");
-					filterSearchTerms[0] = cacheJobj.val();
+					self.filterSearchTerms()[0] = cacheJobj.val();
 					
-					if(filterSearchTerms[0] == 'All publishers'){
-						filterSearchTerms[0] = '';
+					if(self.filterSearchTerms()[0] == 'All publishers'){
+						self.filterSearchTerms()[0] = '';
 					}
 					
-					console.log(filterSearchTerms);
+					console.log(self.filterSearchTerms());
 					self.loadNewPage(false, true);
 				});		
 			});
