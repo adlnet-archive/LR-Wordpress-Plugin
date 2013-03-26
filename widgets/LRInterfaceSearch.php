@@ -70,7 +70,9 @@ class LRInterfaceSearch extends WP_Widget
     //  echo $before_title . $title . $after_title;;
 		
 	?>
-	<label for="LRsearchForm" style="margin-bottom:6px;display:block;"><?php echo $instance['placeholder']; ?></label>
+	<?php if(!empty($instance['placeholder'])): ?>
+		<label for="LRsearchForm" style="margin-bottom:6px;display:block;"><?php echo $instance['placeholder']; ?></label>
+	<?php endif; ?>
 	<form method="get" id="LRsearchForm" action="<?php echo get_page_link( $options['results'] ); ?>">
 		<div class="lrSearchCombo">
 			<input class="lrSearch" type="text" title="<?php echo $instance['placeholder']; ?>" name="query" />
