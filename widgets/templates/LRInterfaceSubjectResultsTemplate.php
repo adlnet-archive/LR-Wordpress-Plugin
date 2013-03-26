@@ -2,7 +2,7 @@
 	<div>
 		<a data-bind="attr:{href:caption}">
 			<span style="padding-bottom: 5px;display:block;" data-bind="text:title"></span>
-			<img data-bind="attr:{src:url}" />
+			<img data-bind="attr:{src:url, alt:title}" />
 		</a>
 	</div>
 </div>

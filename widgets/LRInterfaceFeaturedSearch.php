@@ -117,8 +117,8 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 	?>
 	
 	<div class="lr_free_images" id="lr_featured_search" data-bind="foreach:images">
-		<a data-bind="attr:{href:title}">
-			<img data-bind="attr:{src:url}" />
+		<a data-bind="attr:{href:href}">
+			<img data-bind="attr:{src:url, alt:title}" />
 		</a>
 	</div>
 		
@@ -130,7 +130,7 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 		var ids = '<?php echo $ids; ?>' ? JSON.parse('<?php echo $ids; ?>') : '';
 		for(var i = 0; i < ids.length; i++){
 			
-			ids[i].title = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
+			ids[i].href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
 			self.images.push(ids[i]);
 		}
 	</script>

@@ -10,20 +10,28 @@ class LRInterfaceSearch extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'placeholder'=>'', 'type' => '', 'hide' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'placeholder'=>'', 'type' => '', 'hide' => '', 'label' => '' ) );
     $title = $instance['title'];
 	$placeholder = $instance['placeholder'];
 	$type = $instance['type'];
 	$hide = $instance['hide'];
+	$label = $instance['label'];
 ?>
 
 <p>
 
 	<label for="<?php echo $this->get_field_id('placeholder'); ?>">
-		Search Placeholder: 
+		Search text: 
 	</label>
 	<input class="widefat" id="<?php echo $this->get_field_id('placeholder'); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo attribute_escape($placeholder); ?>" />
 	<br/><br/>
+	
+	<label for="<?php echo $this->get_field_id('label'); ?>">
+		Check to display search text as a label instead of a placeholder: 
+	</label>
+	<input class="widefat" <?php echo $label == 'on' ? 'checked' : ''; ?> id="<?php echo $this->get_field_id('label'); ?>" name="<?php echo $this->get_field_name('label'); ?>" type="checkbox" />
+	<br/><br/>
+	
 	<label for="<?php echo $this->get_field_id('type'); ?>">
 		Search Method:
 	</label>
@@ -51,6 +59,7 @@ class LRInterfaceSearch extends WP_Widget
 	$instance['placeholder'] = $new_instance['placeholder'];
 	$instance['type'] = $new_instance['type'];
 	$instance['hide'] = $new_instance['hide'];
+	$instance['label'] = $new_instance['label'];
     return $instance;
   }
  
@@ -64,18 +73,20 @@ class LRInterfaceSearch extends WP_Widget
     echo $before_widget;
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
     $type = empty($instance['type']) ? 'index' : $instance['type'];
+    $label = empty($instance['label']) ? false : $instance['label'];
+    $placeholder = $instance['placeholder'];
 	$options = get_option('lr_options_object');
-
+	
     //if (!empty($title))
     //  echo $before_title . $title . $after_title;;
 		
 	?>
 	<form method="get" id="LRsearchForm" action="<?php echo get_page_link( $options['results'] ); ?>">
-		<?php if(!empty($instance['placeholder'])): ?>
-			<label for="lrSearch" style="margin-bottom:6px;display:block;"><?php echo $instance['placeholder']; ?></label>
+		<?php if(!empty($placeholder) && !empty($label)): ?>
+			<label for="lrSearch" style="margin-bottom:6px;display:block;"><?php echo $placeholder; ?></label>
 		<?php endif; ?>
 		<div class="lrSearchCombo">
-			<input class="lrSearch" type="text" title="<?php echo $instance['placeholder']; ?>" name="query" />
+			<input class="lrSearch" type="text" title="<?php echo $instance['placeholder']; ?>" name="query" <?php echo (empty($placeholder)||!empty($label))?'':'placeholder="' . $placeholder . '"'; ?> />
 			<input class="lrSubmit" type="submit" value="Search" />
 		</div>
 	</form>
