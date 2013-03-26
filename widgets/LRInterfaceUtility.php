@@ -73,7 +73,7 @@ class LRInterfaceUtility extends WP_Widget
 	?>
 
 		<div data-bind="with: getFilterSections">
-			By content type:
+			<div>By content type:</div>
 			
 			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">	
 
@@ -81,12 +81,16 @@ class LRInterfaceUtility extends WP_Widget
 			</div>
 			
 			
-
+			<div style="margin-top:10px;">By publisher:</div>
 			<div data-bind="visible: $data.publishers.length > 0">
-				By publisher:
+				
 				<select class="filterPublisherSelect" style="width:90%;" data-bind="foreach:$data.publishers">	
 					<option data-bind="'html': $root.getShorterStr($data, 40), 'attr':{'value':$data}"></option>
 				</select>
+			</div>
+			<div style="margin-top:10px; padding-left:10px;">
+				<span data-bind="visible:$root.filterSearchTerms()[0], text: $root.getShorterStr($root.filterSearchTerms()[0], 40)"></span>
+				<button class="LRxButton" title="Remove Filter" data-bind="visible:$root.filterSearchTerms()[0]">X</button>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -96,6 +100,14 @@ class LRInterfaceUtility extends WP_Widget
 			$(document).ready(function(){
 				
 				$(".filterPublisherSelect").val("All Publishers");
+				
+				$(document).on("click", ".LRxButton", function(e){
+					
+					self.results.removeAll();
+					self.filterSearchTerms()[0] = '';
+					self.filterSearchTerms.valueHasMutated();
+					self.loadNewPage(false, true);
+				});
 				
 				$(document).on("change", ".filterPublisherSelect", function(e){
 
@@ -109,6 +121,7 @@ class LRInterfaceUtility extends WP_Widget
 					}
 					
 					console.log(self.filterSearchTerms());
+					self.filterSearchTerms.valueHasMutated();
 					self.loadNewPage(false, true);
 				});		
 			});

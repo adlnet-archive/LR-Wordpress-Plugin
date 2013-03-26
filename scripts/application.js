@@ -710,6 +710,9 @@ var mainViewModel = function(resources){
 	
 	self.getShorterStr = function(a, length){
 		
+		if(a == undefined)
+			return '';
+		
 		var obj = {};
 		obj.title = a.title ? a.title : a;
 		length = length ? length : 55;

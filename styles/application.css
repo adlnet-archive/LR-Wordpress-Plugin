@@ -71,7 +71,7 @@ cursor: pointer;
 }
 
 
-.lrSubmit:hover, .lrSubmitNoFloat:hover, .filterPublisher:hover, .filterPublisherOn{
+.lrSubmit:hover, .lrSubmitNoFloat:hover, .filterPublisher:hover, .LRxButton:hover, .filterPublisherOn{
 	background-color: #eaeaea;
 }
 
@@ -88,6 +88,18 @@ cursor: pointer;
 	border-left: 1px #d9d9d9 solid !important;
 	cursor: pointer;
 }
+.LRxButton{
+
+	margin: 0 0 0 10px !important;
+	padding: 2px 4px !important;
+	border: 1px #aaa solid !important;
+	cursor: pointer;
+	font-size: 10px;
+	color: #000000;
+	font-weight:bold;
+	display: inline;
+}
+
 .lrSubmit{
 	margin: 0 !important;
 	padding: 0 !important;
@@ -179,4 +191,3 @@ cursor: pointer;
 	border:none;
 	padding:0;
 }
-

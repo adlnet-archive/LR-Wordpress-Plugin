@@ -142,7 +142,7 @@
 							<!-- /ko -->
 						</tbody>
 					</table>
-					<button data-bind="click:loadNewPage" id="loadMore" style="float:right; border: 1px solid #d9d9d9 !important;" class="btn lrSubmit">Show More</button>
+					<button data-bind="click:loadNewPage, visible:results().length>10" id="loadMore" style="float:right; border: 1px solid #d9d9d9 !important;" class="btn lrSubmit">Show More</button>
 				<!-- /ko -->
 	
 	
