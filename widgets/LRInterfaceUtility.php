@@ -73,7 +73,7 @@ class LRInterfaceUtility extends WP_Widget
 	?>
 
 		<div data-bind="with: getFilterSections">
-			<div>By content type:</div>
+			<div style="margin-bottom:3px;">By content type:</div>
 			
 			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">	
 
@@ -81,8 +81,8 @@ class LRInterfaceUtility extends WP_Widget
 			</div>
 			
 			
-			<div style="margin-top:10px;"><label for="publisherSelectId">By publisher:</label></div>
-			<div data-bind="visible: $data.publishers.length > 0">
+			<div style="margin-top:10px;margin-bottom:3px;" data-bind="visible:$data.publishers.length > 1 || $root.filterSearchTerms()[0]"><label for="publisherSelectId">By publisher:</label></div>
+			<div data-bind="visible: $data.publishers.length > 1">
 				
 				<select id="publisherSelectId" class="filterPublisherSelect" style="width:90%;" data-bind="foreach:$data.publishers">	
 					<option data-bind="'html': $root.getShorterStr($data, 40), 'attr':{'value':$data}"></option>

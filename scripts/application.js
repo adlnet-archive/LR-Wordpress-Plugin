@@ -25,7 +25,7 @@ var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = ""
 
 var lrConsole  = function(){
 
-	if(debugMode && arguments.length > 0)
+	if(debugMode && arguments.length > 0 && console.log.apply)
 		console.log.apply(console, arguments)
 };
 	
