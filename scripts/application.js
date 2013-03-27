@@ -569,7 +569,7 @@ var mainViewModel = function(resources){
 	
 	self.getFilterSections = ko.computed(function(){
 	
-		var returnObj = {contentTypes: ['Videos', 'Primary Docs', 'Animations', 'Photos'], publishers: []};
+		var returnObj = {contentTypes: ['Video', 'Primary Doc', 'Animation', 'Photo'], publishers: []};
 		
 		//Get different results
 		for(var i = 0; i < self.results().length; i++){
