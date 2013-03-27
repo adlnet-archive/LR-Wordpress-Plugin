@@ -49,7 +49,7 @@
 				
 				self.standards = data;
 				
-				console.log(data, self);
+				lrConsole(data, self);
 				ko.applyBindings(self, $("#standards-map-left")[0]);
 				ko.applyBindings(self, $("#standards-map-right")[0]);
 				$("#standardsMapContainer .standard-div").hide();

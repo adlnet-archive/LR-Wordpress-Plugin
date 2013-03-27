@@ -31,33 +31,33 @@
     var txt = '', obj = null, att = null;
     var nt = node.nodeType, nn = jsVar(node.localName || node.nodeName);
     var nv = node.text || node.nodeValue || '';
-    /*DBG*/ //if(window.console) console.log(['x2j',nn,nt,nv.length+' bytes']);
+    /*DBG*/ //if(window.console) lrConsole(['x2j',nn,nt,nv.length+' bytes']);
     if(node.childNodes){
      if(node.childNodes.length>0){
-      /*DBG*/ //if(window.console) console.log(['x2j',nn,'CHILDREN',node.childNodes]);
+      /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'CHILDREN',node.childNodes]);
       $.each(node.childNodes, function(n,cn){
        var cnt = cn.nodeType, cnn = jsVar(cn.localName || cn.nodeName);
        var cnv = cn.text || cn.nodeValue || '';
-       /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>a',cnn,cnt,cnv]);
+       /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'node>a',cnn,cnt,cnv]);
        if(cnt == 8){
-        /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>b',cnn,'COMMENT (ignore)']);
+        /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'node>b',cnn,'COMMENT (ignore)']);
         return; // ignore comment node
        }
        else if(cnt == 3 || cnt == 4 || !cnn){
         // ignore white-space in between tags
         if(cnv.match(/^\s+$/)){
-         /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>c',cnn,'WHITE-SPACE (ignore)']);
+         /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'node>c',cnn,'WHITE-SPACE (ignore)']);
          return;
         };
-        /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>d',cnn,'TEXT']);
+        /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'node>d',cnn,'TEXT']);
         txt += cnv.replace(/^\s+/,'').replace(/\s+$/,'');
 								// make sure we ditch trailing spaces from markup
        }
        else{
-        /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>e',cnn,'OBJECT']);
+        /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'node>e',cnn,'OBJECT']);
         obj = obj || {};
         if(obj[cnn]){
-         /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>f',cnn,'ARRAY']);
+         /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'node>f',cnn,'ARRAY']);
          
 									// http://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
 									if(!obj[cnn].length) obj[cnn] = myArr(obj[cnn]);
@@ -67,7 +67,7 @@
          obj[cnn].length = obj[cnn].length;
         }
         else{
-         /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>g',cnn,'dig deeper...']);
+         /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'node>g',cnn,'dig deeper...']);
          obj[cnn] = parseXML(cn);
         };
        };
@@ -76,13 +76,13 @@
     };//node.childNodes
     if(node.attributes){
      if(node.attributes.length>0){
-      /*DBG*/ //if(window.console) console.log(['x2j',nn,'ATTRIBUTES',node.attributes])
+      /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'ATTRIBUTES',node.attributes])
       att = {}; obj = obj || {};
       $.each(node.attributes, function(a,at){
        var atn = jsVar(at.name), atv = at.value;
        att[atn] = atv;
        if(obj[atn]){
-        /*DBG*/ //if(window.console) console.log(['x2j',nn,'attr>',atn,'ARRAY']);
+        /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'attr>',atn,'ARRAY']);
         
 								// http://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
 								//if(!obj[atn].length) obj[atn] = myArr(obj[atn]);//[ obj[ atn ] ];
@@ -92,7 +92,7 @@
         obj[atn].length = obj[atn].length;
        }
        else{
-        /*DBG*/ //if(window.console) console.log(['x2j',nn,'attr>',atn,'TEXT']);
+        /*DBG*/ //if(window.console) lrConsole(['x2j',nn,'attr>',atn,'TEXT']);
         obj[atn] = atv;
        };
       });
@@ -106,7 +106,7 @@
      txt = '';
     };
     var out = obj || txt;
-    //console.log([extended, simple, out]);
+    //lrConsole([extended, simple, out]);
     if(extended){
      if(txt) out = {};//new String(out);
      txt = out.text || txt || '';

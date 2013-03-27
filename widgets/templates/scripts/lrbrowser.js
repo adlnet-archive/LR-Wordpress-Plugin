@@ -209,7 +209,7 @@ $(function() {
 		jsonp : 'callback',
 		beforeSend : function(jqXHR) {
 			
-			//console.log("ajaxPool push: ", jqXHR);
+			//lrConsole("ajaxPool push: ", jqXHR);
 			ajaxPool.push(jqXHR);
 		}
 	});
@@ -251,7 +251,7 @@ function startNewSearch(term) {
 
 function killOustandingRequests() {
 	
-	console.log("ajaxPool: ", ajaxPool);
+	lrConsole("ajaxPool: ", ajaxPool);
 	for(var i = 0; i <  ajaxPool.length; i++) {
 		
 		ajaxPool[i].abort();
@@ -285,7 +285,7 @@ function startDetermineType() {
 
 	var tagCountCallback = function(data) {
 		
-		//console.log(data);
+		//lrConsole(data);
 		sliceAsTagResultCount = data.resultCount;
 		if(sliceAsIdentityResultCount > -1)
 			compareTagAndIdentityCountResults();
@@ -300,7 +300,7 @@ function startDetermineType() {
 
 	var identityCountCallback = function(data) {
 		
-		//console.log(data);
+		//lrConsole(data);
 		sliceAsIdentityResultCount = data.resultCount;
 		if(sliceAsTagResultCount > -1)
 			compareTagAndIdentityCountResults();
@@ -385,7 +385,7 @@ function buildSliceObject(dataArg) {
 		data : dataArg
 	};
 	
-	//console.log(sliceObj);
+	//lrConsole(sliceObj);
 	return sliceObj;
 }
 
@@ -588,7 +588,7 @@ function parseSliceResult(results) {
 	status("Parsing complete.");
 	summary();
 	topNode.children = trimChildren(topNode.children, TRIM_SIZE);
-	console.log(topNode.children);
+	lrConsole(topNode.children);
 	self.relatedResultsNodes(topNode.children);
 	loadGraphData(topNode);
 	status("Principle search complete");
@@ -807,7 +807,7 @@ function handleNodeSingleClick() {
 
 function buildDocList(node) {
 	
-	console.log("NODE: ", node);
+	lrConsole("NODE: ", node);
 	if(node.id == -1)
 		$("#doc_list_header").html(''); 
 	else if(node.id == topNode.id)
@@ -824,7 +824,7 @@ function buildDocList(node) {
 		//We also have access to paradata here
 		
 		//if(docDictionary[node.data.doc_ids[i]].type != "paradata")
-		//console.log(docDictionary[node.data.doc_ids[i]].url);
+		//lrConsole(docDictionary[node.data.doc_ids[i]].url);
 		//if($.inArray(docDictionary[node.data.doc_ids[i]].url, tempURLs) == -1){
 			docDictionary[node.data.doc_ids[i]].title = "";
 			docDictionary[node.data.doc_ids[i]].description = "";
@@ -840,7 +840,7 @@ function buildDocList(node) {
 	
 	addFullDescriptions();
 	
-	console.log(temp.results());
+	lrConsole(temp.results());
 	$(".paradataLoader").click(function() {
 		loadParadata($(this).attr('id'));
 	});

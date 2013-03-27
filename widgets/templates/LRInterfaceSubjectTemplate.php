@@ -36,7 +36,7 @@
 	
 	$(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
-			console.log("Data: ", data);
+			lrConsole("Data: ", data);
 			self.children = data.children;
 			ko.applyBindings(self, $("#subject-map-left")[0]);
 			ko.applyBindings(self, $("#subject-map-right")[0]);

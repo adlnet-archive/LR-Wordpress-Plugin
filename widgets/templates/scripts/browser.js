@@ -151,7 +151,7 @@ var BROWSER = (function () {
     link.find('.grade-link').data('standard', standard);
     link.find('.grade-link').val(grade);
     link.show();
-	console.log("link", grade);
+	lrConsole("link", grade);
     return link;
     };
 
@@ -228,7 +228,7 @@ var BROWSER = (function () {
 						var thisObj = [{}],  md5 = [], image = [];
 						$(".getTitle").each( function(i, doc) {
 						
-							console.log(i);
+							lrConsole(i);
 							
 							thisObj[i] = $(this);
 							md5[i] = $(this).attr('name');
@@ -242,7 +242,7 @@ var BROWSER = (function () {
 							for(var i = 0; i < data.length; i++){
 							
 								if(data[i]){
-									//console.log("resource number: ", i, " data: ",  data);
+									//lrConsole("resource number: ", i, " data: ",  data);
 									data[i].description = (data[i].description == undefined) ? "" : data[i].description;
 									data[i].description = (data[i].description.length > 280) ? data[i].description.substr(0, 280) + "..." : data[i].description;
 									
@@ -258,7 +258,7 @@ var BROWSER = (function () {
 							}
 						});
 						
-						console.log("RESOURCE CLICK");
+						lrConsole("RESOURCE CLICK");
 						//return false;
 					
 					});
@@ -274,7 +274,7 @@ var BROWSER = (function () {
     var $div = $('<div/>').addClass('children');
 	
 	data.grade = data.grade ? data.grade : state.grade;
-	console.log("Data sent to nodes: ", data);
+	lrConsole("Data sent to nodes: ", data);
 	
     $div.load(nodesUrl, data, function () {
 	
@@ -376,7 +376,7 @@ var BROWSER = (function () {
             callback = recursiveDescent(childrenToLoad);
             }
             
-            console.log($loadLocation);
+            lrConsole($loadLocation);
             loadNodes($loadLocation, discriminator, callback);
         });
         

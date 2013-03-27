@@ -41,7 +41,7 @@ var standardPlusCollapse = function(e, self){
 	
 	self = self ? self : this;
 	
-	console.log("TESTING", $(self));
+	lrConsole("TESTING", $(self));
 	
 	var isOpen = $(self).siblings(".saveOpen").data("isOpen");
 	if(isOpen == undefined){
@@ -88,7 +88,7 @@ jQuery(document).ready(function($){
 		
 		var tInterval = setInterval(function() {  
 			
-		  console.log(prevent_bust);
+		  lrConsole(prevent_bust);
 		  if (prevent_bust > 0) {  
 			prevent_bust -= 2  
 			
@@ -131,8 +131,8 @@ jQuery(document).ready(function($){
 			data: createJSON(paradata, "bookmark"),
 			success: function(data){
 
-				console.log("added");
-				console.log("Response data: ", data);
+				lrConsole("added");
+				lrConsole("Response data: ", data);
 				$("#bookmark").addClass("disabled");
 				$("#bookmark").off();
 			},
@@ -189,7 +189,7 @@ jQuery(document).ready(function($){
 
 		$("#visualBrowser").modal("hide");
 		handleMainResourceModal($(this).attr("name"));
-		console.log("show click");
+		lrConsole("show click");
 	});
 
 	$("table").on("click", ".author-timeline", function(evt){
@@ -227,7 +227,7 @@ var handleOnclickUserBar = function(obj){
 	
 	//Substr gets the number portion of "paradataX"
 	var test = cacheObj.attr("name").substr(8, cacheObj.attr("name").length-8);
-	console.log(test, self.currentObject().timeline()[test]);
+	lrConsole(test, self.currentObject().timeline()[test]);
 	displayObjectData(self.getReversedTimeline()[test]);
 
 }

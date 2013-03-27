@@ -81,10 +81,10 @@ class LRInterfaceUtility extends WP_Widget
 			</div>
 			
 			
-			<div style="margin-top:10px;">By publisher:</div>
+			<div style="margin-top:10px;"><label for="publisherSelectId">By publisher:</label></div>
 			<div data-bind="visible: $data.publishers.length > 0">
 				
-				<select class="filterPublisherSelect" style="width:90%;" data-bind="foreach:$data.publishers">	
+				<select id="publisherSelectId" class="filterPublisherSelect" style="width:90%;" data-bind="foreach:$data.publishers">	
 					<option data-bind="'html': $root.getShorterStr($data, 40), 'attr':{'value':$data}"></option>
 				</select>
 			</div>
@@ -96,7 +96,7 @@ class LRInterfaceUtility extends WP_Widget
 		<script type="text/javascript">
 			<?php include_once('templates/scripts/applicationPreview.php'); ?>
 		
-			console.log("Testing utility.. ", self);
+			lrConsole("Testing utility.. ", self);
 			$(document).ready(function(){
 				
 				$(".filterPublisherSelect").val("All Publishers");
@@ -120,7 +120,7 @@ class LRInterfaceUtility extends WP_Widget
 						self.filterSearchTerms()[0] = '';
 					}
 					
-					console.log(self.filterSearchTerms());
+					lrConsole(self.filterSearchTerms());
 					self.filterSearchTerms.valueHasMutated();
 					self.loadNewPage(false, true);
 				});		

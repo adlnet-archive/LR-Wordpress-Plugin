@@ -48,7 +48,7 @@
 		
 				
 				
-				console.log(temp.featuredResultsHelper(), names);
+				lrConsole(temp.featuredResultsHelper(), names);
 			});
 			
 		});

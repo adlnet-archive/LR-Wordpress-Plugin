@@ -21,8 +21,14 @@ if (!(window.console && console.log)) { (function() { var noop = function() {}; 
 
 var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
-	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false;
+	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, debugMode = true;
 
+var lrConsole  = function(){
+
+	if(debugMode && arguments.length > 0)
+		console.log.apply(console, arguments)
+};
+	
 var urlTransform = {
 
     "3dr.adlnet.gov" : function(urlObj, screenUrl){
@@ -53,7 +59,7 @@ var reverseTransform = {
         var idIndex = 1;
         var id = urlObj.href.split("=")[idIndex];
 
-        console.log(urlObj.href.split("="));
+        lrConsole(urlObj.href.split("="));
 
         return "http://3dr.adlnet.gov/api/rest/"+id+"/Format/dae?ID=00-00-00";
     }
@@ -70,8 +76,8 @@ var paradataStoreRequest = function(paradata){
 		data: createJSON(paradata, "paradata"),
 		success: function(data){
 
-			console.log("added");
-			console.log("Response data: ", data);
+			lrConsole("added");
+			lrConsole("Response data: ", data);
 		},
 		error: function(error){
 			console.error(error);
@@ -230,7 +236,7 @@ var handleMainResourceModal = function(src, direct){
 						currentObject.url = (data.url == undefined) ? "" : data.url;
 						currentObject.publisher = (data.publisher == undefined) ? "" : data.publisher;
 						
-						console.log("qmarkUrl: ", qmarkUrl);
+						lrConsole("qmarkUrl: ", qmarkUrl);
 						var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
 						
 						currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
@@ -273,7 +279,7 @@ var handleMainResourceModal = function(src, direct){
 
 		//Checks to see if there are enough rows in the timeline to warrant showing the scroll bars
 		//Should be checked whenever an element is added to or removed from the timeline
-		console.log("height: ", $("#timeline-table").height());
+		lrConsole("height: ", $("#timeline-table").height());
 		if($("#timeline-table").height() > 460)
 			$(".modal-timeline").getNiceScroll().show();
 
@@ -308,7 +314,7 @@ var enableModal = function(name){
         $("#modalFrame").attr({src:"about:blank"});
         $(".author-timeline").popover('hide');
 
-        //console.log("");
+        //lrConsole("");
         //self.currentObject({});
         //self.timeline.removeAll();
     });
@@ -388,7 +394,7 @@ var generateAuthorSpan = function(str, author, content, i){
 	author = author.replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 	str = str.replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 
-	//console.log("Debug span ", content + " " + author + " " + str);
+	//lrConsole("Debug span ", content + " " + author + " " + str);
 
     var title = author + '<button type="button" onclick="hidePopover()" class="close closeTimeline" aria-hidden="true">&times;</button>';
 
@@ -413,7 +419,7 @@ var displayObjectData = function(pmdata){
 		$(".prettyprint").remove();
 
 		//Watch out for XSS attacks
-		console.log("metadata: ", pmdata);
+		lrConsole("metadata: ", pmdata);
 		var metadata = '<pre class="prettyprint">';
 
 		if($.isArray(pmdata)){
@@ -457,7 +463,7 @@ var addFullDescriptions = function(){
 			if(self.results().length == 0)
 				return;
 			
-			console.log("The total slice: ", totalSlice);	
+			lrConsole("The total slice: ", totalSlice);	
 				
 			var keys = [];			
 			//Generate an array of MD5 hashes to use as identifiers in request
@@ -479,7 +485,7 @@ var addFullDescriptions = function(){
 			$.getJSON(serviceHost + '/data/?keys=' + keys, function(data){
 									
 				
-				console.log("Incoming data: ", data);
+				lrConsole("Incoming data: ", data);
 				
 				for(var i = 0; i < totalSlice; i++){
 					
@@ -487,7 +493,7 @@ var addFullDescriptions = function(){
 						
 						self.results.remove(i);
 						
-						console.log("Results: ", self.results()[i].title);
+						lrConsole("Results: ", self.results()[i].title);
 						self.results()[i].description = (data[i].description == undefined) ? "" : data[i].description;
 						
 						//If resource doesn't have a title, set title equal to "" (Knockout will display tags if title == "")
@@ -554,7 +560,7 @@ var mainViewModel = function(resources){
 		
 		self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == $(target).attr("name")) ? '' : $(target).attr("name");		
 		
-		console.log("click: ", self.filterSearchTerms()[1], $(target).attr("name"));
+		lrConsole("click: ", self.filterSearchTerms()[1], $(target).attr("name"));
 		self.results.removeAll();
 		self.loadNewPage(false, true);
 		
@@ -585,7 +591,7 @@ var mainViewModel = function(resources){
 	self.notOnBlackList = function(url){
 		
 		var link = getLocation(url);
-		//console.log("blacklist? " + link.hostname + " " , $.inArray(link.hostname, blackList));
+		//lrConsole("blacklist? " + link.hostname + " " , $.inArray(link.hostname, blackList));
 		
 		//We don't want to show resources in the blackList
 		return $.inArray(link.hostname, blackList) == -1;
@@ -609,7 +615,7 @@ var mainViewModel = function(resources){
 		totalSlice += newLoad * loadIndex;
 		loadIndex++;
 		self.results.valueHasMutated();
-		console.log(totalSlice);
+		lrConsole(totalSlice);
 		addFullDescriptions();
 	};
 	
@@ -644,7 +650,7 @@ var mainViewModel = function(resources){
 			}
 				
 				
-			console.log("Load index: ", loadIndex, query, data);
+			lrConsole("Load index: ", loadIndex, query, data);
 			
 			$.ajax(serviceHost + '/search',{
 				dataType : 'json',
@@ -652,12 +658,12 @@ var mainViewModel = function(resources){
 				data: data,
 			}).done(function(data){
 				
-				console.log("data: ", data);
+				lrConsole("data: ", data);
 				
 				if(data.responseText)
 					data = $.parseJSON(data.responseText);
 					
-				//console.log(data);
+				//lrConsole(data);
 				$('#spinnerDiv').hide();
 				$("#loadMore").show();
 				$('#spinnerDiv').css("margin-top", "50px");
@@ -682,7 +688,7 @@ var mainViewModel = function(resources){
 				
 				handlePerfectSize();
 			}).fail(function(error){
-				console.log(error);
+				lrConsole(error);
 				$('#spinnerDiv').hide();
 				$('#spinnerDiv').css("margin-top", "50px");
 				temp.resultsNotFound(true);
@@ -721,7 +727,7 @@ var mainViewModel = function(resources){
 	
 	self.relatedTagSlice = function(e){
 		
-		console.log(e);
+		lrConsole(e);
 		buildDocList(e);
 	};
 
@@ -755,7 +761,7 @@ var mainViewModel = function(resources){
 				return (temp().length > length)? temp().splice(0, length).join(", ") : temp().join(", ") ;
 			}
 			
-			//console.log("KEYS: ", str);
+			//lrConsole("KEYS: ", str);
             return (str.length > length)? str.splice(0, length).join(", ") : str.join(", ") ;
 		}
     };
@@ -765,7 +771,7 @@ var mainViewModel = function(resources){
 
 
     //allOrganizations is defined outside of this script
-    console.log(allOrganizations);
+    lrConsole(allOrganizations);
     self.allOrganizations = ko.observableArray(allOrganizations);
     self.allTerms = allTerms;
 
@@ -799,7 +805,7 @@ var mainViewModel = function(resources){
 
 		var date = getDate(dateStr);
 		
-		//console.log("Final content char: ",content[content.length-1]);
+		//lrConsole("Final content char: ",content[content.length-1]);
 		dateStr = moment(date.getTime()).format("M/D/YYYY"); //moment(date.getTime()).fromNow();
 
 		//3DR paradata fixes. Remove period, and fix "a user". More fixes (for all orgs) to come.
@@ -853,10 +859,10 @@ var mainViewModel = function(resources){
             data: createJSON(e, "follow"),
             success: function(data){
 
-				console.log("added");
+				lrConsole("added");
                 self.allOrganizations.remove(e);
                 self.followers.push({name:data.subject, content:[]});
-            //console.log(data);
+            //lrConsole(data);
             },
             error: function(error){
                 console.error(error);
@@ -876,7 +882,7 @@ var mainViewModel = function(resources){
 
     self.moveResourceToBookmark = function(index){
 
-		console.log(self.currentObject());
+		lrConsole(self.currentObject());
 
 		//Element was found in bookmarks
         if(self.bookmarks.indexOf(self.currentObject().url) !== -1){
@@ -886,7 +892,7 @@ var mainViewModel = function(resources){
 			self.currentResourceName(currentName);
 			self.bookmarks.remove(self.currentObject().url);
 
-			console.log(self.bookmarks().length);
+			lrConsole(self.bookmarks().length);
         }
 
         else{
@@ -898,7 +904,7 @@ var mainViewModel = function(resources){
             self.bookmarks.push(self.currentObject().url);
             self.currentResourceName("-1_" + (self.bookmarks().length-1) + "_" + "bookmarks");
 
-            console.log(self.bookmarks().length);
+            lrConsole(self.bookmarks().length);
         }
 
         enableDrag();
@@ -929,7 +935,7 @@ var mainViewModel = function(resources){
     self.isCurrentBookmarked = function(){
 
 
-		console.log("Is in bookmarks? ", self.bookmarks.indexOf(self.currentObject().url));
+		lrConsole("Is in bookmarks? ", self.bookmarks.indexOf(self.currentObject().url));
         return (self.bookmarks.indexOf(self.currentObject().url) !== -1);
     };
 
@@ -1047,7 +1053,7 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
           },
           abort: function() {
               if(xdr)xdr.abort();
-			  console.log("abort!");
+			  lrConsole("abort!");
           }
         };
       }
