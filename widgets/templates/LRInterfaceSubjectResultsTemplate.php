@@ -1,6 +1,6 @@
 <div class="lr_free_images" id="lr_featured_results_helper" data-bind="foreach:featuredResultsHelper, style: {display:featuredResultsHelper().length > 0?'block':'none'}">
 	<div>
-		<a data-bind="attr:{href:caption}">
+		<a style="text-decoration:none !important;" data-bind="attr:{href:caption}">
 			<span style="padding-bottom: 5px;display:block;" data-bind="text:title"></span>
 			<img data-bind="attr:{src:url, alt:title}" />
 		</a>

@@ -117,7 +117,7 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 	?>
 	
 	<div class="lr_free_images" id="lr_featured_search" data-bind="foreach:images">
-		<a data-bind="attr:{href:href}">
+		<a style="text-decoration:none !important;" data-bind="attr:{href:href}">
 			<img data-bind="attr:{src:url, alt:title}" />
 		</a>
 	</div>
