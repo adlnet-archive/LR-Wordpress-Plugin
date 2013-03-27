@@ -180,7 +180,12 @@
 			$("#endOfResults").hide();
 			$('input, textarea').placeholder();
 			var cacheJObj = $(".resultModal");
-
+			
+			<?php if(!empty($_GET['filter'])): ?>
+	
+				temp.filterSearchTerms()[1] = '<?php echo $_GET['filter']; ?>';
+			<?php endif; ?>
+			
 			//if regular search
 			self.loadNewPage(<?php echo $type == 'slice' ? 'true': ''; ?>);
 		});
