@@ -130,7 +130,7 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 		var ids = '<?php echo $ids; ?>' ? JSON.parse('<?php echo $ids; ?>') : '';
 		for(var i = 0; i < ids.length; i++){
 			
-			ids[i].href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
+			ids[i].href = '<?php echo add_query_arg(array("query"=>"LRreplaceMe","filter"=>"free.ed.gov"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
 			self.images.push(ids[i]);
 		}
 	</script>
