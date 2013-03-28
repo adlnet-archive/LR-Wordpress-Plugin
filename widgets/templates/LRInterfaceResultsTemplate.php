@@ -115,8 +115,6 @@
 				
 					<table class="table table-striped resultsTable">
 						<tbody data-bind="foreach:results">
-							<!-- WARNING: HAS SCREENSHOT TEMPORARY FIX -->
-							<!-- ko if: hasScreenshot -->
 							<tr style="border-top:none;">
 								<td style="border-top:none;padding-top:15px;padding-bottom:15px;" data-bind="style: { 'border-bottom': $index() < $root.results().length - 1 ? '#ddd dotted 1px' : ''}" class="imageCell">
 									<div style="float:left;width: 140px;min-width:140px;text-align:center;">
@@ -139,7 +137,6 @@
 									</div>
 								</td>
 							</tr>
-							<!-- /ko -->
 						</tbody>
 					</table>
 					<button data-bind="click:loadNewPage, visible:results().length>10" id="loadMore" style="float:right; border: 1px solid #d9d9d9 !important;" class="btn lrSubmit">Show More</button>
