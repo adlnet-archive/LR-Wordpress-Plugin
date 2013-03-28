@@ -60,7 +60,7 @@
 										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{alt:title,src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource screenshot" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
-										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" alt="Question mark image" class="img-polaroid" />
+										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" alt="Magnifying glass image" class="img-polaroid" />
 										<!-- /ko -->
 									</a>
 								</div>
@@ -123,7 +123,7 @@
 										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__ ); ?>" data-bind="attr:{alt:title, src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource Screenshot" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
-										<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" alt="Question mark image" />
+										<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" alt="Magnifying glass image" />
 										<!-- /ko -->
 										</a>
 									</div>
