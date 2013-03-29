@@ -546,13 +546,14 @@ var mainViewModel = function(resources){
 	self.isMetadataHidden = ko.observable(-1);
 	self.featuredResource = ko.observableArray();
 	self.children = [];
-	self.standards = [];
+	self.standards = ko.observableArray();
 	self.images = ko.observableArray();
 	self.featuredResultsHelper = ko.observableArray();
 	self.levelTracker = [0];
 	self.handleStandardsClick = function(item, e){};
 	self.standardDescription = '';
 	self.filterSearchTerms = ko.observableArray();
+	self.listOfStates = ko.observableArray();
 	
 	self.handlePublisherClick = function(data, obj){
 		
@@ -563,6 +564,49 @@ var mainViewModel = function(resources){
 		lrConsole("click: ", self.filterSearchTerms()[1], $(target).attr("name"));
 		self.results.removeAll();
 		self.loadNewPage(false, true);
+		
+		return;
+	};
+	
+	self.handleSubCategoryClick = function(data, obj){
+	
+		var target = obj.target;
+		console.log(data);
+		
+		//self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == $(target).attr("name")) ? '' : $(target).attr("name");		
+		
+		//lrConsole("click: ", self.filterSearchTerms()[1], $(target).attr("name"));
+		//self.results.removeAll();
+		//self.loadNewPage(false, true);
+		
+		$.getJSON(serviceHost + "/new/standards/" + data, function(data){
+
+				$("#standardsMapContainer").removeClass("loading");
+				spinner.stop();
+				
+				self.standards(data);
+				self.standards.valueHasMutated();
+				
+				lrConsole(data, self);
+				$("#standardsMapContainer .standard-div").hide();
+				
+				
+				$("#standardsMapContainer .standard-link-collapse").click(function(e){
+				
+					standardPlusCollapse(e, this);
+				});
+				
+				/*$("#standardsMapContainer .standard-link").click(function(e){
+			
+					e.preventDefault();
+					e.stopPropagation();
+					
+					window.location.href = 
+					'<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).attr("name")));
+						return false;
+				});*/
+				
+			});
 		
 		return;
 	};

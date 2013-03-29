@@ -20,9 +20,17 @@
 			<!-- /ko -->
 		</div>
 </script>
-<div id="standardsMapContainer" class="loading" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;">
-	<div id="standards-map-left" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': standards[0]}"></div>
-	<div id="standards-map-right" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': standards[1]}"></div>
+
+
+<div data-bind="foreach:listOfStates">
+
+	<div>
+		<a data-bind="text:$data, attr:{href:'/'}, click:$root.handleSubCategoryClick" ></a>
+	</div>
+</div>
+
+<div id="standardsMapContainer" class="loading" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;" data-bind="foreach:standards().children">
+	<div id="standards-map-left" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': $data}"></div>
 </div>
 
 	<script type="text/javascript">
@@ -36,40 +44,27 @@
 			@include_once('scripts/applicationPreview.php'); 
 		} ?>
 		
-		
-		
 		$(document).ready(function(){
 			
 			spinner.spin($("#standardsMapContainer")[0]);
 			
-			$.getJSON(serviceHost + "/standards", function(data){
+			$.getJSON(serviceHost + "/new/standards", function(data){
 				
-				$("#standardsMapContainer").removeClass("loading");
-				spinner.stop();
+				var remove = ['Common', 'english', 'math'];
+				for(var i = 0; i < data.length; i++){
 				
-				self.standards = data;
+					if($.inArray(data[i], remove) > -1){
+						
+						delete data[i];
+					}
+				}
 				
-				lrConsole(data, self);
-				ko.applyBindings(self, $("#standards-map-left")[0]);
-				ko.applyBindings(self, $("#standards-map-right")[0]);
-				$("#standardsMapContainer .standard-div").hide();
-				
-				
-				$("#standardsMapContainer .standard-link-collapse").click(function(e){
-				
-					standardPlusCollapse(e, this);
-				});
-				
-				/*$("#standardsMapContainer .standard-link").click(function(e){
-			
-					e.preventDefault();
-					e.stopPropagation();
-					
-					window.location.href = 
-					'<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).attr("name")));
-						return false;
-				});*/
+				self.listOfStates(data);
+				console.log("STANDARDS ", data);
 				
 			});
+			
+			
+
 		});
 	</script>
