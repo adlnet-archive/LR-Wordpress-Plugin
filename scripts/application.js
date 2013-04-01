@@ -546,7 +546,7 @@ var mainViewModel = function(resources){
 	self.isMetadataHidden = ko.observable(-1);
 	self.featuredResource = ko.observableArray();
 	self.children = [];
-	self.standards = ko.observableArray();
+	self.standards = ko.observable({children:[]});
 	self.images = ko.observableArray();
 	self.featuredResultsHelper = ko.observableArray();
 	self.levelTracker = [0];
@@ -569,46 +569,61 @@ var mainViewModel = function(resources){
 	};
 	
 	self.handleSubCategoryClick = function(data, obj){
-	
+			
 		var target = obj.target;
+		
+		$("#standardsMapContainer").show();
+		$('.spinner').show();
+		if(!saveThisStateNow)
+			spinner.spin($("#standardsMapContainer")[0]);
+			
+		saveThisStateNow = true;
+		
 		console.log(data);
+		self.standards({children:[]});
+
 		
-		//self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == $(target).attr("name")) ? '' : $(target).attr("name");		
-		
-		//lrConsole("click: ", self.filterSearchTerms()[1], $(target).attr("name"));
-		//self.results.removeAll();
-		//self.loadNewPage(false, true);
+		$('.stateList').hide();
 		
 		$.getJSON(serviceHost + "/new/standards/" + data, function(data){
 
-				$("#standardsMapContainer").removeClass("loading");
-				spinner.stop();
-				
-				self.standards(data);
-				self.standards.valueHasMutated();
-				
-				lrConsole(data, self);
-				$("#standardsMapContainer .standard-div").hide();
-				
-				
-				$("#standardsMapContainer .standard-link-collapse").click(function(e){
-				
-					standardPlusCollapse(e, this);
-				});
-				
-				/*$("#standardsMapContainer .standard-link").click(function(e){
+			$("#standardsMapContainer").removeClass("loading");
+			$('.spinner').hide();//spinner.stop();
 			
-					e.preventDefault();
-					e.stopPropagation();
-					
-					window.location.href = 
-					'<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).attr("name")));
-						return false;
-				});*/
-				
+			self.standards(data);
+			self.standards.valueHasMutated();
+			
+			lrConsole(data, self);
+			$("#standardsMapContainer .standard-div").hide();
+			
+			$("#standardsMapContainer .standard-link-collapse").click(function(e){
+			
+				standardPlusCollapse(e, this);
 			});
+				
+		});
 		
 		return;
+	};
+	self.handleStandardHeaderClick = function(data, e){
+	
+		var obj = $(e.target);
+		console.log(e,data);
+		
+		if(obj.hasClass('standardHeaderInactive')){
+		
+			$('.standardHeader').addClass('standardHeaderInactive');
+			obj.removeClass('standardHeaderInactive');
+			
+			if(self.standards().children){
+				$('#standardsMapContainer').hide();
+				$('.stateList').show();
+			}
+			
+		}
+		
+		//standards().children
+	
 	};
 	
 	self.getFilterSections = ko.computed(function(){

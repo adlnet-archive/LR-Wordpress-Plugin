@@ -162,6 +162,44 @@ cursor: pointer;
 	height: 100px;
 }
 
+.standardHeader{
+	
+	float:left;
+	border: 1px #ddd solid;
+	border-bottom: none;
+	padding: 10px 15px;
+	margin-right:10px;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	background-color: #efefef;
+	border-radius:3px;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+}
+
+.stateList{
+
+	margin: 15px 15%;
+}
+
+.individualState{
+	margin: 5px auto;
+}
+
+.standardHeaderInactive{
+
+	background: none;
+	border: none;
+	color: #aaa;
+}
+
+.standardHeaderInactive:hover{
+
+	color: #222;
+
+	
+}
 
 .lr_free_images{
 	
