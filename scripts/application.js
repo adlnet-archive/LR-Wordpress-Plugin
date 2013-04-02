@@ -21,7 +21,7 @@ if (!(window.console && console.log)) { (function() { var noop = function() {}; 
 
 var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
-	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, debugMode = true;
+	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, debugMode = true, saveStandardsData;
 
 var lrConsole  = function(){
 
@@ -554,6 +554,7 @@ var mainViewModel = function(resources){
 	self.standardDescription = '';
 	self.filterSearchTerms = ko.observableArray();
 	self.listOfStates = ko.observableArray();
+	self.commonCore = ko.observableArray();
 	
 	self.handlePublisherClick = function(data, obj){
 		
@@ -572,35 +573,20 @@ var mainViewModel = function(resources){
 			
 		var target = obj.target;
 		
-		$("#standardsMapContainer").show();
-		$('.spinner').show();
-		if(!saveThisStateNow)
-			spinner.spin($("#standardsMapContainer")[0]);
-			
-		saveThisStateNow = true;
-		
-		console.log(data);
-		self.standards({children:[]});
-
-		
 		$('.stateList').hide();
 		
+		$("#standardsMapContainer").hide();
+		spinner.spin($(".allStates")[0]);		
+		
 		$.getJSON(serviceHost + "/new/standards/" + data, function(data){
-
-			$("#standardsMapContainer").removeClass("loading");
-			$('.spinner').hide();//spinner.stop();
+			
 			
 			self.standards(data);
-			self.standards.valueHasMutated();
-			
+		
+			spinner.stop();
+			$("#standardsMapContainer").show();			
 			lrConsole(data, self);
-			$("#standardsMapContainer .standard-div").hide();
-			
-			$("#standardsMapContainer .standard-link-collapse").click(function(e){
-			
-				standardPlusCollapse(e, this);
-			});
-				
+			$("#standardsMapContainer .standard-div").hide();	
 		});
 		
 		return;
@@ -616,14 +602,35 @@ var mainViewModel = function(resources){
 			obj.removeClass('standardHeaderInactive');
 			
 			if(self.standards().children){
-				$('#standardsMapContainer').hide();
-				$('.stateList').show();
+				
+				if(data == 'State'){
+					$('.stateList').show();
+					$("#standardsMapContainer").hide();
+					
+					
+				}
+				else {
+					$("#standardsMapContainer").show();
+					$('.stateList').hide();
+					if(self.standards() != saveStandardsData){
+						
+						$("#standardsMapContainer").hide();
+						spinner.spin($(".allStates")[0]);	
+						
+						
+						window.setTimeout(function(){
+						
+							self.standards(saveStandardsData);
+							$("#standardsMapContainer .standard-div").hide();	
+							spinner.stop();
+							$("#standardsMapContainer").show();
+						}, 500);
+						
+					}
+				}
 			}
 			
-		}
-		
-		//standards().children
-	
+		}	
 	};
 	
 	self.getFilterSections = ko.computed(function(){

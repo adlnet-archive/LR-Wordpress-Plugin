@@ -178,9 +178,20 @@ cursor: pointer;
 	border-bottom-right-radius:0px;
 }
 
+.standardsContainer{
+	border-bottom:1px #ddd solid;
+	width:100%;
+	overflow:hidden;
+	margin-bottom: 15px;
+}
+
+.allStates{
+	min-height: 200px;
+}
+
 .stateList{
 
-	margin: 15px 15%;
+	margin: 0 14% 15px 14%;
 }
 
 .individualState{

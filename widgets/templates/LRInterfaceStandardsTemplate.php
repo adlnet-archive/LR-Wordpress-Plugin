@@ -21,32 +21,33 @@
 		</div>
 </script>
 
-<div style="border-bottom:1px #ddd solid; width:100%;overflow:hidden;">
-	<div class="standardHeader" data-bind="click:handleStandardHeaderClick">Common Core</div>
-	<div class="standardHeader standardHeaderInactive" data-bind="click:handleStandardHeaderClick">State</div>
+<div style="width:100%; overflow:hidden;clear:both;float:left;margin-bottom:20px;">
+	<div class="standardsContainer" data-bind="foreach:['Common Core', 'State']">
+		<div class="standardHeader" data-bind="click:$root.handleStandardHeaderClick, text:$data, css:{standardHeaderInactive:$index()>0}"></div>
+		<div style="float:right; color: red;padding:16px 10px 0 0;" data-bind="visible:$index()==1">Beta</div>
+	</div>
+	<div class="allStates">
+		<div id="standardsMapContainer" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;" data-bind="foreach:standards().children">
+			<div id="standards-map-left" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': $data}"></div>
+		</div>
+		<div class="stateList" data-bind="foreach:listOfStates.slice(0, 18)" style="float:left;">
+			<div class="individualState">
+				<span data-bind="visible:$data"><a data-bind="text:$data, attr:{href:'/'}, click:$root.handleSubCategoryClick"></a></span>
+			</div>
+		</div>
+		<div class="stateList" data-bind="foreach:listOfStates.slice(18, 35)" style="float:left;height:200px;">
+			<div class="individualState">
+				<span data-bind="visible:$data"><a data-bind="text:$data, attr:{href:'/'}, click:$root.handleSubCategoryClick"></a></span>
+			</div>
+		</div>
+		<div class="stateList" data-bind="foreach:listOfStates.slice(35, 52)" style="float:left;height:200px;">
+			<div class="individualState">
+				<span data-bind="visible:$data"><a data-bind="text:$data, attr:{href:'/'}, click:$root.handleSubCategoryClick"></a></span>
+			</div>
+		</div>
+		
+	</div>
 </div>
-<div class="allStates">
-	<div id="standardsMapContainer" class="loading" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;" data-bind="foreach:standards().children">
-		<div id="standards-map-left" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': $data}"></div>
-	</div>
-	<div class="stateList" data-bind="foreach:listOfStates.slice(0, 18)" style="float:left;">
-		<div class="individualState">
-			<span data-bind="visible:$data"><a data-bind="text:$data, attr:{href:'/'}, click:$root.handleSubCategoryClick"></a></span>
-		</div>
-	</div>
-	<div class="stateList" data-bind="foreach:listOfStates.slice(18, 35)" style="float:left;height:200px;">
-		<div class="individualState">
-			<span data-bind="visible:$data"><a data-bind="text:$data, attr:{href:'/'}, click:$root.handleSubCategoryClick"></a></span>
-		</div>
-	</div>
-	<div class="stateList" data-bind="foreach:listOfStates.slice(35, 52)" style="float:left;height:200px;">
-		<div class="individualState">
-			<span data-bind="visible:$data"><a data-bind="text:$data, attr:{href:'/'}, click:$root.handleSubCategoryClick"></a></span>
-		</div>
-	</div>
-	
-</div>
-
 
 	<script type="text/javascript">
 		
@@ -60,9 +61,27 @@
 		} ?>
 		
 		$(document).ready(function(){
-			$("#standardsMapContainer").hide();
-			$.getJSON(serviceHost + "/new/standards", function(data){
+
+			spinner.spin($(".allStates")[0]);	
+			$('.stateList').hide();
+			$.getJSON(serviceHost + "/new/standards/Common", function(data){
 				
+				self.standards(data);
+				console.log("STANDARDS ", data);
+				$("#standardsMapContainer .standard-div").hide();	
+				
+				saveStandardsData = data;
+				spinner.stop();
+			});			
+			
+			$("#standardsMapContainer").on("click",".standard-link-collapse",function(e){
+			
+				standardPlusCollapse(e, this);
+				
+			});
+			
+			$.getJSON(serviceHost + "/new/standards", function(data){
+
 				var remove = ['Common', 'english', 'math'];
 				for(var i = 0; i < data.length; i++){
 				
@@ -74,7 +93,6 @@
 				
 				self.listOfStates(data);
 				console.log("STANDARDS ", data);
-				
 			});
 			
 			
