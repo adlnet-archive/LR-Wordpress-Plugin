@@ -61,10 +61,12 @@
 		} ?>
 		
 		$(document).ready(function(){
+			
+			$.ajaxSetup({ cache:true });
 
 			spinner.spin($(".allStates")[0]);	
 			$('.stateList').hide();
-			$.getJSON(serviceHost + "/new/standards/Common", function(data){
+			$.ajax({cache:true, url: serviceHost + "/new/standards/Common", success:function(data){
 				
 				self.standards(data);
 				console.log("STANDARDS ", data);
@@ -72,7 +74,7 @@
 				
 				saveStandardsData = data;
 				spinner.stop();
-			});			
+			}});			
 			
 			$("#standardsMapContainer").on("click",".standard-link-collapse",function(e){
 			
@@ -80,7 +82,7 @@
 				
 			});
 			
-			$.getJSON(serviceHost + "/new/standards", function(data){
+			$.ajax({cache:true,url:serviceHost + "/new/standards", success:function(data){
 
 				var remove = ['Common', 'english', 'math'];
 				for(var i = 0; i < data.length; i++){
@@ -93,7 +95,7 @@
 				
 				self.listOfStates(data);
 				console.log("STANDARDS ", data);
-			});
+			}});
 			
 			
 
