@@ -555,6 +555,13 @@ var mainViewModel = function(resources){
 	self.filterSearchTerms = ko.observableArray();
 	self.listOfStates = ko.observableArray();
 	self.commonCore = ko.observableArray();
+	self.currentLevel = [0];
+	
+	self.handleStandardChildren = function(data, obj){
+		
+		data.children = ['noo'];
+		console.log(data);
+	};
 	
 	self.handlePublisherClick = function(data, obj){
 		

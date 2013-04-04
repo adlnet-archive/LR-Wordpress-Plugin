@@ -41,7 +41,25 @@ var standardPlusCollapse = function(e, self){
 	
 	self = self ? self : this;
 	
-	lrConsole("TESTING", $(self));
+	
+	var store = saveStandardsData;
+	var copyStore = temp.standards();
+	
+	var loadChildren = JSON.parse('[' +  $(self).siblings('.storeChildrenInfo').text() + ']');
+	
+	
+	for(var i = 0; i < loadChildren.length; i++){
+	
+		store = store.children[loadChildren[i]];
+		copyStore = copyStore.children[loadChildren[i]];
+		
+		console.log(saveStandardsData);
+	}
+	
+	store.children = copyStore.children;
+	
+	console.log(store, copyStore);
+	
 	
 	var isOpen = $(self).siblings(".saveOpen").data("isOpen");
 	if(isOpen == undefined){
