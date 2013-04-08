@@ -39,7 +39,7 @@
 		<div style="float:right; color: red;padding:16px 10px 0 0;" data-bind="visible:$index()==1">Beta</div>
 	</div>
 	<div class="allStates">
-		<div id="standardsMapContainer" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;" data-bind="foreach:standards().children">
+		<div id="standardsMapContainer" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;" data-bind="foreach:standardsMutated">
 			<div id="standards-map-left" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': $data}"></div>
 		</div>
 		<div class="stateList" data-bind="foreach:listOfStates.slice(0, 17)" style="float:left;">
@@ -82,7 +82,7 @@
 			if(a[i].children)
 				b[i].children = [];
 		}
-		return b;
+		return {children:b};
 	};
 	
 	$(document).ready(function(){
@@ -94,7 +94,7 @@
 		
 		$.ajax({cache:true, url: serviceHost + "/new/standards/Common", success:function(data){
 			
-			self.standards({children:getDirectChildren(data.children)});
+			self.standards(getDirectChildren(data.children));
 			$("#standardsMapContainer .standard-div").hide();		
 			saveStandardsData = data;
 			

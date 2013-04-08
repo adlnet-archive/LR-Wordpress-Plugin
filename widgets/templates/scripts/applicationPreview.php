@@ -28,7 +28,8 @@ temp.handleStandardsClick = function(item, e){
 		e.stopImmediatePropagation();
 		var baseEncoded = Base64.encode(item.title);
 		
-		window.location.href = '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(item.id)).replace("LRstandardReplaceMe", baseEncoded);
+		window.location.href = '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
+		encodeURIComponent(item.id)).replace("LRstandardReplaceMe", baseEncoded);
 		
 		return;
 };
@@ -42,23 +43,12 @@ var standardPlusCollapse = function(e, self){
 	self = self ? self : this;
 	
 	
-	var store = saveStandardsData;
-	var copyStore = temp.standards();
+
 	
 	var loadChildren = JSON.parse('[' +  $(self).siblings('.storeChildrenInfo').text() + ']');
 	
-	
-	for(var i = 0; i < loadChildren.length; i++){
-	
-		store = store.children[loadChildren[i]];
-		copyStore = copyStore.children[loadChildren[i]];
-		
-		console.log(saveStandardsData);
-	}
-	
-	store.children = copyStore.children;
-	
-	console.log(store, copyStore);
+	temp.standardsMutated(loadChildren);
+
 	
 	
 	var isOpen = $(self).siblings(".saveOpen").data("isOpen");

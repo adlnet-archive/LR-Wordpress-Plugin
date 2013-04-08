@@ -546,7 +546,7 @@ var mainViewModel = function(resources){
 	self.isMetadataHidden = ko.observable(-1);
 	self.featuredResource = ko.observableArray();
 	self.children = [];
-	self.standards = ko.observable({children:[]});
+	self.standards = ko.observableArray();
 	self.images = ko.observableArray();
 	self.featuredResultsHelper = ko.observableArray();
 	self.levelTracker = [0];
@@ -556,6 +556,33 @@ var mainViewModel = function(resources){
 	self.listOfStates = ko.observableArray();
 	self.commonCore = ko.observableArray();
 	self.currentLevel = [0];
+	
+	self.standardsMutated = ko.computed({
+	
+			read: function(){
+					return self.standards().children;
+				},
+				
+			write: function(loadChildren){
+			
+					var store = saveStandardsData;
+					var copyStore = self.standards();
+					for(var i = 0; i < loadChildren.length; i++){
+					
+						store = store.children[loadChildren[i]];
+						copyStore = copyStore.children[loadChildren[i]];
+						
+						
+					}
+					
+					console.log("Save standards: ", saveStandardsData);
+					copyStore.children = getDirectChildren(store.children);
+					
+					temp.standards({children:temp.standards().children, random:Math.random()});
+					console.log(store, copyStore);
+				}
+	
+	});
 	
 	self.handleStandardChildren = function(data, obj){
 		
