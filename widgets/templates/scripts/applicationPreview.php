@@ -24,17 +24,10 @@ newLoad = 15;
 
 temp.handleStandardsClick = function(item, e){
 		
-		console.log(item.title());
-		//return;
-		
-	//	e.stopImmediatePropagation();
 		var baseEncoded = Base64.encode(item.title());
-		
-		
-		window.location.href = '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
-		encodeURIComponent(item.title())).replace("LRstandardReplaceMe", baseEncoded);
-		
-		return;
+
+		return '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
+		encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded);	
 };
 
 

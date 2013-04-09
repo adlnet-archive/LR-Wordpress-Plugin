@@ -560,7 +560,9 @@ var mainViewModel = function(resources){
 		var me = this;
 		me.node = node;
 		me.title = ko.observable(node.title);
+		me.count = ko.observable(node.count);
 		me.children = noChildren === true? undefined : ko.observableArray();
+		me.id = noChildren === true? ko.observable(node.id) : undefined;
 		
 		me.loadChildren = function(){
 		
@@ -601,7 +603,8 @@ var mainViewModel = function(resources){
 		$.getJSON(serviceHost + "/new/standards/" + data, function(data){
 			
 			
-			self.standards(data);
+			self.standards(new self.model(data));
+			self.standards().loadChildren();
 		
 			spinner.stop();
 			$("#standardsMapContainer").show();			
@@ -639,8 +642,9 @@ var mainViewModel = function(resources){
 						
 						
 						window.setTimeout(function(){
-						
-							self.standards(saveStandardsData);
+
+							self.standards(new self.model(saveStandardsData));
+							self.standards().loadChildren();
 							$("#standardsMapContainer .standard-div").hide();	
 							spinner.stop();
 							$("#standardsMapContainer").show();
