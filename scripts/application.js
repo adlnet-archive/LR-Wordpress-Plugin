@@ -617,7 +617,7 @@ var mainViewModel = function(resources){
 	self.handleStandardHeaderClick = function(data, e){
 	
 		var obj = $(e.target);
-		console.log(e,data);
+		//console.log(e,data);
 		
 		if(obj.hasClass('standardHeaderInactive')){
 		
@@ -643,8 +643,8 @@ var mainViewModel = function(resources){
 						
 						window.setTimeout(function(){
 
-							self.standards(new self.model(saveStandardsData));
-							self.standards().loadChildren();
+							self.standards(saveStandardsData);
+							//self.standards().loadChildren();
 							$("#standardsMapContainer .standard-div").hide();	
 							spinner.stop();
 							$("#standardsMapContainer").show();

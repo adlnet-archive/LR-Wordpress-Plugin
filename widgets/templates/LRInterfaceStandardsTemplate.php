@@ -68,10 +68,11 @@
 		
 		$.ajax({cache:true, url: serviceHost + "/new/standards/Common", success:function(data){
 			
-			self.standards(new self.model(data));
+			saveStandardsData = new self.model(data);
+			self.standards(saveStandardsData);
 			self.standards().loadChildren();
 			$("#standardsMapContainer .standard-div").hide();		
-			saveStandardsData = data;
+			
 			
 			console.log("DATA FORMAT: ", saveStandardsData);
 			spinner.stop();
