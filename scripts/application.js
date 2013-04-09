@@ -546,7 +546,7 @@ var mainViewModel = function(resources){
 	self.isMetadataHidden = ko.observable(-1);
 	self.featuredResource = ko.observableArray();
 	self.children = [];
-	self.standards = ko.observableArray();
+	self.standards = ko.observable({children:[]});
 	self.images = ko.observableArray();
 	self.featuredResultsHelper = ko.observableArray();
 	self.levelTracker = [0];
@@ -554,40 +554,26 @@ var mainViewModel = function(resources){
 	self.standardDescription = '';
 	self.filterSearchTerms = ko.observableArray();
 	self.listOfStates = ko.observableArray();
-	self.commonCore = ko.observableArray();
-	self.currentLevel = [0];
 	
-	self.standardsMutated = ko.computed({
-	
-			read: function(){
-					return self.standards().children;
-				},
-				
-			write: function(loadChildren){
-			
-					var store = saveStandardsData;
-					var copyStore = self.standards();
-					for(var i = 0; i < loadChildren.length; i++){
-					
-						store = store.children[loadChildren[i]];
-						copyStore = copyStore.children[loadChildren[i]];
-						
-						
-					}
-					
-					console.log("Save standards: ", saveStandardsData);
-					copyStore.children = getDirectChildren(store.children);
-					
-					temp.standards({children:temp.standards().children, random:Math.random()});
-					console.log(store, copyStore);
-				}
-	
-	});
-	
-	self.handleStandardChildren = function(data, obj){
+	self.model = function(node, noChildren){
+
+		var me = this;
+		me.node = node;
+		me.title = ko.observable(node.title);
+		me.children = noChildren === true? undefined : ko.observableArray();
 		
-		data.children = ['noo'];
-		console.log(data);
+		me.loadChildren = function(){
+		
+			if(!me.node.children)
+				return;
+			
+			var childrenCheck;
+			for(var child in me.node.children){
+			
+				childrenCheck = me.node.children[child].children ? false : true;
+				me.children.push(new self.model(me.node.children[child], childrenCheck));
+			}
+		};
 	};
 	
 	self.handlePublisherClick = function(data, obj){

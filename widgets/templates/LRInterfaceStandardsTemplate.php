@@ -1,26 +1,15 @@
 <script type="text/html" id="standards-template">
 		<div>
-			
 			<!-- ko if: $data && $data.children !== undefined -->
-				<span class="storeChildrenInfo" data-bind="html: $root.currentLevel"></span>
-
-				<a href="#" data-bind="text: ' [ + ] '" class="standard-plus"></a>
-				<a href="#" data-bind="click:$root.handleStandardChildren, html: title[0].toUpperCase() + title.slice(1, title.length), attr:{name:$data.id!=undefined?$data.id:title}" class="standard-link-collapse" style="line-height:21px;"></a>
+				<a href="#" data-bind="click:$data.loadChildren, text: ' [ + ] '" class="standard-plus"></a>
+				<a href="#" data-bind="click:$data.loadChildren, html: title()[0].toUpperCase() + title().slice(1, title().length), attr:{name:$data.id!=undefined?$data.id:title}" class="standard-link-collapse" style="line-height:21px;"></a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $data.count + ' )': ''"></span>
 				<br/><br/>
 				<div class="saveOpen"></div>
 				
-				<span style="display:none;" data-bind="text:$root.currentLevel.push(0)"></span>
 				<div style="padding-left: 40px;" data-bind="'template':{'name': 'standards-template', 'foreach': children}, 'attr':{'class':'standard-div standard-' + $data.children.length}"></div>
-				
-				<span style="display:none;" data-bind="text:$root.currentLevel.pop()"></span>
-				<span style="display:none;" data-bind="html: $root.currentLevel[$root.currentLevel.length-1]++"></span>
 			<!-- /ko -->
-			
-			<!-- ko if: $data && $data.children == undefined -->
-				<span class="" data-bind="html: $root.currentLevel"></span>
-				<span style="display:none;" data-bind="html: $root.currentLevel[$root.currentLevel.length-1]++"></span>
-				
+			<!-- ko if: $data && $data.children == undefined -->				
 				<div style="border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7;" >
 					<a style="text-decoration:none;" href="#" data-bind="html: title, click:$root.handleStandardsClick" class="standard-link"></a>
 					<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $data.count + ' )': ''"></span>
@@ -39,7 +28,7 @@
 		<div style="float:right; color: red;padding:16px 10px 0 0;" data-bind="visible:$index()==1">Beta</div>
 	</div>
 	<div class="allStates">
-		<div id="standardsMapContainer" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;" data-bind="foreach:standardsMutated">
+		<div id="standardsMapContainer" style="clear:both; overflow:hidden; margin: 0 auto; width: 100%;" data-bind="foreach:standards().children">
 			<div id="standards-map-left" style="width: 90%; float: left; padding-left:10%;" data-bind="'template':{'name': 'standards-template', 'data': $data}"></div>
 		</div>
 		<div class="stateList" data-bind="foreach:listOfStates.slice(0, 17)" style="float:left;">
@@ -70,21 +59,6 @@
 		@include_once('scripts/applicationPreview.php'); 
 	} ?>
 	
-	var getDirectChildren = function(a){
-		var b = [];
-		for(var i = 0; i < a.length; i++){
-			
-			b[i] = {};
-			b[i].title = a[i].title;
-			b[i].count = a[i].count;
-			b[i].id = a[i].id;
-			
-			if(a[i].children)
-				b[i].children = [];
-		}
-		return {children:b};
-	};
-	
 	$(document).ready(function(){
 		
 		$.ajaxSetup({ cache:true });
@@ -94,7 +68,8 @@
 		
 		$.ajax({cache:true, url: serviceHost + "/new/standards/Common", success:function(data){
 			
-			self.standards(getDirectChildren(data.children));
+			self.standards(new self.model(data));
+			self.standards().loadChildren();
 			$("#standardsMapContainer .standard-div").hide();		
 			saveStandardsData = data;
 			
@@ -105,16 +80,8 @@
 		$("#standardsMapContainer").on("click",".standard-link-collapse",function(e){
 			standardPlusCollapse(e, this);
 		});
-		
-		/*$.ajax({cache:true,url:serviceHost + "/new/standards", success:function(data){
-			var remove = ['Common', 'english', 'math'];
-			for(var i = 0; i < data.length; i++){
-				if($.inArray(data[i], remove) > -1){
-					delete data[i];
-				}
-			}*/
-			self.listOfStates(["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"]);
-		//}});
+
+		self.listOfStates(["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"]);
 
 	});
 </script>

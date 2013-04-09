@@ -23,13 +23,16 @@ newLoad = 15;
 
 
 temp.handleStandardsClick = function(item, e){
-	
 		
-		e.stopImmediatePropagation();
-		var baseEncoded = Base64.encode(item.title);
+		console.log(item.title());
+		//return;
+		
+	//	e.stopImmediatePropagation();
+		var baseEncoded = Base64.encode(item.title());
+		
 		
 		window.location.href = '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
-		encodeURIComponent(item.id)).replace("LRstandardReplaceMe", baseEncoded);
+		encodeURIComponent(item.title())).replace("LRstandardReplaceMe", baseEncoded);
 		
 		return;
 };
@@ -38,18 +41,11 @@ temp.handleStandardsClick = function(item, e){
 var standardPlusCollapse = function(e, self){
 	
 	e.preventDefault();
-	e.stopPropagation();
 	
 	self = self ? self : this;
 	
-	
-
-	
-	var loadChildren = JSON.parse('[' +  $(self).siblings('.storeChildrenInfo').text() + ']');
-	
-	temp.standardsMutated(loadChildren);
-
-	
+	//var loadChildren = JSON.parse('[' +  $(self).siblings('.storeChildrenInfo').text() + ']');
+	//temp.standardsMutated(loadChildren);
 	
 	var isOpen = $(self).siblings(".saveOpen").data("isOpen");
 	if(isOpen == undefined){
