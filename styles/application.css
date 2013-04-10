@@ -240,3 +240,15 @@ cursor: pointer;
 	border:none;
 	padding:0;
 }
+
+.IE_error{
+
+	width:90%;
+	background-color:#ffdede;
+	padding:8px;
+	text-align:center;
+	margin:10px auto 25px auto;
+	border:1px solid #efcece;
+	color: #777;
+	display:none;
+}

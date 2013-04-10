@@ -24,6 +24,7 @@ include_once('widgets/LRInterfaceFeaturedSearch.php');
 include_once('widgets/LRInterfaceSubject.php');
 include_once('widgets/LRInterfaceCount.php');
 include_once('widgets/LRInterfaceSubjectResults.php');
+include_once('widgets/LRInterfaceIENotSupported.php');
 include_once('LRInterfacePluginSettings.php');
 
 function registerWidgets(){
@@ -37,6 +38,7 @@ function registerWidgets(){
 	register_widget("LRInterfaceCount");
 	register_widget("LRInterfaceFeaturedSearch");
 	register_widget("LRInterfaceSubjectResults");
+	register_widget("LRInterfaceIENotSupported");
 }
 
 function lr_enqueue_script(){
