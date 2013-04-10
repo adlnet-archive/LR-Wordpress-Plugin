@@ -593,8 +593,6 @@ var mainViewModel = function(resources){
 	
 	self.handleSubCategoryClick = function(data, obj){
 			
-		var target = obj.target;
-		
 		$('.stateList').hide();
 		
 		$("#standardsMapContainer").hide();
@@ -745,7 +743,7 @@ var mainViewModel = function(resources){
 			$.ajax(serviceHost + '/search',{
 				dataType : 'json',
 				jsonp : 'callback',
-				data: data,
+				data: data
 			}).done(function(data){
 				
 				lrConsole("data: ", data);

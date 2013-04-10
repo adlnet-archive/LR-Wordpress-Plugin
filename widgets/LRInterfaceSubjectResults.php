@@ -28,7 +28,7 @@ class LRInterfaceSubjectResults extends WP_Widget
   <script type="text/javascript">
 	(function(){
 		var file_frame;
-		var ids = '<?php echo $ids; ?>' ? JSON.parse('<?php echo $ids; ?>') : '';
+		var ids = '<?php echo $ids; ?>' ? $.parseJSON('<?php echo $ids; ?>') : '';
 		var setText = function(){
 			var text = '';
 			for(var i = 0; i < ids.length; i++){

@@ -13,7 +13,7 @@
 		<?php @include_once('scripts/applicationPreview.php'); ?>
 		
 		$(document).ready(function(){
-			var ids = '<?php echo $instance['ids']; ?>' ? JSON.parse('<?php echo $instance['ids']; ?>') : '';
+			var ids = '<?php echo $instance['ids']; ?>' ? $.parseJSON('<?php echo $instance['ids']; ?>') : '';
 			var indexLocation = [<?php echo $_GET['subject']; ?>];
 			
 			$.getJSON(serviceHost + "/data/sitemap", function(data){
