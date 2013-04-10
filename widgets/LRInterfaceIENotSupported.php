@@ -46,17 +46,11 @@ class LRInterfaceIENotSupported extends WP_Widget
 		<div class="IE_error">
 			<?php echo $title; ?>
 		</div>
-		<script type="text/javascript">
-			(function(){
-				if($.browser){
-				
-					var version = parseInt($.browser.version);
-					
-					if($.browser.msie && version <= 7)
-						$(".IE_error").show();
-				}
-			})();
-		</script>
+		<!--[if lte IE 7]>
+			<script type="text/javascript">
+				$(".IE_error").show();
+			</script>
+		<![endif]-->
 	
 	<?php
 
