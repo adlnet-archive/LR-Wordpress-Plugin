@@ -192,7 +192,7 @@ var fetchLiveParadata = function(src){
 			if(data.documents[0].document[i].resource_data_type == "paradata"){
 
 				jsonData = (typeof data.documents[0].document[i].resource_data == "string") ?
-							$.parseJSON( data.documents[0].document[i].resource_data ) : data.documents[0].document[i].resource_data;
+							JSON.parse( data.documents[0].document[i].resource_data ) : data.documents[0].document[i].resource_data;
 
 				self.currentObject().timeline.push(jsonData);
 			}
@@ -749,7 +749,7 @@ var mainViewModel = function(resources){
 				lrConsole("data: ", data);
 				
 				if(data.responseText)
-					data = $.parseJSON(data.responseText);
+					data = JSON.parse(data.responseText);
 					
 				//lrConsole(data);
 				$('#spinnerDiv').hide();

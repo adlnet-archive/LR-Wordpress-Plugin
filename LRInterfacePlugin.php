@@ -43,7 +43,7 @@ function lr_enqueue_script(){
 
 	wp_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', false );
 	wp_enqueue_script( 'knockout', 'https://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js', false );
-	wp_enqueue_script( 'json2', 'http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.min.js', false );
+	wp_enqueue_script( 'json2', '//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js', false );
 	wp_enqueue_script( 'hexmd5', plugins_url( "scripts/hexmd5.js" , __FILE__ ) , false );
 	wp_enqueue_script( 'lrinterface', plugins_url( "scripts/application.js" , __FILE__ ) , false );
 	wp_enqueue_script( 'spinjs', plugins_url( "scripts/spin.min.js" , __FILE__ ) , false );

@@ -35,7 +35,7 @@ class LRInterfaceFeaturedSearch extends WP_Widget
   <script type="text/javascript">
 	(function(){
 		var file_frame;
-		var ids = '<?php echo $ids; ?>' ? $.parseJSON('<?php echo $ids; ?>') : '';
+		var ids = '<?php echo $ids; ?>' ? JSON.parse('<?php echo $ids; ?>') : '';
 		var setText = function(){
 			var text = '';
 			for(var i = 0; i < ids.length; i++){
@@ -127,7 +127,7 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 			@include_once('templates/scripts/applicationPreview.php'); 
 		} ?>
 		
-		var ids = '<?php echo $ids; ?>' ? $.parseJSON('<?php echo $ids; ?>') : '';
+		var ids = '<?php echo $ids; ?>' ? JSON.parse('<?php echo $ids; ?>') : '';
 		for(var i = 0; i < ids.length; i++){
 			
 			ids[i].href = '<?php echo add_query_arg(array("query"=>"LRreplaceMe","filter"=>"free.ed.gov"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent(ids[i].title));
