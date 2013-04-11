@@ -234,8 +234,8 @@ cursor: pointer;
 	overflow:hidden;
 }
 .lr_free_images img{ 
-	height: 140px;
-	width:140px;
+	height: 140px !important;
+	width:140px !important;
 	background:none;
 	border:none;
 	padding:0;
