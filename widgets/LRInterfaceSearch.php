@@ -20,6 +20,11 @@ class LRInterfaceSearch extends WP_Widget
 
 <p>
 
+	<label for="<?php echo $this->get_field_id('title'); ?>">
+		Title: 
+	</label>	
+	<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
+	<br/><br/>
 	<label for="<?php echo $this->get_field_id('placeholder'); ?>">
 		Search text: 
 	</label>
@@ -69,16 +74,17 @@ class LRInterfaceSearch extends WP_Widget
  
 	if($instance['hide'] == 'on' && (empty($_GET['query']) && empty($_GET['lr_resource'])))
 		return;
- 
+
     echo $before_widget;
-    $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+    $title = empty($instance['title']) ? ' ' : $instance['title'];
     $type = empty($instance['type']) ? 'index' : $instance['type'];
     $label = empty($instance['label']) ? false : $instance['label'];
     $placeholder = $instance['placeholder'];
 	$options = get_option('lr_options_object');
 	
-    //if (!empty($title))
-    //  echo $before_title . $title . $after_title;;
+	
+    if (!empty($title))
+      echo $before_title . $title . $after_title;
 		
 	?>
 	<form method="get" id="LRsearchForm" action="<?php echo get_page_link( $options['results'] ); ?>">

@@ -17,7 +17,13 @@ class LRInterfaceFeaturedSearch extends WP_Widget
 	 wp_enqueue_media();
 ?>
 <p>
-
+	
+	<label for="<?php echo $this->get_field_id('title'); ?>">
+		Title: 
+	</label>	
+	<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
+	<br/><br/>
+	
 	<span>Current featured searches:</span>
 	<textarea style="width: 100%; height: 80px; background: #f3f3f3;" class="lr_list_featured_searches" disabled="disabled"></textarea><br/><br/>
 	
@@ -112,8 +118,14 @@ class LRInterfaceFeaturedSearch extends WP_Widget
     $ids = empty($instance['ids']) ? ' ' : $instance['ids'];
     $resources = empty($instance['resources']) ? array('') : explode(';', $instance['resources']);
     $host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
+	$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	
 	 echo $before_widget;
+	 
+	     
+    if (!empty($title))
+      echo $before_title . $title . $after_title;
+	  
 	?>
 	
 	<div class="lr_free_images" id="lr_featured_search" data-bind="foreach:images">
