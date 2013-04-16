@@ -554,6 +554,7 @@ var mainViewModel = function(resources){
 	self.standardDescription = '';
 	self.filterSearchTerms = ko.observableArray();
 	self.listOfStates = ko.observableArray();
+	self.standardsCounter = 0;
 	
 	self.model = function(node, noChildren){
 

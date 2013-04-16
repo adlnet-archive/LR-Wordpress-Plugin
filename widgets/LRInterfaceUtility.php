@@ -10,23 +10,25 @@ class LRInterfaceUtility extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'hide'=> '' ) );
     $title = empty($instance['title']) ? "Paradata" : $instance['title'];
-	
+    $hide = $instance['hide'];
 
 ?>
-
-
 <p>
-
 	<label for="<?php echo $this->get_field_id('title'); ?>">
 		Title: 
 	</label>
 	<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
 	<br/><br/>
 	
+	<label for="<?php echo $this->get_field_id('hide'); ?>">
+		Check to hide this widget on results and preview pages: 
+	</label>
+	<input class="widefat" <?php echo $hide == 'on' ? 'checked' : ''; ?> id="<?php echo $this->get_field_id('hide'); ?>" name="<?php echo $this->get_field_name('hide'); ?>" type="checkbox" />
+	<br/><br/>
+	
 </p>
-
 <?php
   }
  

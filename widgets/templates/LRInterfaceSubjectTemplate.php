@@ -1,10 +1,11 @@
 <script type="text/html" id="subject-template">
-		<div>
+		<span data-bind="text:$root.standardsCounter++" style="display:none;"></span>
+		<div class="standardsTree">
 			<!-- ko if: children.length > 0 -->
 
 				<a href="#" data-bind="text: '[ + ] '" class="standard-plus"></a>
 				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
-				<a href="#" data-bind="text: name, attr:{name:$data.name}" class="standard-link"></a><br/><br/>
+				<a href="#" data-bind="text: name, attr:{name:$data.name, href:'#'+$root.standardsCounter}" class="standard-link"></a><br/><br/>
 				<div class="saveOpen"></div>
 				<!-- ko if: $root.levelTracker.push(0) --><!-- /ko -->
 				<div style="padding-left: 40px;" data-bind="'template':{'name': 'subject-template', 'foreach': children}, 'attr':{'class':'standard-div standard-' + children.length}"></div>
@@ -13,7 +14,7 @@
 			
 			<!-- ko if: children.length == 0 -->
 				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
-				<a href="#" data-bind="text: name, attr:{name:$data.name}" class="standard-link"></a><br/><br/>
+				<a href="#" data-bind="text: name, attr:{name:$data.name,href:'#'+$root.standardsCounter}" class="standard-link"></a><br/><br/>
 				<div class="noChildren"></div>
 			<!-- /ko -->
 			
@@ -33,18 +34,26 @@
 	<?php if(empty($_GET['query']) && empty($_GET['lr_interface'])){
 			@include_once('scripts/applicationPreview.php'); 
 	} ?>
+
+	var openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
 	
 	$(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
 			lrConsole("Data: ", data);
+			
 			self.children = data.children;
 			ko.applyBindings(self, $("#subject-map-left")[0]);
 			ko.applyBindings(self, $("#subject-map-right")[0]);
 
 			$("#subjectMapContainer .standard-div").hide();
-			$("#subjectMapContainer .standard-link").each(function(){
+			
+			if(openTreeStateArr !== false)
+				$($(".standardsTree")[openTreeStateArr]).parents('.standard-div').show();		
+			
+			
+			$("#subjectMapContainer").on("click", ".standard-link", function(){
 				
-				$(this).attr('href', '<?php echo add_query_arg(array('query'=>'LRreplaceMe', 'subject'=>'LRsubjectReplace'), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text())).replace("LRsubjectReplace", encodeURIComponent($(this).siblings(".levelTracker").attr('name'))));
+				window.location = '<?php echo add_query_arg(array('query'=>'LRreplaceMe', 'subject'=>'LRsubjectReplace'), get_page_link( $options['results']));?>'.replace("LRreplaceMe", encodeURIComponent($(this).text())).replace("LRsubjectReplace", encodeURIComponent($(this).siblings(".levelTracker").attr('name')));
 				
 			});
 		});
