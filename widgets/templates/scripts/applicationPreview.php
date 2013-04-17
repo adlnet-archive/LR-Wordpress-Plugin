@@ -34,6 +34,8 @@ temp.handleStandardsClick = function(item, e){
 var standardPlusCollapse = function(e, self){
 	
 	e.preventDefault();
+	
+	self = self ? self : this;
 
 	var isOpen = $(self).siblings(".saveOpen").data("isOpen");
 	if(isOpen == undefined){
