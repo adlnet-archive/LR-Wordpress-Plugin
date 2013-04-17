@@ -12,7 +12,7 @@
 			<div style="padding-top:5px;">
 				<span style="color: #888;line-height:16px;" data-bind="text: 'Source: ' + currentObject().publisher, visible: currentObject().publisher != undefined && currentObject().publisher != '' "></span>
 			</div>
-			<p style="margin: 2.4rem auto" data-bind="html:currentObject().description"></p>
+			<p style="margin: 2.4rem 0;text-align:justify;" data-bind="html:currentObject().description"></p>
 			<div style="margin-top: 10px; text-align:center;">
 				<?php if(empty($options['metadata'])): ?>
 				<button class="btn btn-info lrSubmitNoFloat" style="border: 1px solid #d9d9d9 !important;" data-bind="click: handleDataClick, visible: isMetadataHidden() || isMetadataHidden() == -1">View Metadata</button>
