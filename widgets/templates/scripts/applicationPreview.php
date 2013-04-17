@@ -34,12 +34,7 @@ temp.handleStandardsClick = function(item, e){
 var standardPlusCollapse = function(e, self){
 	
 	e.preventDefault();
-	
-	self = self ? self : this;
-	
-	//var loadChildren = JSON.parse('[' +  $(self).siblings('.storeChildrenInfo').text() + ']');
-	//temp.standardsMutated(loadChildren);
-	
+
 	var isOpen = $(self).siblings(".saveOpen").data("isOpen");
 	if(isOpen == undefined){
 		isOpen = true;
