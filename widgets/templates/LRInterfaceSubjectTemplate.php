@@ -47,8 +47,15 @@
 
 			$("#subjectMapContainer .standard-div").hide();
 			
-			if(openTreeStateArr !== false)
-				$($(".standardsTree")[openTreeStateArr]).parents('.standard-div').show();		
+			if(openTreeStateArr !== false){
+				var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
+				cacheStandardDiv.show();		
+				cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+				
+					standardPlusCollapse({preventDefault:function(){}}, this);
+				});
+				
+			}
 			
 			
 			$("#subjectMapContainer").on("click", ".standard-link", function(){
