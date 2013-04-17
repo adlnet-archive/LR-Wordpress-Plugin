@@ -5,7 +5,8 @@
 
 				<a href="#" data-bind="text: '[ + ] '" class="standard-plus"></a>
 				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
-				<a href="#" data-bind="text: name, attr:{name:$data.name, href:'#'+$root.standardsCounter}" class="standard-link"></a><br/><br/>
+				<a href="#" data-bind="text: name, attr:{name:$data.name, href:'#'+$root.standardsCounter}" class="standard-link"></a>
+				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $root.addComma($data.count) + ' )': ''">&nbsp;</span><br/><br/>
 				<div class="saveOpen"></div>
 				<!-- ko if: $root.levelTracker.push(0) --><!-- /ko -->
 				<div style="padding-left: 40px;" data-bind="'template':{'name': 'subject-template', 'foreach': children}, 'attr':{'class':'standard-div standard-' + children.length}"></div>
@@ -14,7 +15,8 @@
 			
 			<!-- ko if: children.length == 0 -->
 				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
-				<a href="#" data-bind="text: name, attr:{name:$data.name,href:'#'+$root.standardsCounter}" class="standard-link"></a><br/><br/>
+				<a href="#" data-bind="text: name, attr:{name:$data.name,href:'#'+$root.standardsCounter}" class="standard-link"></a>
+				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $root.addComma($data.count) + ' )': ''">&nbsp;</span><br/><br/>
 				<div class="noChildren"></div>
 			<!-- /ko -->
 			
@@ -37,7 +39,7 @@
 
 	var openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
 	
-	$(function(){
+	$(document).ready(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
 			lrConsole("Data: ", data);
 			

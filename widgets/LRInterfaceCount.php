@@ -52,44 +52,13 @@ class LRInterfaceCount extends WP_Widget
 	</div>
 	
 	<script type="text/javascript">
-		var addDecimal = function(num){
-			var newStr = '';
-			var temp = 0;
-			var saveMod = 0;
-			
-			do {
-				temp = parseInt(num/1000);
-				
-				if(temp >= 1){
-					
-					saveMod = num % 1000;
-					
-					if(saveMod < 100)
-						saveMod = (saveMod < 10 ) ? '00' + saveMod : '0' + saveMod;
-						
-					newStr = ',' + saveMod + newStr;
-				}
-				
-				else{		
-					newStr = parseInt(num) + newStr;
-				}
-				
-				num = temp;
-				
-			} while(temp >= 1);
-			
-			return newStr;
-		};
-		
 		jQuery(document).ready(function($){
 		
 			$.getJSON('<?php echo $host; ?>/data',function(data){	
 							
-				$("#LR_resourceCount").html('<?php echo $count; ?>'.replace('$count', addDecimal(data['doc_count'])));
+				$("#LR_resourceCount").html('<?php echo $count; ?>'.replace('$count', self.addComma(data['doc_count'])));
 			});
 		});
-		
-		
 	</script>
 	<?php
     echo $after_widget;

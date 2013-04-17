@@ -531,6 +531,35 @@ var sliceSearchDone = function(){
 	handlePerfectSize();
 };
 
+var addComma = function(num){
+	var newStr = '';
+	var temp = 0;
+	var saveMod = 0;
+	
+	do {
+		temp = parseInt(num/1000);
+		
+		if(temp >= 1){
+			
+			saveMod = num % 1000;
+			
+			if(saveMod < 100)
+				saveMod = (saveMod < 10 ) ? '00' + saveMod : '0' + saveMod;
+				
+			newStr = ',' + saveMod + newStr;
+		}
+		
+		else{		
+			newStr = parseInt(num) + newStr;
+		}
+		
+		num = temp;
+		
+	} while(temp >= 1);
+	
+	return newStr;
+};
+
 /* The main View Model used by Knockout.js */
 var mainViewModel = function(resources){
 
@@ -579,6 +608,36 @@ var mainViewModel = function(resources){
 		};
 	};
 	
+	
+	self.addComma = function(num){
+		var newStr = '';
+		var temp = 0;
+		var saveMod = 0;
+		
+		do {
+			temp = parseInt(num/1000);
+			
+			if(temp >= 1){
+				
+				saveMod = num % 1000;
+				
+				if(saveMod < 100)
+					saveMod = (saveMod < 10 ) ? '00' + saveMod : '0' + saveMod;
+					
+				newStr = ',' + saveMod + newStr;
+			}
+			
+			else{		
+				newStr = parseInt(num) + newStr;
+			}
+			
+			num = temp;
+			
+		} while(temp >= 1);
+		
+		return newStr;
+	};
+		
 	self.handlePublisherClick = function(data, obj){
 		
 		var target = obj.target;
