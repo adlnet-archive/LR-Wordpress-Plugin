@@ -38,6 +38,22 @@
 	} ?>
 
 	var openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
+	window.onhashchange = function(e){
+		console.log(e);
+		openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
+		$("#subjectMapContainer .standard-div").hide();
+	
+		if(openTreeStateArr !== false){
+			var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
+			console.log(cacheStandardDiv);
+			cacheStandardDiv.show();		
+			cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+			
+				standardPlusCollapse({preventDefault:function(){}}, this);
+			});
+			
+		}
+	};
 	
 	$(document).ready(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
@@ -51,6 +67,7 @@
 			
 			if(openTreeStateArr !== false){
 				var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
+				
 				cacheStandardDiv.show();		
 				cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
 				
