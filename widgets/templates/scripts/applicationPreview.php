@@ -30,6 +30,23 @@ temp.handleStandardsClick = function(item, e){
 		encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded);	
 };
 
+var standardCollapseAllAndOpen = function(){
+
+	$(".saveOpen").data("isOpen", false);
+	$(".standard-div").hide();
+	$(self).parent().children(".standard-plus").text("[ + ] ");
+	
+	if(openTreeStateArr !== false){
+		var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
+		
+		cacheStandardDiv.show();		
+		cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+		
+			standardPlusCollapse({preventDefault:function(){}}, this);
+		});
+			
+	}
+};
 
 var standardPlusCollapse = function(e, self){
 	

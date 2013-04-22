@@ -9,7 +9,7 @@
 				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $root.addComma($data.count) + ' )': ''">&nbsp;</span><br/><br/>
 				<div class="saveOpen"></div>
 				<!-- ko if: $root.levelTracker.push(0) --><!-- /ko -->
-				<div style="padding-left: 40px;" data-bind="'template':{'name': 'subject-template', 'foreach': children}, 'attr':{'class':'standard-div standard-' + children.length}"></div>
+				<div style="padding-left: 40px;" data-bind="'template':{'name': 'subject-template', 'foreach': children}, 'attr':{'class':'standard-div'}"></div>
 				<!-- ko if: $root.levelTracker.pop() --><!-- /ko -->
 			<!-- /ko -->
 			
@@ -39,43 +39,19 @@
 
 	var openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
 	window.onhashchange = function(e){
-		console.log(e);
+
 		openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
-		$("#subjectMapContainer .standard-div").hide();
-	
-		if(openTreeStateArr !== false){
-			var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
-			console.log(cacheStandardDiv);
-			cacheStandardDiv.show();		
-			cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
-			
-				standardPlusCollapse({preventDefault:function(){}}, this);
-			});
-			
-		}
+		standardCollapseAllAndOpen();
 	};
 	
 	$(document).ready(function(){
 		$.getJSON(serviceHost + "/data/sitemap", function(data){
-			lrConsole("Data: ", data);
 			
 			self.children = data.children;
 			ko.applyBindings(self, $("#subject-map-left")[0]);
 			ko.applyBindings(self, $("#subject-map-right")[0]);
 
-			$("#subjectMapContainer .standard-div").hide();
-			
-			if(openTreeStateArr !== false){
-				var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
-				
-				cacheStandardDiv.show();		
-				cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
-				
-					standardPlusCollapse({preventDefault:function(){}}, this);
-				});
-				
-			}
-			
+			standardCollapseAllAndOpen();			
 			
 			$("#subjectMapContainer").on("click", ".standard-link", function(){
 				
