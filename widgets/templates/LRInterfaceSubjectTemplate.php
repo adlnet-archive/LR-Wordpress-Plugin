@@ -1,11 +1,10 @@
 <script type="text/html" id="subject-template">
-		<span data-bind="text:$root.standardsCounter++" style="display:none;"></span>
-		<div class="standardsTree">
+		<div class="subjectTree" data-bind="attr:{name:$root.subjectCounter++}">
 			<!-- ko if: children.length > 0 -->
 
-				<a href="#" data-bind="text: '[ + ] '" class="standard-plus"></a>
+				<a href="#" data-bind="html: '&#9654; '" class="standard-plus"></a>
 				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
-				<a href="#" data-bind="text: name, attr:{name:$data.name, href:'#'+$root.standardsCounter}" class="standard-link"></a>
+				<a href="#" data-bind="text: name, attr:{name:$data.name, href:'#t'+$root.subjectCounter}" class="standard-link"></a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $root.addComma($data.count) + ' )': ''">&nbsp;</span><br/><br/>
 				<div class="saveOpen"></div>
 				<!-- ko if: $root.levelTracker.push(0) --><!-- /ko -->
@@ -15,7 +14,7 @@
 			
 			<!-- ko if: children.length == 0 -->
 				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
-				<a href="#" data-bind="text: name, attr:{name:$data.name,href:'#'+$root.standardsCounter}" class="standard-link"></a>
+				<a href="#" data-bind="text: name, attr:{name:$data.name,href:'#t'+$root.subjectCounter}" class="standard-link"></a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $root.addComma($data.count) + ' )': ''">&nbsp;</span><br/><br/>
 				<div class="noChildren"></div>
 			<!-- /ko -->
@@ -37,10 +36,8 @@
 			@include_once('scripts/applicationPreview.php'); 
 	} ?>
 
-	var openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
+	var openTreeStateArr;
 	window.onhashchange = function(e){
-
-		openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(1,window.location.hash.length))-1:false;
 		standardCollapseAllAndOpen();
 	};
 	

@@ -24,17 +24,21 @@ newLoad = 15;
 
 temp.handleStandardsClick = function(item, e){
 		
-		var baseEncoded = Base64.encode(item.title());
+	var baseEncoded = Base64.encode(item.title());
 
-		return '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
-		encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded);	
+	console.log(e, '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
+	encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded));	
+	
+	return true;
 };
 
 var standardCollapseAllAndOpen = function(){
 
+	openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(2,window.location.hash.length))-1:false
+
 	$(".saveOpen").data("isOpen", false);
 	$(".standard-div").hide();
-	$(self).parent().children(".standard-plus").text("[ + ] ");
+	$(self).parent().children(".standard-plus").html("&#9654; ");
 	
 	if(openTreeStateArr !== false){
 		var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
@@ -60,18 +64,18 @@ var standardPlusCollapse = function(e, self){
 		$(self).siblings(".saveOpen").data("isOpen", true);
 		$(self).siblings(".standard-div").show();
 		
-		$(self).parent().children(".standard-plus").text("[ - ] ");
+		$(self).parent().children(".standard-plus").html("&#9660; ");
 		return;
 	}
 	else
 		$(self).siblings(".saveOpen").data("isOpen", ! isOpen);
 	
 	if(isOpen){
-		$(self).parent().children(".standard-plus").text("[ + ] ");
+		$(self).parent().children(".standard-plus").html("&#9654; ");
 		$(self).siblings(".standard-div").hide();
 	}
 	else{
-		$(self).parent().children(".standard-plus").text("[ - ] ");
+		$(self).parent().children(".standard-plus").html("&#9660; ");
 		$(self).siblings(".standard-div").show();
 	}
 	
