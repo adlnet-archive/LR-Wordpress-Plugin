@@ -38,10 +38,10 @@ var standardCollapseAllAndOpen = function(){
 
 	$(".saveOpen").data("isOpen", false);
 	$(".standard-div").hide();
-	$(self).parent().children(".standard-plus").html("&#9654; ");
+	$(self).parent().children(".standard-plus").html("&#9654;");
 	
 	if(openTreeStateArr !== false){
-		var cacheStandardDiv = $($(".standardsTree")[openTreeStateArr]).parents('.standard-div');
+		var cacheStandardDiv = $($(".subjectTree")[openTreeStateArr]).parents('.standard-div');
 		
 		cacheStandardDiv.show();		
 		cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
@@ -64,18 +64,21 @@ var standardPlusCollapse = function(e, self){
 		$(self).siblings(".saveOpen").data("isOpen", true);
 		$(self).siblings(".standard-div").show();
 		
-		$(self).parent().children(".standard-plus").html("&#9660; ");
+		//Arrow pointing right
+		$(self).parent().children(".standard-plus").html("&#9660;");
 		return;
 	}
 	else
 		$(self).siblings(".saveOpen").data("isOpen", ! isOpen);
 	
 	if(isOpen){
-		$(self).parent().children(".standard-plus").html("&#9654; ");
+		//Arrow pointing down
+		$(self).parent().children(".standard-plus").html("&#9654;");
 		$(self).siblings(".standard-div").hide();
 	}
 	else{
-		$(self).parent().children(".standard-plus").html("&#9660; ");
+		//Arrow pointing right
+		$(self).parent().children(".standard-plus").html("&#9660;");
 		$(self).siblings(".standard-div").show();
 	}
 	

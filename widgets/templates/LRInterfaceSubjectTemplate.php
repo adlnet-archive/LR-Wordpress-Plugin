@@ -2,7 +2,7 @@
 		<div class="subjectTree" data-bind="attr:{name:$root.subjectCounter++}">
 			<!-- ko if: children.length > 0 -->
 
-				<a href="#" data-bind="html: '&#9654; '" class="standard-plus"></a>
+				<a href="#" data-bind="html: '&#9654;'" class="standard-plus" style="outline:0;"></a>
 				<span class="levelTracker" style="visibility:invisible" data-bind="attr:{name:$root.levelTracker}"></span>
 				<a href="#" data-bind="text: name, attr:{name:$data.name, href:'#t'+$root.subjectCounter}" class="standard-link"></a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count >= 0? '( ' + $root.addComma($data.count) + ' )': ''">&nbsp;</span><br/><br/>
