@@ -222,7 +222,9 @@ var handleMainResourceModal = function(src, direct){
 
 			//Workaround to get 'hasScreenshot' property
 			if(src){
-				$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent(JSON.stringify([src])),function(data){
+                var url = window.location.pathname + "?json=data.get_data_items&keys=" + encodeURIComponent(JSON.stringify([src]));
+                console.log(url);				
+				$.getJSON(url, function(data){
 					var md5 = src;
 					if(data[0]){
 						data = data[0];
@@ -480,10 +482,11 @@ var addFullDescriptions = function(){
 			}
 			
 			keys = encodeURIComponent(JSON.stringify(keys));
-
+            var url = window.location.pathname + "?json=data.get_data_items&keys=" + keys;
+            console.log(url);
 			//Do request and update self.results			
-			$.getJSON(serviceHost + '/data/?keys=' + keys, function(data){
-									
+			$.getJSON(url, function(data){
+				data = data.data;			
 				
 				lrConsole("Incoming data: ", data);
 				
@@ -658,9 +661,9 @@ var mainViewModel = function(resources){
 		
 		$("#standardsMapContainer").hide();
 		spinner.spin($(".allStates")[0]);		
-		
-		$.getJSON(serviceHost + "/new/standards/" + data, function(data){
-			
+		var url = window.location.pathname + "?json=standards.standards&standard=" + data;		
+		$.getJSON(url, function(data){
+			data = data.data;
 			
 			self.standards(new self.model(data));
 			self.standards().loadChildren();
@@ -800,18 +803,18 @@ var mainViewModel = function(resources){
 				
 				
 			lrConsole("Load index: ", loadIndex, query, data);
-			
-			$.ajax(serviceHost + '/search',{
+			data.json = "search.search";
+			$.ajax(window.location.pathname, {
 				dataType : 'json',
 				jsonp : 'callback',
 				data: data
 			}).done(function(data){
 				
-				lrConsole("data: ", data);
 				
+				lrConsole("data: ", data);
 				if(data.responseText)
-					data = JSON.parse(data.responseText);
-					
+					data = JSON.parse(data.responseText).data;
+				data = data.data;
 				//lrConsole(data);
 				$('#spinnerDiv').hide();
 				$("#loadMore").show();

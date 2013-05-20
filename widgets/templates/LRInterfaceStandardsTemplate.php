@@ -65,9 +65,9 @@
 
 		spinner.spin($(".allStates")[0]);	
 		$('.stateList').hide();
-		
-		$.getJSON(serviceHost + "/new/standards/Common", function(data){
-			
+		var url = window.location.pathname + "?json=standards.standards&standard=Common";
+		$.getJSON(url, function(data){
+			data = data.data;
 			saveStandardsData = new self.model(data);
 			self.standards(saveStandardsData);
 			self.standards().loadChildren();
