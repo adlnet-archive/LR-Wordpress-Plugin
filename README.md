@@ -9,6 +9,13 @@ Some info about the plugin and its usage here.
   * Widgetize Pages Light allows you to create a "sidebar" that is displayed in the main content area of a page.
   * You may follow [Widgetize's sidebar creation instructions](http://otwthemes.com/online-documentation-widgetize-pages-light/) whenever this document asks you to create a new sidebar.
 
+### Installing the Service Proxies
+0. Go to the wp-admin page and login as an administrative user
+0. Install and activate the json-api Wordpress plugin.
+0. Copy the files from our controllers directory to wp-content\plugins\json-api\controllers directory
+0. On the wp-admin page go to the JSON API settings page via the left menu setting -> JSON API
+0. Enable the Data, Search and Standards controllers, all others can be deactivated.
+
 ##Configuration
 
 ### Creating a Results Page
@@ -31,6 +38,7 @@ Some info about the plugin and its usage here.
   * `Check to hide metadata` allows you to specify whether metadata may be viewed from the resource preview page.
   * `Results` should be set to the name of the newly created Results page.
 0. You **must** click `Save Changes`
+
 
 ### Displaying a Search Bar
 Note: This section is placed after displaying the results because the search bar requires an existing results page to function properly.
