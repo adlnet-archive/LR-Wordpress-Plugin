@@ -134,12 +134,12 @@ class LRInterfaceUtility extends WP_Widget
 		return;
 	}
 	
-	
-    $title = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
- 
-    if (!empty($title))
-      echo $before_title . $title .  $after_title;;
-?>	
+	if(empty($options['paradata'])){
+		$title = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
+	 
+		if (!empty($title))
+		  echo $before_title . $title .  $after_title;;
+	?>
 	
 	<div class="modal-timeline">
 		<table id="timeline-table" class="table table-striped">
@@ -156,6 +156,8 @@ class LRInterfaceUtility extends WP_Widget
 			<span data-bind="if: checkTimelineLength(currentObject().timeline) == 0">Paradata not found</span>
 		</div>
 	</div>
+	
+	<? } ?>
 	
 	<script type="text/javascript" src="<?php echo plugins_url( '/templates/scripts/moment.min.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript">
