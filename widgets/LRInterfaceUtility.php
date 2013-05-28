@@ -42,12 +42,13 @@ class LRInterfaceUtility extends WP_Widget
   function widget($args, $instance)
   {
     $type = $_GET['type'];
+	$options = get_option('lr_options_object');
 
-	if(empty($_GET['lr_resource']) && $type != "slice" && empty($_GET["query"])){
+	if((empty($_GET['lr_resource']) || !empty($options['paradata'])) && $type != "slice" && empty($_GET["query"])){
 		return;
 	}
 	
-	$options = get_option('lr_options_object');
+	
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];	
 	extract($args, EXTR_SKIP);
 	echo $before_widget;
