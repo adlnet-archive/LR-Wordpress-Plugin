@@ -158,7 +158,7 @@ class LRInterfaceUtility extends WP_Widget
 		</div>
 	</div>
 	
-	<? } ?>
+	<?php } ?>
 	
 	<script type="text/javascript" src="<?php echo plugins_url( '/templates/scripts/moment.min.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript">
@@ -169,4 +169,4 @@ class LRInterfaceUtility extends WP_Widget
 	<?php
     echo $after_widget;
   }
-}
+} 
