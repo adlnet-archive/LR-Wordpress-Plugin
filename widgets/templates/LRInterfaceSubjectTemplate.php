@@ -42,8 +42,9 @@
 	};
 	
 	$(document).ready(function(){
-		$.getJSON(serviceHost + "/data/sitemap", function(data){
-			
+		var url = window.location.pathname + "?json=data.get_data_item&doc_id=sitemap";
+		$.getJSON(url, function(data){
+			data = data.data;
 			self.children = data.children;
 			ko.applyBindings(self, $("#subject-map-left")[0]);
 			ko.applyBindings(self, $("#subject-map-right")[0]);
