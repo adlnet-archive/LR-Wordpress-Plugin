@@ -42,7 +42,7 @@
 	};
 	
 	$(document).ready(function(){
-		var url = window.location.pathname + "?json=data.get_data&doc_id=sitemap";
+		var url = window.location.pathname + "?json=data.get_data_item&doc_id=sitemap";
 		$.getJSON(url, function(data){
 			data = data.data;
 			self.children = data.children;

@@ -223,11 +223,12 @@ var handleMainResourceModal = function(src, direct){
 			//Workaround to get 'hasScreenshot' property
 			if(src){
                 var url = window.location.pathname + "?json=data.get_data_items&keys=" + encodeURIComponent(JSON.stringify([src]));
-                console.log(url);				
 				$.getJSON(url, function(data){
+					data = data.data;
+					data = data.pop();
+					console.log(data);
 					var md5 = src;
-					if(data[0]){
-						data = data[0];
+					if(data){
 						src = data.url;
 						
 						//This is done because observable.valueHasMutated wasn't working.. so assign each property to a new object individually and update self
@@ -483,7 +484,6 @@ var addFullDescriptions = function(){
 			
 			keys = encodeURIComponent(JSON.stringify(keys));
             var url = window.location.pathname + "?json=data.get_data_items&keys=" + keys;
-            console.log(url);
 			//Do request and update self.results			
 			$.getJSON(url, function(data){
 				data = data.data;			

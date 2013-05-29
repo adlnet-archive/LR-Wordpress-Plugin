@@ -112,11 +112,11 @@ class LRInterfaceFeatured extends WP_Widget
 		
 		$(document).ready(function(){
             var url = window.location.pathname + "?json=data.get_data_items&keys=" + encodeURIComponent('<?php echo json_encode($save_arr); ?>');
-            console.log(url);			
-			$.getJSON(url,function(data){		
-				$.each(data.data, function(i, data){
+			$.getJSON(url,function(d){		
+				lrConsole(d);
+				$.each(d.data, function(i, data){
 					
-					lrConsole(data);
+					
 					var src = data.url;
 					var md5 = data._id;
 					var currentObject = new resourceObject("Item", src);

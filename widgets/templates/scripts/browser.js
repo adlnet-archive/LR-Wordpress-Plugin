@@ -238,7 +238,6 @@ var BROWSER = (function () {
 						
 						var keys = encodeURIComponent(JSON.stringify(md5));
                         var url = window.location.pathname + "?json=data.get_data_items&keys=" + keys;
-                        console.log(url);
 						$.getJSON(url, function(data){
 							data = data.data;
 							for(var i = 0; i < data.length; i++){

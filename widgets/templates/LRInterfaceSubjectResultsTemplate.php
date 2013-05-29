@@ -15,7 +15,7 @@
 		$(document).ready(function(){
 			var ids = '<?php echo $instance['ids']; ?>' ? JSON.parse('<?php echo $instance['ids']; ?>') : '';
 			var indexLocation = [<?php echo $_GET['subject']; ?>];
-			var url = window.location.pathname + "?json=data.get_data&doc_id=sitemap";
+			var url = window.location.pathname + "?json=data.get_data_item&doc_id=sitemap";
 			$.getJSON(url, function(data){
 				data = data.data;
 				if(data.children == undefined)
