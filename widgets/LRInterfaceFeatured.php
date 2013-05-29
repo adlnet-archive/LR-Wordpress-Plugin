@@ -10,11 +10,14 @@ class LRInterfaceFeatured extends WP_Widget
  
   function form($instance)
   {
+	wp_enqueue_script( 'knockout', 'https://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js', false );
     $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '', 'hide' => '') );
     $title = $instance['title'];
     $resources = $instance['resources'];
     $total = $instance['total'];
     $hide = $instance['hide'];
+	
+	$options = get_option('lr_options_object');
 ?>
 
 <p>
@@ -38,21 +41,98 @@ class LRInterfaceFeatured extends WP_Widget
 	
 	</select>
 	
-	
 	<br/><br/>	
-	
 	<label for="<?php echo $this->get_field_id('resources'); ?>">
-		Resource ID pool separated by semicolons: 
+		Random selection pool: 
 	</label>
-	<textarea class="widefat" rows="10" id="<?php echo $this->get_field_id('resources'); ?>" name="<?php echo $this->get_field_name('resources'); ?>" type="text"><?php echo attribute_escape($resources); ?></textarea>
-	<br/><br/>
-	
+	<div style="margin: 10px auto 20px auto;border: 1px #ebebeb solid;padding:5px;">	
+		<input data-bind="value:getVal" value="<?php echo attribute_escape($resources); ?>" id="<?php echo $this->get_field_id('resources'); ?>" name="<?php echo $this->get_field_name('resources'); ?>" type="hidden" />
+		
+		<div data-bind="foreach:resources">
+			<div style="margin-bottom:10px;">
+				<a data-bind="text: $data.title.length>25?$data.title.substr(0, 25)+'...':$data.title.substr(0, 25), attr:{href:$root.baseUrl.replace('LRreplaceMe', $data.resource)}" 
+				target="_blank"></a>
+				
+				<input type="text" data-bind="value:$data.resource, visible:!existing" placeholder="Enter resource ID or URL" style="width:80%;" />
+				<span style="float:right;color:red;font-weight:bold;font-size:16px;cursor:pointer;" data-bind="click: $root.deleteResource" >x</span>
+			</div>
+		</div>
+		
+		<div style="text-align:right;">
+			<a href="" data-bind="click: $root.addResource" >Add New</a>
+		</div>
+	</div>	
+
 	<label for="<?php echo $this->get_field_id('hide'); ?>">
 		Check to hide this widget on results and preview pages: 
 	</label>
 	<input class="widefat" <?php echo $hide == 'on' ? 'checked' : ''; ?> id="<?php echo $this->get_field_id('hide'); ?>" name="<?php echo $this->get_field_name('hide'); ?>" type="checkbox" />
 	<br/><br/>
+
 </p>
+<script type="text/javascript">
+	var resourcesModel;
+	var allResources = '<?php echo $resources; ?>'.split(';');
+	var temp = [];
+	
+	//Not sure why Wordpress is loading this widget's script more than once
+	var subsequentLoad = subsequentLoad ? true : false;
+	if(! subsequentLoad){
+		jQuery(document).ready(function(){
+			
+			
+			
+			resourcesModel = new function(){
+			
+				var self = this;
+				
+				self.addResource = function(){
+				
+					self.resources.push({resource:'', title:'', existing: false});
+					console.log("HI THERE");
+				};			
+				self.deleteResource = function(e){
+				
+					self.resources.remove(e);
+					console.log("HI THERE");
+				};
+				
+				self.getVal = function(){
+					
+					var str = '';
+					
+					var l = resourcesModel.resources().length;
+					for(var i = 0; i < l; i++){
+					
+						str += resourcesModel.resources()[i] + (i + 1 != l) ? ';' : '';
+					}
+					
+					console.log(str);
+					return str;
+				}
+				
+				self.baseUrl = '<?php echo add_query_arg("lr_resource", "LRreplaceMe", get_page_link( $options['results']));?>';
+			};
+			
+			
+			jQuery.getJSON('http://12.109.40.31/data/?keys='+encodeURIComponent(JSON.stringify(allResources)), function(data){
+
+				for(var i = 0; i < allResources.length; i++){
+					
+					console.log(i);
+					temp[i] = {resource: allResources[i], title: (allResources[i] == data[i]._id) ? data[i].title : '', existing:true};
+				}
+				
+				console.log(temp);
+				resourcesModel.resources = ko.observableArray(temp);
+				ko.applyBindings(resourcesModel);
+			});
+			
+		});
+	}
+	
+	subsequentLoad = true;
+</script>
   
 <?php
   }

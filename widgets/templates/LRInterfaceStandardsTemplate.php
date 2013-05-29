@@ -23,7 +23,7 @@
 </script>
 
 <div style="width:100%; overflow:hidden;clear:both;float:left;margin-bottom:20px;">
-	<div class="standardsContainer" data-bind="foreach:['Common Core', 'State']">
+	<div class="standardsContainer" data-bind="foreach:['Multistate', 'State']">
 		<div class="standardHeader" data-bind="click:$root.handleStandardHeaderClick, text:$data, css:{standardHeaderInactive:$index()>0}"></div>
 		<div style="float:right; color: red;padding:16px 10px 0 0;" data-bind="visible:$index()==1">Beta</div>
 	</div>

@@ -42,12 +42,13 @@ class LRInterfaceUtility extends WP_Widget
   function widget($args, $instance)
   {
     $type = $_GET['type'];
+	$options = get_option('lr_options_object');
 
-	if(empty($_GET['lr_resource']) && $type != "slice" && empty($_GET["query"])){
+	if((empty($_GET['lr_resource']) || !empty($options['paradata'])) && $type != "slice" && empty($_GET["query"])){
 		return;
 	}
 	
-	$options = get_option('lr_options_object');
+	
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];	
 	extract($args, EXTR_SKIP);
 	echo $before_widget;
@@ -134,12 +135,12 @@ class LRInterfaceUtility extends WP_Widget
 		return;
 	}
 	
-	
-    $title = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
- 
-    if (!empty($title))
-      echo $before_title . $title .  $after_title;;
-?>	
+	if(empty($options['paradata'])){
+		$title = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
+	 
+		if (!empty($title))
+		  echo $before_title . $title .  $after_title;;
+	?>
 	
 	<div class="modal-timeline">
 		<table id="timeline-table" class="table table-striped">
@@ -156,6 +157,8 @@ class LRInterfaceUtility extends WP_Widget
 			<span data-bind="if: checkTimelineLength(currentObject().timeline) == 0">Paradata not found</span>
 		</div>
 	</div>
+	
+	<? } ?>
 	
 	<script type="text/javascript" src="<?php echo plugins_url( '/templates/scripts/moment.min.js' , __FILE__ ) ?>"></script>
 	<script type="text/javascript">

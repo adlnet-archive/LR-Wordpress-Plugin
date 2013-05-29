@@ -60,6 +60,10 @@ $nodeArray = array("http://node01.public.learningregistry.net/", "http://node02.
 		<tr valign="top">
 			<th scope="row">Check to hide metadata:</th>
 			<td><input type="checkbox" name="lr_options_object[metadata]" <?php echo !empty($options['metadata'])?' checked ':''; ?> /></td>
+        </tr>			
+		<tr valign="top">
+			<th scope="row">Check to hide paradata:</th>
+			<td><input type="checkbox" name="lr_options_object[paradata]" <?php echo !empty($options['paradata'])?' checked ':''; ?> /></td>
         </tr>	
 		<tr valign="top">
 			<th scope="row">Results: </th>
