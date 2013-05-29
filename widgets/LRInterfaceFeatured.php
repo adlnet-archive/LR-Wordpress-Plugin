@@ -11,6 +11,7 @@ class LRInterfaceFeatured extends WP_Widget
   function form($instance)
   {
 	wp_enqueue_script( 'knockout', 'https://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js', false );
+	wp_enqueue_style( 'lrinterface', plugins_url( "styles/application.css" , __DIR__ ));
     $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'resources' => '', 'total' => '', 'hide' => '') );
     $title = $instance['title'];
     $resources = $instance['resources'];
@@ -46,15 +47,15 @@ class LRInterfaceFeatured extends WP_Widget
 		Random selection pool: 
 	</label>
 	<div style="margin: 10px auto 20px auto;border: 1px #ebebeb solid;padding:5px;">	
-		<input data-bind="value:getVal" value="<?php echo attribute_escape($resources); ?>" id="<?php echo $this->get_field_id('resources'); ?>" name="<?php echo $this->get_field_name('resources'); ?>" type="hidden" />
+		<input data-bind="value:strValue" value="<?php echo attribute_escape($resources); ?>" id="<?php echo $this->get_field_id('resources'); ?>" name="<?php echo $this->get_field_name('resources'); ?>" type="hidden" />
 		
 		<div data-bind="foreach:resources">
 			<div style="margin-bottom:10px;">
-				<a data-bind="text: $data.title.length>25?$data.title.substr(0, 25)+'...':$data.title.substr(0, 25), attr:{href:$root.baseUrl.replace('LRreplaceMe', $data.resource)}" 
+				<a data-bind="text: $data.title.length>25?$data.title.substr(0, 25)+'...':$data.title.substr(0, 25), attr:{href:$root.baseUrl.replace('LRreplaceMe', $data.resource())}" 
 				target="_blank"></a>
 				
-				<input type="text" data-bind="value:$data.resource, visible:!existing" placeholder="Enter resource ID or URL" style="width:80%;" />
-				<span style="float:right;color:red;font-weight:bold;font-size:16px;cursor:pointer;" data-bind="click: $root.deleteResource" >x</span>
+				<input type="text" data-bind="value:$data.resource, visible:!existing, valueUpdate:'afterkeydown'" placeholder="Enter resource ID or URL" style="width:80%;" />
+				<a class="LRxButton" style="float:right;" data-bind="click: $root.deleteResource" >X</a>
 			</div>
 		</div>
 		
@@ -66,68 +67,79 @@ class LRInterfaceFeatured extends WP_Widget
 	<label for="<?php echo $this->get_field_id('hide'); ?>">
 		Check to hide this widget on results and preview pages: 
 	</label>
-	<input class="widefat" <?php echo $hide == 'on' ? 'checked' : ''; ?> id="<?php echo $this->get_field_id('hide'); ?>" name="<?php echo $this->get_field_name('hide'); ?>" type="checkbox" />
+	<input class="widefat" <?php echo $hide == 'on' ? 'checked' : ''; ?> id="<?php echo $this->get_field_id('hide'); ?>" name="<?php echo $this->get_field_name('hide'); ?>" type="checkbox" style="background:none;border:none;"/>
 	<br/><br/>
 
 </p>
 <script type="text/javascript">
-	var resourcesModel;
-	var allResources = '<?php echo $resources; ?>'.split(';');
-	var temp = [];
+	var resourcesModel, allResources = '<?php echo $resources; ?>'.split(';'), temp = [];
 	
 	//Not sure why Wordpress is loading this widget's script more than once
+	//Second time being included seems to work more consistently
 	var subsequentLoad = subsequentLoad ? true : false;
-	if(! subsequentLoad){
+	if( subsequentLoad){
 		jQuery(document).ready(function(){
-			
-			
-			
+
 			resourcesModel = new function(){
-			
 				var self = this;
 				
-				self.addResource = function(){
+				self.strValue = ko.observable('');
+				self.baseUrl = '<?php echo add_query_arg("lr_resource", "LRreplaceMe", get_page_link( $options['results']));?>';
+				self.saveRegex = new RegExp(/[^0-9a-zA-Z]/g);
 				
-					self.resources.push({resource:'', title:'', existing: false});
-					console.log("HI THERE");
-				};			
-				self.deleteResource = function(e){
-				
-					self.resources.remove(e);
-					console.log("HI THERE");
+				self.testForURL = function(str){
+					//This string does not contain characters that are NOT alphanumeric, okay to return
+					if(self.saveRegex.test(str) === false)
+						return str;
+						
+					return str.split("lr_resource=")[1] || '';
 				};
 				
-				self.getVal = function(){
+				self.handleValue = function(){
+						
+					var str = '';				
+					if(!self.resources) return '';
 					
-					var str = '';
-					
-					var l = resourcesModel.resources().length;
+					var l = self.resources().length;
+					var temp = '';
 					for(var i = 0; i < l; i++){
-					
-						str += resourcesModel.resources()[i] + (i + 1 != l) ? ';' : '';
+						temp = self.testForURL(self.resources()[i].resource());
+						if(temp.length == 0)
+							continue;
+							
+						str +=  (str.length > 0 && i > 0)? ';' + temp : temp;
 					}
-					
-					console.log(str);
-					return str;
+
+					self.strValue(str);
+					return self.strValue();
+				};
+				
+				self.addResource = function(){
+					self.resources.push({resource:ko.observable(''), title:'', existing: false});
+					self.resources().slice(-1)[0].resource.subscribe(self.handleValue);
+				};			
+				self.deleteResource = function(e){
+					//Possible KO memory leak due to not disposing of subscription?
+					self.resources.remove(e);
+				};
+			};
+
+			jQuery.getJSON('<?php echo home_url(); ?>?json=data.get_data_items&keys='+encodeURIComponent(JSON.stringify(allResources)), function(data){
+				
+				data = data.data;
+				for(var i = 0; i < allResources.length; i++){
+					if(allResources[i] && data[i])
+						temp[i] = {resource: ko.observable(allResources[i]), title: (allResources[i] == data[i]._id) ? data[i].title : '', existing:true};
 				}
 				
-				self.baseUrl = '<?php echo add_query_arg("lr_resource", "LRreplaceMe", get_page_link( $options['results']));?>';
-			};
-			
-			
-			jQuery.getJSON('http://12.109.40.31/data/?keys='+encodeURIComponent(JSON.stringify(allResources)), function(data){
-
-				for(var i = 0; i < allResources.length; i++){
-					
-					console.log(i);
-					temp[i] = {resource: allResources[i], title: (allResources[i] == data[i]._id) ? data[i].title : '', existing:true};
-				}
+				resourcesModel.resources = ko.observableArray(temp);
+				resourcesModel.resources.subscribe(resourcesModel.handleValue);
+				resourcesModel.handleValue();
 				
 				console.log(temp);
-				resourcesModel.resources = ko.observableArray(temp);
+				
 				ko.applyBindings(resourcesModel);
 			});
-			
 		});
 	}
 	
