@@ -5,20 +5,19 @@ Some info about the plugin and its usage here.
 ## Install
 0. [Download](https://github.com/mickmuzac/LR-Wordpress-Widget/archive/master.zip) the LR Wordpress plugin.
 0. [Install and activate](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins) the LR Wordpress plugin via the upload tab in the admin panel in Wordpress.
-0. Install and activate [Widgetize Pages Light](http://wordpress.org/extend/plugins/widgetize-pages-light/) via the admin panel in Wordpress.
+0. Install and activate [JSON API](http://wordpress.org/plugins/json-api/).
+0. Install and activate [Widgetize Pages Light](http://wordpress.org/extend/plugins/widgetize-pages-light/).
   * Widgetize Pages Light allows you to create a "sidebar" that is displayed in the main content area of a page.
   * You may follow [Widgetize's sidebar creation instructions](http://otwthemes.com/online-documentation-widgetize-pages-light/) whenever this document asks you to create a new sidebar.
 
 ##Configuration
 
-### Installing the Service Proxies
-0. Go to the wp-admin page and login as an administrative user
-0. Install and activate the json-api Wordpress plugin.
-0. Copy the files from our controllers directory to wp-content\plugins\json-api\controllers directory
-0. On the wp-admin page go to the JSON API settings page via the left menu setting -> JSON API
-0. Enable the Data, Search and Standards controllers, all others can be deactivated.
+#### Installing the Service Proxies
+0. Copy all of the files in the `wp-content\plugins\LR-Wordpress-Widget\controllers` directory to the `wp-content\plugins\json-api\controllers` directory.
+0. Hover over `Settings` in the admin panel and click on the newly created `JSON API` sublink.
+0. Activate the Data, Search and Standards controllers, all others can be deactivated.
 
-### Creating a Results Page
+#### Creating a Results Page
 0. Create a new sidebar using Widgetize Pages Light. Name it `Results Sidebar`
 0. [Create a new Wordpress page](http://codex.wordpress.org/Pages#Creating_Pages) to display the results.
   * Before publishing this new page, click the blue icon labeled `Insert Sidebar ShortCode`. Select `Results Sidebar` and then click "Insert".
@@ -30,7 +29,7 @@ Some info about the plugin and its usage here.
   * `Number of Results Per Page` is mandatory and is set to `50` by defualt.
   * `Results page text` is used to explicitly specify the format in which the header on the Results page is displayed. `$query` is replaced with the search term. Example: if you set the page text as `Showing results for $query` and the user searches for `math`, then the header on the Results page will be `Showing results for math`
 
-###Global Plugin Settings
+####Global Plugin Settings
 0. Click on the newly created `LR Interface` link in the admin panel.
   * `WebService Endpoint` is mandatory and is set to `http://12.109.40.31` by default. Changing this value is generally not needed.
   * `Learning Registry Node` is mandatory and is set to `http://node01.public.learningregistry.net/` by default.
@@ -39,8 +38,9 @@ Some info about the plugin and its usage here.
   * `Results` should be set to the name of the newly created Results page.
 0. You **must** click `Save Changes`
 
+##Optional Components
 
-### Displaying a Search Bar
+#### Displaying a Search Bar
 Note: This section is placed after displaying the results because the search bar requires an existing results page to function properly.
 
 0. Add the `LR Interface Search Bar` widget to a sidebar (will appear as a search box on your live site).
@@ -49,7 +49,7 @@ Note: This section is placed after displaying the results because the search bar
   * `Search Method` is mandatory and is set to `Indexed Search` by defualt. Slice is also an option.
 0. To-do...
 
-### Displaying the Standards Browser
+#### Displaying the Standards Browser
 0. Create a new sidebar. Name it `Standards Sidebar`.
 0. Create a new Wordpress page to display the standards. Before publishing this new page, click the blue icon labeled `Insert Sidebar ShortCode`. Select `Standards Sidebar` and then click "Insert". You may now save and publish the page.
 0. Add the `LR Interface Standards Browser` widget to `Standards Sidebar`
@@ -57,16 +57,16 @@ Note: This section is placed after displaying the results because the search bar
   * To-do
 0. To-do
 
-###Displaying the Subject Map
+####Displaying the Subject Map
 0. To-do
 
-###Displaying Featured Resources
+####Displaying Featured Resources
 0. To-do
 
-###Displaying the Paradata Timeline
+####Displaying the Paradata Timeline
 0. To-do
 
-###Displaying the Index Count
+####Displaying the Index Count
 0. To-do
 
 
