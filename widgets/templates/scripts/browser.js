@@ -237,8 +237,9 @@ var BROWSER = (function () {
 						});
 						
 						var keys = encodeURIComponent(JSON.stringify(md5));
-						$.getJSON(serviceHost + '/data/?keys=' + keys, function(data){
-												
+                        var url = window.location.pathname + "?json=data.get_data_items&keys=" + keys;
+						$.getJSON(url, function(data){
+							data = data.data;
 							for(var i = 0; i < data.length; i++){
 							
 								if(data[i]){

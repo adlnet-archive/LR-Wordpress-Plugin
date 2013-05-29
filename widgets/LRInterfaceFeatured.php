@@ -191,11 +191,12 @@ class LRInterfaceFeatured extends WP_Widget
 		} ?>
 		
 		$(document).ready(function(){
-			lrConsole(serviceHost + '/data/?keys=' + encodeURIComponent('<?php echo json_encode($save_arr); ?>'));
-			$.getJSON(serviceHost + '/data/?keys=' + encodeURIComponent('<?php echo json_encode($save_arr); ?>'),function(data){		
-				$.each(data, function(i, data){
+            var url = window.location.pathname + "?json=data.get_data_items&keys=" + encodeURIComponent('<?php echo json_encode($save_arr); ?>');
+			$.getJSON(url,function(d){		
+				lrConsole(d);
+				$.each(d.data, function(i, data){
 					
-					lrConsole(data);
+					
 					var src = data.url;
 					var md5 = data._id;
 					var currentObject = new resourceObject("Item", src);
