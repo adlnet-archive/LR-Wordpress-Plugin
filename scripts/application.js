@@ -589,25 +589,32 @@ var mainViewModel = function(resources){
 	self.standardsCounter = 0;
 	self.subjectCounter = 0;
 	
-	self.model = function(node, noChildren){
+	self.model = function(node, noChildren, parentRoute){
 
 		var me = this;
 		me.node = node;
+		me.parentRoute = parentRoute ? parentRoute : [0];
 		me.title = ko.observable(node.title);
 		me.count = ko.observable(node.count);
 		me.children = noChildren === true? undefined : ko.observableArray();
 		me.id = noChildren === true? ko.observable(node.id) : undefined;
+		
 		
 		me.loadChildren = function(){
 		
 			if(!me.node.children)
 				return;
 			
-			var childrenCheck;
-			for(var child in me.node.children){
-			
-				childrenCheck = me.node.children[child].children ? false : true;
-				me.children.push(new self.model(me.node.children[child], childrenCheck));
+			var tempArr = $.extend(true, [], me.parentRoute);
+			tempArr.push(-1);
+
+			for(var i = 0; i < me.node.children.length; i++){
+				
+				tempArr = $.extend(true, [], tempArr);
+				tempArr[tempArr.length-1]++;
+				
+				childrenCheck = me.node.children[i].children ? false : true;
+				me.children.push(new self.model(me.node.children[i], childrenCheck, tempArr));
 			}
 		};
 	};

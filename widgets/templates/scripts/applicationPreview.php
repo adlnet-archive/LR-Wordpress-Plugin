@@ -26,29 +26,56 @@ temp.handleStandardsClick = function(item, e){
 		
 	var baseEncoded = Base64.encode(item.title());
 
-	console.log(e, '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
-	encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded));	
+	window.location = '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
+	encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded);	
 	
 	return true;
 };
 
 var standardCollapseAllAndOpen = function(){
 
-	openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(2,window.location.hash.length))-1:false
-
-	$(".saveOpen").data("isOpen", false);
-	$(".standard-div").hide();
-	$(self).parent().children(".standard-plus").html("&#9654;");
-	
-	if(openTreeStateArr !== false){
-		var cacheStandardDiv = $($(".subjectTree")[openTreeStateArr]).parents('.standard-div');
+	if(window.location.hash.charAt(1) == 't'){
 		
-		cacheStandardDiv.show();		
-		cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+		var openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(2,window.location.hash.length))-1:false;
 		
-			standardPlusCollapse({preventDefault:function(){}}, this);
-		});
+		console.log(openTreeStateArr);
+		$(".saveOpen").data("isOpen", false);
+		$(".standard-div").hide();
+		
+		if(openTreeStateArr !== false){
+			var cacheStandardDiv = $($('.subjectTree')[openTreeStateArr]).parents('.standard-div');
 			
+			cacheStandardDiv.show();		
+			cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+			
+				standardPlusCollapse({preventDefault:function(){}}, this);
+			});
+				
+		}
+	}
+	
+	if(window.location.hash.charAt(1) == 's'){
+	
+		var openTreeStateArr = window.location.hash?window.location.hash.slice(2,window.location.hash.length).split(',') : false;
+		console.log(openTreeStateArr);
+
+		$(".saveOpen").data("isOpen", false);
+		$(".standard-div").hide();
+		/*
+			Resume here
+		*/
+		if(openTreeStateArr !== false){
+			
+			var tempPointer = temp.standards().children()[openTreeStateArr[0]];
+			for(var i = 1; openTreeStateArr.length-1 > i; i++){
+				
+				//if(tempPointer)
+					tempPointer.loadChildren();
+					tempPointer = tempPointer.children()[openTreeStateArr[i]];
+			}	
+			
+			console.log('Hi:', tempPointer, openTreeStateArr);
+		}
 	}
 };
 

@@ -8,9 +8,8 @@ Version: 1
 Author URI: http://adlnet.gov/
 */
 
-function sanitize_lr($str, $opt){
-	
-	return $str;
+function sanitize_lr($str, $opt = ''){
+
 	return preg_replace('/[^a-zA-Z0-9'.$opt.']+/', '', $str);
 }
 

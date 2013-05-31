@@ -1,7 +1,7 @@
 <script type="text/html" id="standards-template">
-		<div class="standardsTree" data-bind="attr:{name:$root.standardsCounter++}">
+		<div class="standardsTree">
 			<!-- ko if: $data && $data.children !== undefined -->
-				<a href="#" data-bind="click:$data.loadChildren, text: ' [ + ] '" class="standard-plus"></a>
+				<a href="#" data-bind="click:$data.loadChildren, text: '&#9654;'" class="standard-plus"></a>
 				<a href="#" data-bind="'click':$data.loadChildren, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), 'attr':{'name':$data.id!=undefined?$data.id:title()}" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
 				<br/><br/>
@@ -11,7 +11,7 @@
 			<!-- /ko -->
 			<!-- ko if: $data && $data.children == undefined -->				
 				<div style="border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7;" >
-					<a style="text-decoration:none;" href="#" data-bind="'html': title(), 'attr':{href:'#s'+$root.standardsCounter}, 'click':$root.handleStandardsClick" class="standard-link">&nbsp;</a>
+					<a style="text-decoration:none;" href="#" data-bind="'html': title(), 'attr':{href:'#s'+parentRoute}, 'click':$root.handleStandardsClick" class="standard-link">&nbsp;</a>
 					<span class="childrenResourceNumber" data-bind="'text': $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
 					
 					<div class="noChildren"></div>
@@ -59,6 +59,10 @@
 		@include_once('scripts/applicationPreview.php'); 
 	} ?>
 	
+	window.onhashchange = function(e){
+		standardCollapseAllAndOpen();
+	};
+	
 	$(document).ready(function(){
 		
 		$.ajaxSetup({ cache:true });
@@ -68,14 +72,16 @@
 		var url = window.location.pathname + "?json=standards.standards&standard=Common";
 		$.getJSON(url, function(data){
 			data = data.data;
+			
 			saveStandardsData = new self.model(data);
 			self.standards(saveStandardsData);
 			self.standards().loadChildren();
-
+			
 			$("#standardsMapContainer .standard-div").hide();		
 			
 			console.log("DATA FORMAT: ", saveStandardsData);
 			spinner.stop();
+			standardCollapseAllAndOpen();
 		});			
 		
 		$("#standardsMapContainer").on("click",".standard-link-collapse",function(e){
