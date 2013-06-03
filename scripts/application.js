@@ -207,9 +207,10 @@ var fetchLiveParadata = function(src){
 };
 
 var displaySocialMediaButtons = function(){
-	
-	$("#socialMediaPlugins").show();
-	$("#socialMediaPlugins").html(socialMediaPlugins);
+	if(socialMediaPlugins){
+		$("#socialMediaPlugins").show();
+		$("#socialMediaPlugins").html(socialMediaPlugins);
+	}
 };
 
 var handleMainResourceModal = function(src, direct){
