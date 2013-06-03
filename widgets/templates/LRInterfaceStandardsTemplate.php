@@ -1,13 +1,13 @@
 <script type="text/html" id="standards-template">
 		<div class="standardsTree">
 			<!-- ko if: $data && $data.children !== undefined -->
-				<a href="#" data-bind="click:$data.loadChildren, text: '&#9654;'" class="standard-plus"></a>
+				<a href="#" data-bind="click:$data.loadChildren" class="standard-plus">&#9654;</a>
 				<a href="#" data-bind="'click':$data.loadChildren, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), 'attr':{'name':$data.id!=undefined?$data.id:title()}" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
 				<br/><br/>
 				<div class="saveOpen"></div>
 				
-				<div style="padding-left: 40px;" data-bind="'template':{'name': 'standards-template', 'foreach': children}, 'attr':{'class':'standard-div'}"></div>
+				<div style="padding-left: 40px;" class="standard-div" data-bind="'template':{'name': 'standards-template', 'foreach': children}"></div>
 			<!-- /ko -->
 			<!-- ko if: $data && $data.children == undefined -->				
 				<div style="border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7;" >
@@ -77,7 +77,7 @@
 			self.standards(saveStandardsData);
 			self.standards().loadChildren();
 			
-			$("#standardsMapContainer .standard-div").hide();		
+			//$("#standardsMapContainer .standard-div").hide();		
 			
 			console.log("DATA FORMAT: ", saveStandardsData);
 			spinner.stop();
@@ -85,7 +85,7 @@
 		});			
 		
 		$("#standardsMapContainer").on("click",".standard-link-collapse",function(e){
-			standardPlusCollapse(e, this);
+			//standardPlusCollapse(e, this);
 		});
 
 		self.listOfStates(["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"]);

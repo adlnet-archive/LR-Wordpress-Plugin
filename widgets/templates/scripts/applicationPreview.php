@@ -55,32 +55,31 @@ var standardCollapseAllAndOpen = function(){
 	}
 	
 	if(window.location.hash.charAt(1) == 's'){
-	
+
 		var openTreeStateArr = window.location.hash?window.location.hash.slice(2,window.location.hash.length).split(',') : false;
-		console.log(openTreeStateArr);
 
 		$(".saveOpen").data("isOpen", false);
 		$(".standard-div").hide();
-		/*
-			Resume here
-		*/
+		
 		if(openTreeStateArr !== false){
-			
-			var tempPointer = temp.standards().children()[openTreeStateArr[0]];
-			for(var i = 1; openTreeStateArr.length-1 > i; i++){
+			var tempPointer = temp.standards().children()[openTreeStateArr[1]];
+			for(var i = 2; openTreeStateArr.length > i; i++){
+
+				tempPointer.loadChildren();
 				
-				//if(tempPointer)
-					tempPointer.loadChildren();
+				if(tempPointer.children){
+					
+					standardPlusCollapse({preventDefault:function(){}}, $('[name="'+tempPointer.title()+'"]'));
 					tempPointer = tempPointer.children()[openTreeStateArr[i]];
+				}
 			}	
-			
-			console.log('Hi:', tempPointer, openTreeStateArr);
 		}
 	}
 };
 
 var standardPlusCollapse = function(e, self){
 	
+	console.log("Collapse");
 	e.preventDefault();
 	
 	self = self ? self : this;
@@ -111,7 +110,6 @@ var standardPlusCollapse = function(e, self){
 	
 	return false;
 };
-
 $(document).on("click", ".standard-plus", standardPlusCollapse);
 
 jQuery(document).ready(function($){

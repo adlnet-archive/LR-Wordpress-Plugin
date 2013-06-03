@@ -601,7 +601,8 @@ var mainViewModel = function(resources){
 		
 		
 		me.loadChildren = function(){
-		
+			
+			console.log("Load children");
 			if(!me.node.children)
 				return;
 			
