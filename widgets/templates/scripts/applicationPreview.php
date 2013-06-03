@@ -32,54 +32,60 @@ temp.handleStandardsClick = function(item, e){
 	return true;
 };
 
-var standardCollapseAllAndOpen = function(){
+var standardCollapseAllAndOpen = function(e){
 
-	if(window.location.hash.charAt(1) == 't'){
-		
-		var openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(2,window.location.hash.length))-1:false;
-		
-		console.log(openTreeStateArr);
-		$(".saveOpen").data("isOpen", false);
-		$(".standard-div").hide();
-		
-		if(openTreeStateArr !== false){
-			var cacheStandardDiv = $($('.subjectTree')[openTreeStateArr]).parents('.standard-div');
-			
-			cacheStandardDiv.show();		
-			cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
-			
-				standardPlusCollapse({preventDefault:function(){}}, this);
-			});
-				
-		}
+	if(!window.location.hash || e){
+	
+		$(".saveOpen").data("isOpen", true);
+		$('.standard-plus').each(function(i, element){
+			standardPlusCollapse({preventDefault:function(){}}, this);
+		});	
 	}
 	
-	if(window.location.hash.charAt(1) == 's'){
+	if(window.location.hash){
+		if(window.location.hash.charAt(1) == 't'){
+			var openTreeStateArr = parseInt(window.location.hash.slice(2,window.location.hash.length))-1;
 
-		var openTreeStateArr = window.location.hash?window.location.hash.slice(2,window.location.hash.length).split(',') : false;
-
-		$(".saveOpen").data("isOpen", false);
-		$(".standard-div").hide();
-		
-		if(openTreeStateArr !== false){
-			var tempPointer = temp.standards().children()[openTreeStateArr[1]];
-			for(var i = 2; openTreeStateArr.length > i; i++){
-
-				tempPointer.loadChildren();
+			$(".saveOpen").data("isOpen", false);
+			$(".standard-div").hide();
+			
+			if(openTreeStateArr >= 0){
+				var cacheStandardDiv = $($('.subjectTree')[openTreeStateArr]).parents('.standard-div');
 				
-				if(tempPointer.children){
+				cacheStandardDiv.show();		
+				cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+				
+					standardPlusCollapse({preventDefault:function(){}}, this);
+				});	
+			}
+		}
+		
+		if(window.location.hash.charAt(1) == 's'){
+
+			openTreeStateArr = window.location.hash?window.location.hash.slice(2,window.location.hash.length).split(',') : false;
+
+			$(".saveOpen").data("isOpen", false);
+			$(".standard-div").hide();
+			
+			if(openTreeStateArr !== false){
+				var tempPointer = temp.standards().children()[openTreeStateArr[1]];
+				for(var i = 2; openTreeStateArr.length > i; i++){
+
+					tempPointer.loadChildren();
 					
-					standardPlusCollapse({preventDefault:function(){}}, $('[name="'+tempPointer.title()+'"]'));
-					tempPointer = tempPointer.children()[openTreeStateArr[i]];
-				}
-			}	
+					if(tempPointer.children){
+						
+						standardPlusCollapse({preventDefault:function(){}}, $('[name="'+tempPointer.title()+'"]'));
+						tempPointer = tempPointer.children()[openTreeStateArr[i]];
+					}
+				}	
+			}
 		}
 	}
 };
 
 var standardPlusCollapse = function(e, self){
-	
-	console.log("Collapse");
+
 	e.preventDefault();
 	
 	self = self ? self : this;

@@ -37,7 +37,7 @@
 	} ?>
 
 	window.onhashchange = function(e){
-		standardCollapseAllAndOpen();
+		standardCollapseAllAndOpen(e);
 	};
 	
 	$(document).ready(function(){
