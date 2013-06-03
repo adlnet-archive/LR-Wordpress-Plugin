@@ -82,6 +82,10 @@ $nodeArray = array("http://node01.public.learningregistry.net/", "http://node02.
 				</select>
 			</td>
         </tr>
+		<tr valign="top">
+			<th scope="row">Social media plugin code:</th>
+			<td><textarea style="width:400px;height:200px;" name="lr_options_object[social]"><?php echo $options['social']; ?></textarea></td>
+        </tr>	
     </table>
     
     <?php submit_button(); ?>

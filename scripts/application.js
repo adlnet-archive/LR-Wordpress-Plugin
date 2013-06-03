@@ -206,6 +206,12 @@ var fetchLiveParadata = function(src){
 	});
 };
 
+var displaySocialMediaButtons = function(){
+	
+	$("#socialMediaPlugins").show();
+	$("#socialMediaPlugins").html(socialMediaPlugins);
+};
+
 var handleMainResourceModal = function(src, direct){
 	
 	if(src){
@@ -230,6 +236,7 @@ var handleMainResourceModal = function(src, direct){
 					var md5 = src;
 					if(data){
 						src = data.url;
+						document.title = data.title;
 						
 						//This is done because observable.valueHasMutated wasn't working.. so assign each property to a new object individually and update self
 						var currentObject = new resourceObject("Item", src);
@@ -260,6 +267,7 @@ var handleMainResourceModal = function(src, direct){
 						self.currentObject(currentObject);
 					}
 					
+					displaySocialMediaButtons();
 					fetchLiveParadata(data.url);
 				});
 			}

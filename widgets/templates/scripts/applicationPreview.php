@@ -279,4 +279,4 @@ var handleOnclickUserBar = function(obj){
 	lrConsole(test, self.currentObject().timeline()[test]);
 	displayObjectData(self.getReversedTimeline()[test]);
 
-}
+};
