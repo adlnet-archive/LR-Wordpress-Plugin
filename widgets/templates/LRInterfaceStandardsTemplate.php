@@ -2,7 +2,7 @@
 		<div class="standardsTree">
 			<!-- ko if: $data && $data.children !== undefined -->
 				<a href="#" data-bind="click:$data.loadChildren" class="standard-plus">&#9654;</a>
-				<a href="#" data-bind="'click':$root.handleStandardsNodeClick, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), 'attr':{'name':$data.id!=undefined?$data.id:title()}" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
+				<a href="#" data-bind="'attr':{'name':$data.id!=undefined?$data.id:title(), href:'#s'+parentRoute}, 'click':$root.handleStandardsNodeClick, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length)" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
 				<br/><br/>
 				<div class="saveOpen"></div>

@@ -598,14 +598,16 @@ var mainViewModel = function(resources){
 	self.standardsCounter = 0;
 	self.subjectCounter = 0;
 	self.handleStandardsNodeClick = function(data, e){
-
+		
 		if(data.id)
-			self.handleStandardsClick(data);
+			self.handleStandardsClick(data, e);
 			
 		else{
 			standardPlusCollapse(e, $(e.currentTarget));
 			data.loadChildren();
 		}
+		
+		return true;
 	};
 	
 	self.model = function(node, noChildren, parentRoute){
@@ -622,7 +624,7 @@ var mainViewModel = function(resources){
 		me.loadChildren = function(){
 			
 			console.log("Load children");
-			if(!me.node.children)
+			if(!me.node.children || (me.children && me.children().length>1))
 				return;
 			
 			var tempArr = $.extend(true, [], me.parentRoute);
