@@ -623,7 +623,7 @@ var mainViewModel = function(resources){
 		
 		me.loadChildren = function(){
 			
-			console.log("Load children");
+			//console.log("Load children");
 			if(!me.node.children || (me.children && me.children().length>1))
 				return;
 			

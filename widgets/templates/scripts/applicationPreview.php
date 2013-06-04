@@ -33,22 +33,24 @@ temp.handleStandardsClick = function(item, e){
 };
 
 var standardCollapseAllAndOpen = function(e){
-
+	
+	console.log(e);
 	if(!window.location.hash || e){
 	
-		$(".saveOpen").data("isOpen", true);
+	$(".saveOpen").data("isOpen", true);
 		$('.standard-plus').each(function(i, element){
-			standardPlusCollapse({preventDefault:function(){}}, this);
+			standardPlusCollapse({preventDefault:function(){}}, element);
 		});	
 	}
 	
 	if(window.location.hash){
+	
+		$(".saveOpen").data("isOpen", false);
+		$(".standard-div").hide();
+		
 		if(window.location.hash.charAt(1) == 't'){
 			var openTreeStateArr = parseInt(window.location.hash.slice(2,window.location.hash.length))-1;
 
-			$(".saveOpen").data("isOpen", false);
-			$(".standard-div").hide();
-			
 			if(openTreeStateArr >= 0){
 				var cacheStandardDiv = $($('.subjectTree')[openTreeStateArr]).parents('.standard-div');
 				
@@ -63,9 +65,6 @@ var standardCollapseAllAndOpen = function(e){
 		if(window.location.hash.charAt(1) == 's'){
 
 			openTreeStateArr = window.location.hash?window.location.hash.slice(2,window.location.hash.length).split(',') : false;
-
-			$(".saveOpen").data("isOpen", false);
-			$(".standard-div").hide();
 			
 			if(openTreeStateArr !== false){
 				var tempPointer = temp.standards().children()[openTreeStateArr[1]];
@@ -75,7 +74,8 @@ var standardCollapseAllAndOpen = function(e){
 					
 					if(tempPointer.children){
 						
-						standardPlusCollapse({preventDefault:function(){}}, $('[name="'+tempPointer.title()+'"]'));
+						console.log(tempPointer.title(), openTreeStateArr[i-1], i-1);
+						standardPlusCollapse({preventDefault:function(){}}, '[name="'+tempPointer.title()+'"]');
 						tempPointer = tempPointer.children()[openTreeStateArr[i]];
 					}
 				}	
