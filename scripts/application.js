@@ -597,16 +597,26 @@ var mainViewModel = function(resources){
 	self.listOfStates = ko.observableArray();
 	self.standardsCounter = 0;
 	self.subjectCounter = 0;
+	self.handleStandardsNodeClick = function(data, e){
+
+		if(data.id)
+			self.handleStandardsClick(data);
+			
+		else{
+			standardPlusCollapse(e, $(e.currentTarget));
+			data.loadChildren();
+		}
+	};
 	
 	self.model = function(node, noChildren, parentRoute){
-
+		
 		var me = this;
 		me.node = node;
 		me.parentRoute = parentRoute ? parentRoute : [0];
 		me.title = ko.observable(node.title);
 		me.count = ko.observable(node.count);
 		me.children = noChildren === true? undefined : ko.observableArray();
-		me.id = noChildren === true? ko.observable(node.id) : undefined;
+		me.id = node.id? ko.observable(node.id) : undefined;
 		
 		
 		me.loadChildren = function(){

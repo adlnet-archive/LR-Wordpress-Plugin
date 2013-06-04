@@ -2,7 +2,7 @@
 		<div class="standardsTree">
 			<!-- ko if: $data && $data.children !== undefined -->
 				<a href="#" data-bind="click:$data.loadChildren" class="standard-plus">&#9654;</a>
-				<a href="#" data-bind="'click':$data.loadChildren, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), 'attr':{'name':$data.id!=undefined?$data.id:title()}" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
+				<a href="#" data-bind="'click':$root.handleStandardsNodeClick, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), 'attr':{'name':$data.id!=undefined?$data.id:title()}" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
 				<span class="childrenResourceNumber" data-bind="text: $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
 				<br/><br/>
 				<div class="saveOpen"></div>
@@ -81,10 +81,6 @@
 			spinner.stop();
 			standardCollapseAllAndOpen();
 		});			
-		
-		$("#standardsMapContainer").on("click",".standard-link-collapse",function(e){
-			standardPlusCollapse(e, this);
-		});
 
 		self.listOfStates(["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"]);
 
