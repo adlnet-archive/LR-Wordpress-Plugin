@@ -22,7 +22,7 @@ class LRInterfaceCount extends WP_Widget
 	</label>
 	<textarea class="widefat" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"><?php echo $count; ?></textarea>
 	<br/><br/>
-	
+	test
 </p>
   
 <?php
