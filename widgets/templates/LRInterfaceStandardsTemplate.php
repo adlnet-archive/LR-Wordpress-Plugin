@@ -1,9 +1,13 @@
 <script type="text/html" id="standards-template">
 		<div class="standardsTree">
 			<!-- ko if: $data && $data.children !== undefined -->
+
 				<a href="#" data-bind="click:$data.loadChildren" class="standard-plus">&#9654;</a>
-				<a href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'click':$root.handleStandardsNodeClick, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length)" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
-				<span class="childrenResourceNumber" data-bind="text: $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
+				<a href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'click':$data.loadChildren, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length)" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
+				<span class="childrenResourceNumber" data-bind="text: $data.childCount() >= 0? '( ' + $data.childCount() + ' )': ''">&nbsp;</span>
+				<a href="#" title="Search for this standard directly" data-bind="click:$root.handleStandardsNodeClick, visible:$data.count(), attr:{href:'#s'+parentRoute}" style="text-decoration:none;">
+					<img src="<?php echo plugins_url( 'images/glass.png' , __FILE__ ) ?>" style="box-shadow:none;" />
+				</a>
 				<br/><br/>
 				<div class="saveOpen"></div>
 				
@@ -53,7 +57,7 @@
 <script type="text/javascript">
 	var serviceHost = "<?php echo $host; ?>";
 	var permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
-	var qmarkUrl = '<?php echo plugins_url( 'templates/images/qmark.png' , __FILE__ ) ?>';
+	var qmarkUrl = '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>';
 	var saveThisStateNow = false;
 	<?php if(empty($_GET['query']) && empty($_GET['lr_interface'])){
 		@include_once('scripts/applicationPreview.php'); 

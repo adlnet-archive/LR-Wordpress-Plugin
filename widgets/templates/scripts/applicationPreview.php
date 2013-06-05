@@ -73,8 +73,6 @@ var standardCollapseAllAndOpen = function(e){
 					tempPointer.loadChildren();
 					
 					if(tempPointer.children){
-						
-						console.log(tempPointer.title(), openTreeStateArr[i-1], i-1);
 						standardPlusCollapse({preventDefault:function(){}}, '[name="'+tempPointer.title()+'"]');
 						tempPointer = tempPointer.children()[openTreeStateArr[i]];
 					}

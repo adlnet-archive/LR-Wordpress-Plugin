@@ -617,6 +617,7 @@ var mainViewModel = function(resources){
 		me.parentRoute = parentRoute ? parentRoute : [0];
 		me.title = ko.observable(node.title);
 		me.count = ko.observable(node.count);
+		me.childCount = ko.observable(node.childCount);
 		me.children = noChildren === true? undefined : ko.observableArray();
 		me.id = node.id? ko.observable(node.id) : undefined;
 		
