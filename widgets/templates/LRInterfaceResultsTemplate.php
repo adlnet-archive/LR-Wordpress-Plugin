@@ -101,7 +101,10 @@
 	<?php if($type == "index"): ?>
 	
 		<?php if(empty($_GET['standard']) && ! empty($text)): ?>
-			<div style="width: 100%; overflow: hidden; clear:both;"><span style="font-size:22px;"><?php echo $text; ?></span><span id="countReplace" style="font-size:13px;"></span></div>
+			<div style="width: 100%; overflow: hidden; clear:both;margin-bottom:30px;">
+				<span style="font-size:22px;"><?php echo $text; ?></span>
+				<span id="countReplace" style="font-size:13px;"></span>
+			</div>
 		<?php endif; ?>
 		<?php if(!empty($_GET['standard'])): ?>
 			<div class="row" style="width: 100%; overflow: hidden; clear:both; border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7; margin-bottom:15px;">
