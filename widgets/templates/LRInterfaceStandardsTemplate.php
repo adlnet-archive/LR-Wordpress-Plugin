@@ -6,8 +6,10 @@
 				<a href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'click':$data.loadChildren, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length)" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
 				<span class="childrenResourceNumber" data-bind="text: $data.childCount() >= 0? '( ' + $data.childCount() + ' )': ''">&nbsp;</span>
 				<a href="#" title="Search for this standard directly" data-bind="click:$root.handleStandardsNodeClick, visible:$data.count(), attr:{href:'#s'+parentRoute}" style="text-decoration:none;">
-					<img src="<?php echo plugins_url( 'images/glass.png' , __FILE__ ) ?>" style="box-shadow:none; width:12px;height:12px;" />
+					<img src="<?php echo plugins_url( 'images/glass.png' , __FILE__ ) ?>" style="box-shadow:none; width:12px;height:12px;" class="directAlignment" />
+					<span class="childrenResourceNumber" data-bind="text: $data.count() + ' aligned resources'">&nbsp;</span>
 				</a>
+				
 				<br/><br/>
 				<div class="saveOpen"></div>
 				
@@ -66,6 +68,11 @@
 	window.onhashchange = function(e){
 		standardCollapseAllAndOpen(e);
 	};
+	
+	$('.standardsTree').on('mouseover', '.directAlignment', function(e){
+	
+		console.log(e);
+	});
 	
 	$(document).ready(function(){
 		
