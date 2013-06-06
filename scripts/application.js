@@ -842,9 +842,16 @@ var mainViewModel = function(resources){
 				
 				
 				lrConsole("data: ", data);
+				
+				if(countReplace && data.count){
+					$('#countReplace').text(countReplace.replace('$count', addComma(data.count)));
+					console.log(data.count);
+				}
+				
 				if(data.responseText)
 					data = JSON.parse(data.responseText).data;
 				data = data.data;
+
 				//lrConsole(data);
 				$('#spinnerDiv').hide();
 				$("#loadMore").show();

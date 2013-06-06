@@ -101,7 +101,7 @@
 	<?php if($type == "index"): ?>
 	
 		<?php if(empty($_GET['standard']) && ! empty($text)): ?>
-			<div class="row" style="width: 100%; overflow: hidden; clear:both;height:80px;"><h2><?php echo $text; ?></h2></div>
+			<div style="width: 100%; overflow: hidden; clear:both;"><span style="font-size:20px;"><?php echo $text; ?></span></div>
 		<?php endif; ?>
 		<?php if(!empty($_GET['standard'])): ?>
 			<div class="row" style="width: 100%; overflow: hidden; clear:both; border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7; margin-bottom:15px;">
@@ -109,7 +109,7 @@
 				<a class="childrenResourceNumber" href="http://asn.jesandco.org/resources/<?php echo sanitize_lr($_GET['query']); ?>" style="float:right;"><?php echo sanitize_lr($_GET['query']); ?></a>
 			</div>
 		<?php endif; ?>
-		
+		<span id="countReplace"></span>
 		<div class="row">
 			<div class="span12 activity">
 				<!-- ko if: results().length > 0 -->
@@ -164,6 +164,7 @@
 		
 		totalSlice = 15;
 		newLoad = 15;
+		var countReplace = <?php echo json_encode($count); ?>;
 		
 		<?php if(!empty($_GET['standard'])): ?>
 		

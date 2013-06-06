@@ -11,10 +11,11 @@ class LRInterfaceResults extends WP_Widget
  
   function form($instance)
   {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'numResults' => '', 'text' => '') );
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'numResults' => '', 'text' => '', 'count' => '') );
     $title = $instance['title'];
 	$numResults = $instance['numResults'];
 	$text = $instance['text'];
+	$count = $instance['count'];
 
 ?>
 
@@ -29,9 +30,15 @@ class LRInterfaceResults extends WP_Widget
 	<br/><br/>	
 	
 	<label>
-		Results page text - '$query' is replaced with the user's search terms:
+		Search header text - '$query' is replaced with the user's search terms:
 	</label>
 	<input class="widefat" id="<?php echo $this->get_field_id('text'); ?>" name="<?php echo $this->get_field_name('text'); ?>" type="text" value="<?php echo $text; ?>" />
+	<br/><br/>	
+	
+	<label>
+		Number of returned results text - '$count' is replaced with the number of returned results:
+	</label>
+	<input class="widefat" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" />
 	<br/><br/>
 </p>
   
@@ -43,6 +50,7 @@ class LRInterfaceResults extends WP_Widget
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
     $instance['text'] = $new_instance['text'];
+    $instance['count'] = $new_instance['count'];
     $instance['numResults'] = (is_numeric($new_instance['numResults']) && $new_instance['numResults'] > 0)? $new_instance['numResults'] : 50;
     return $instance;
   }
@@ -56,6 +64,7 @@ class LRInterfaceResults extends WP_Widget
 	$options = get_option('lr_options_object');
 	
 	$text = str_ireplace( '$query', $_GET['query'], $instance['text']);
+	$count = $instance['count'];
 	
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	
