@@ -14,7 +14,7 @@ Controller description: Search Controller
                         );
 			$raw_data = file_get_contents(self::SEARCH_ROOT . http_build_query($query));
 			$data = json_encode($raw_data);			
-			return $raw_data;
+			return $data;
 
 		}
 	}
