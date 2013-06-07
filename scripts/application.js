@@ -597,6 +597,10 @@ var mainViewModel = function(resources){
 	self.listOfStates = ko.observableArray();
 	self.standardsCounter = 0;
 	self.subjectCounter = 0;
+	self.page = 0;
+	self.publishers = ko.observableArray([]);
+	self.loadMore = ko.observable(true);
+	
 	self.handleStandardsNodeClick = function(data, e){
 		
 		if(data.id)
@@ -609,6 +613,24 @@ var mainViewModel = function(resources){
 		
 		return true;
 	};
+	
+	self.load = function(){
+		$.getJSON("?json=publishers.publishers_list&fetchPage=" + self.page, function(data){							
+			self.page++;
+			if(data.length <= 0){
+				self.loadMore(false);
+			}else{
+				data = data.data;
+				for(var i in data){
+					var item = {
+						title: data[i],
+						url: "/publisher/" + data[i] + "/view"
+					}
+					self.publishers.push(item);
+				}
+			}
+		});
+	}
 	
 	self.model = function(node, noChildren, parentRoute){
 		
@@ -807,7 +829,7 @@ var mainViewModel = function(resources){
 		$("#loadMore").hide();
 		temp.resultsNotFound(false);
 		//var query = $("#s").val();
-		if(isVisual === true){
+		if(isVisual === true || isVisual === 'slice'){
 			
 			startNewSearch(query);
 		}
@@ -834,6 +856,7 @@ var mainViewModel = function(resources){
 				
 			lrConsole("Load index: ", loadIndex, query, data);
 			data.json = "search.search";
+				
 			$.ajax(window.location.pathname, {
 				dataType : 'json',
 				jsonp : 'callback',
@@ -849,8 +872,8 @@ var mainViewModel = function(resources){
 				
 				if(data.responseText)
 					data = JSON.parse(data.responseText).data;
-					
-				data = data.data;
+				
+				data = data.data ? data.data : data;
 
 				//lrConsole(data);
 				$('#spinnerDiv').hide();

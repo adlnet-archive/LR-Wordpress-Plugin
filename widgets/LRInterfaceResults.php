@@ -68,7 +68,7 @@ class LRInterfaceResults extends WP_Widget
 	
     $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	
-	$type  = $_GET['type'] == 'index' || $_GET['type'] == 'slice'  ? $_GET['type'] : 'index';
+	$type  = $_GET['type'] == 'index' || $_GET['type'] == 'slice' ||  $_GET['type'] == 'publisher' ? $_GET['type'] : 'index';
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
  
 	if(!empty($_GET['lr_resource']))

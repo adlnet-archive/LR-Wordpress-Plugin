@@ -41,16 +41,32 @@ class LRInterfacePublishers extends WP_Widget
 	echo $before_widget;
 	echo $before_title . $title .  $after_title;;
 	?>
-
-		<div data-bind="">
-			Testing Publishers
-		</div>
+	<div style="width:100%;clear:both;float:left;">
+		<ul style="width:48%;float:left;" data-bind="foreach: publishers.slice(0, publishers().length*.5)">
+			<li style="margin-bottom: 10px;">
+				<a data-bind="text: title, attr: {href: $root.fixPublisherURL(title)}"></a><br/>
+			</li>
+		</ul>
+		<ul style="width:48%;float:right;" data-bind="foreach: publishers.slice(publishers().length*.5, publishers().length)">
+			<li style="margin-bottom: 10px;">
+				<a data-bind="text: title, attr: {href: $root.fixPublisherURL(title)}"></a><br/>
+			</li>
+		</ul>
+	</div>
+	<div>
+		<!-- ko if: loadMore -->
+			<button data-bind="click: load, visible:publishers().length>0">More</button>
+		<!-- /ko -->
+	</div>
 		<script type="text/javascript">
 			var serviceHost = "<?php echo $host; ?>";
 			<?php include_once('templates/scripts/applicationPreview.php'); ?>
 			
-			lrConsole("Testing utility.. ", self);
-			$(document).ready(function(){});
+
+			$(function(){
+				self.load();
+			});
+
 		</script>
 	
 	<?php

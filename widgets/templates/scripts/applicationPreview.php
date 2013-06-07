@@ -9,6 +9,11 @@ handleMainResourceModal(<?php echo empty($_GET['lr_resource']) ? 'false' : 'quer
 
 var qmarkUrl = qmarkUrl?qmarkUrl:'<?php echo plugins_url( "templates/images/qmark.png" , dirname(__FILE__) ) ?>';
 temp.permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
+temp.fixPublisherURL = function(e){
+	
+	var tempStr = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>';
+	return tempStr.replace('LRreplaceMe', e);
+};
 
 for (var f in followed){
 	temp.followers.push({name:followed[f], content:[]});
