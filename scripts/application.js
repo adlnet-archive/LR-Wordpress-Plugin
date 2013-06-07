@@ -597,7 +597,7 @@ var mainViewModel = function(resources){
 	self.listOfStates = ko.observableArray();
 	self.standardsCounter = 0;
 	self.subjectCounter = 0;
-	self.page = 0;
+	self.page = ko.observable(-1);
 	self.publishers = ko.observableArray([]);
 	self.loadMore = ko.observable(true);
 	
@@ -614,20 +614,20 @@ var mainViewModel = function(resources){
 		return true;
 	};
 	
-	self.load = function(){
-		$.getJSON("?json=publishers.publishers_list&fetchPage=" + self.page, function(data){							
-			self.page++;
+	self.previous = function(){
+		self.load(true);
+	}
+	
+	self.load = function(prev){
+		self.page(prev===true && self.page() > 0 ? self.page()-1 : self.page()+1);
+		$.getJSON("?json=publishers.publishers_list&fetchPage=" + self.page(), function(data){							
+			
 			if(data.length <= 0){
 				self.loadMore(false);
 			}else{
 				data = data.data;
-				for(var i in data){
-					var item = {
-						title: data[i],
-						url: "/publisher/" + data[i] + "/view"
-					}
-					self.publishers.push(item);
-				}
+				console.log(data);
+				self.publishers(data);
 			}
 		});
 	}

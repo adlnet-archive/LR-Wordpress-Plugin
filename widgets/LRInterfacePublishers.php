@@ -39,23 +39,24 @@ class LRInterfacePublishers extends WP_Widget
 	extract($args, EXTR_SKIP);
 	
 	echo $before_widget;
-	echo $before_title . $title .  $after_title;;
 	?>
 	<div style="width:100%;clear:both;float:left;">
 		<ul style="width:48%;float:left;" data-bind="foreach: publishers.slice(0, publishers().length*.5)">
 			<li style="margin-bottom: 10px;">
-				<a data-bind="text: title, attr: {href: $root.fixPublisherURL(title)}"></a><br/>
+				<a data-bind="text: $data.length>27?$data.substr(0,27)+'...':$data, attr: {href: $root.fixPublisherURL($data)}"></a><br/>
 			</li>
 		</ul>
 		<ul style="width:48%;float:right;" data-bind="foreach: publishers.slice(publishers().length*.5, publishers().length)">
 			<li style="margin-bottom: 10px;">
-				<a data-bind="text: title, attr: {href: $root.fixPublisherURL(title)}"></a><br/>
+				<a data-bind="text: $data.length>27?$data.substr(0,27)+'...':$data, attr: {href: $root.fixPublisherURL($data)}"></a><br/>
 			</li>
 		</ul>
 	</div>
 	<div>
 		<!-- ko if: loadMore -->
-			<button data-bind="click: load, visible:publishers().length>0">More</button>
+			<button data-bind="click: previous, visible:publishers().length>0 && page() > 0">Previous</button>
+			<span data-bind="text:'Page: ' + (page() + 1)">&nbsp;</span>
+			<button data-bind="click: load, visible:publishers().length>0">Next</button>
 		<!-- /ko -->
 	</div>
 		<script type="text/javascript">
