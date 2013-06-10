@@ -888,10 +888,19 @@ var mainViewModel = function(resources){
 					
 					$("#loadMore").hide();
 					$("#endOfResults").show();
-				}
+				}		
+				
+				var regexTerms = '(' + query.split(' ').join('|') + ')';				
+				var regexObj = new RegExp(regexTerms, 'gi');
 
-				for(var i = startIndex; i < data.length; i++)
+				for(var i = startIndex; i < data.length; i++){
+				
+					data[i].title = data[i].title.replace(regexObj, '<b>$&</b>');
+					data[i].description = data[i].description.replace(regexObj, '<b>$&</b>');
+					data[i].publisher = data[i].publisher ? data[i].publisher.replace(regexObj, '<b>$&</b>') : '';
+				
 					self.results.push(data[i]);
+				}
 			
 				self.results.remove(function(item){
 					

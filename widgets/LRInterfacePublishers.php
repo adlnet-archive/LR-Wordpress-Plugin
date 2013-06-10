@@ -52,6 +52,9 @@ class LRInterfacePublishers extends WP_Widget
 			</li>
 		</ul>
 	</div>
+	<div class="pubSpinner" style="width:100%;">
+	
+	</div>
 	<div>
 		<!-- ko if: loadMore -->
 			<button data-bind="click: previous, visible:publishers().length>0 && page() > 0">Previous</button>
@@ -61,6 +64,7 @@ class LRInterfacePublishers extends WP_Widget
 	</div>
 		<script type="text/javascript">
 			var serviceHost = "<?php echo $host; ?>";
+			var publishersSpin = new Spinner(opts).spin($('.pubSpinner')[0]);
 			<?php include_once('templates/scripts/applicationPreview.php'); ?>
 			
 
