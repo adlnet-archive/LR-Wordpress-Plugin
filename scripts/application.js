@@ -838,7 +838,7 @@ var mainViewModel = function(resources){
 			
 			loadIndex = (startOver === true) ? 1 : loadIndex;
 			
-			var data = {terms: query, page: loadIndex-1};
+			var data = {terms: query, pager: loadIndex-1};
 			if(self.filterSearchTerms().length > 0){
 				
 				var newArr = [];
@@ -890,8 +890,16 @@ var mainViewModel = function(resources){
 					$("#endOfResults").show();
 				}		
 				
-				var regexTerms = '(' + query.split(' ').join('|') + ')';				
-				var regexObj = new RegExp(regexTerms, 'gi');
+				
+				var tempRegexArr = query.replace(/[^a-zA-Z0-9 ]/gi, '').split(' ');
+				for(var i = 0; i < tempRegexArr.length; i++){
+					
+					if(tempRegexArr[i].search(/[a-zA-Z0-9]/gi) == -1)
+						tempRegexArr.splice(i, 1);
+				}
+				
+
+				var regexObj = new RegExp('(' + tempRegexArr.join('|') + ')', 'gi');
 
 				for(var i = startIndex; i < data.length; i++){
 				
