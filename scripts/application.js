@@ -838,7 +838,7 @@ var mainViewModel = function(resources){
 			
 			loadIndex = (startOver === true) ? 1 : loadIndex;
 			
-			var data = {terms: query, pager: loadIndex-1};
+			var data = {terms: query, page: loadIndex-1};
 			if(self.filterSearchTerms().length > 0){
 				
 				var newArr = [];
