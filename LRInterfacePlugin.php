@@ -8,9 +8,9 @@ Version: 1
 Author URI: http://adlnet.gov/
 */
 
-function sanitize_lr($str, $opt = ''){
+function sanitize_lr($str, $opt = '', $numbers = false){
 
-	return preg_replace('/[^a-zA-Z0-9'.$opt.']+/', '', $str);
+	return $numbers ? preg_replace('/[^0-9'.$opt.']+/', '', $str) : preg_replace('/[^a-zA-Z0-9'.$opt.']+/', '', $str);
 }
 
 //Load the individual widgets
