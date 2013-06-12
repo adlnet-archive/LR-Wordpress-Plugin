@@ -242,10 +242,10 @@ var handleMainResourceModal = function(src, direct){
 						//This is done because observable.valueHasMutated wasn't working.. so assign each property to a new object individually and update self
 						var currentObject = new resourceObject("Item", src);
 						currentObject.timeline = self.currentObject().timeline;
-						currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
-						currentObject.description = (data.description == undefined) ? "" : data.description;
+						currentObject.title = (data.title == undefined) ? doTransform(src) : stripHTML(data.title);
+						currentObject.description = (data.description == undefined) ? "" : stripHTML(data.description);
 						currentObject.url = (data.url == undefined) ? "" : data.url;
-						currentObject.publisher = (data.publisher == undefined) ? "" : data.publisher;
+						currentObject.publisher = (data.publisher == undefined) ? "" : stripHTML(data.publisher);
 						
 						lrConsole("qmarkUrl: ", qmarkUrl);
 						var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
@@ -907,9 +907,9 @@ var mainViewModel = function(resources){
 
 				for(var i = startIndex; i < data.length; i++){
 				
-					data[i].title = data[i].title.replace(regexObj, '<b>$&</b>');
-					data[i].description = data[i].description.replace(regexObj, '<b>$&</b>');
-					data[i].publisher = data[i].publisher ? data[i].publisher.replace(regexObj, '<b>$&</b>') : '';
+					data[i].title = stripHTML(data[i].title.replace(regexObj, '<b>$&</b>'));
+					data[i].description = stripHTML(data[i].description.replace(regexObj, '<b>$&</b>'));
+					data[i].publisher = stripHTML(data[i].publisher ? data[i].publisher.replace(regexObj, '<b>$&</b>')) : '';
 				
 					self.results.push(data[i]);
 				}
