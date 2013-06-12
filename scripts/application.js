@@ -572,6 +572,10 @@ var addComma = function(num){
 	return newStr;
 };
 
+var stripHTML = function(str){
+	return str.replace(/<[^>]+>/gim, '');
+};
+
 /* The main View Model used by Knockout.js */
 var mainViewModel = function(resources){
 
