@@ -909,7 +909,7 @@ var mainViewModel = function(resources){
 				
 					data[i].title = stripHTML(data[i].title.replace(regexObj, '<b>$&</b>'));
 					data[i].description = stripHTML(data[i].description.replace(regexObj, '<b>$&</b>'));
-					data[i].publisher = stripHTML(data[i].publisher ? data[i].publisher.replace(regexObj, '<b>$&</b>')) : '';
+					data[i].publisher = data[i].publisher ? stripHTML(data[i].publisher.replace(regexObj, '<b>$&</b>')) : '';
 				
 					self.results.push(data[i]);
 				}
