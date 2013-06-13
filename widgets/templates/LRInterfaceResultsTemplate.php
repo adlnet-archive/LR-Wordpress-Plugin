@@ -98,8 +98,8 @@
 	<link type="text/css" href="<?php echo plugins_url( '/styles/Hypertree.css' , __FILE__ ) ?>" rel="stylesheet" />
 	
 	<?php endif; ?>
-	<?php if($type == "index"): ?>
-	
+	<?php if($type == "index" || $type == "publisher"): ?>
+
 		<?php if(empty($_GET['standard']) && ! empty($text)): ?>
 			<div style="width: 100%; overflow: hidden; clear:both;margin-bottom:30px;">
 				<span style="font-size:22px;"><?php echo $text; ?></span>
@@ -188,6 +188,6 @@
 			<?php endif; ?>
 			
 			//if regular search
-			self.loadNewPage(<?php echo $type == 'slice' ? 'true': ''; ?>);
+			self.loadNewPage('<?php echo $type; ?>');
 		});
 	</script>

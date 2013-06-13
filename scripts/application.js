@@ -603,7 +603,9 @@ var mainViewModel = function(resources){
 	self.subjectCounter = 0;
 	self.page = ko.observable(-1);
 	self.publishers = ko.observableArray([]);
-	self.loadMore = ko.observable(true);
+	
+	//Temporarily set to false for federal resources
+	self.loadMore = ko.observable(false);
 	
 	self.handleStandardsNodeClick = function(data, e){
 		
@@ -859,7 +861,7 @@ var mainViewModel = function(resources){
 				
 				
 			lrConsole("Load index: ", loadIndex, query, data);
-			data.json = "search.search";
+			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";
 				
 			$.ajax(window.location.pathname, {
 				dataType : 'json',
@@ -910,7 +912,8 @@ var mainViewModel = function(resources){
 					data[i].title = stripHTML(data[i].title).replace(regexObj, '<b>$&</b>');
 					data[i].description = stripHTML(data[i].description).replace(regexObj, '<b>$&</b>');
 					data[i].publisher = data[i].publisher ? stripHTML(data[i].publisher).replace(regexObj, '<b>$&</b>') : '';
-				
+					data[i].hasScreenshot = true;
+					
 					self.results.push(data[i]);
 				}
 			

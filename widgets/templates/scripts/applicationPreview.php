@@ -11,7 +11,7 @@ var qmarkUrl = qmarkUrl?qmarkUrl:'<?php echo plugins_url( "templates/images/qmar
 temp.permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
 temp.fixPublisherURL = function(e){
 	
-	var tempStr = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>';
+	var tempStr = '<?php echo add_query_arg(array("query"=>"LRreplaceMe",'type'=>'publisher'), get_page_link( $options['results']));?>';
 	return tempStr.replace('LRreplaceMe', e);
 };
 
