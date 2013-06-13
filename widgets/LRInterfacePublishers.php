@@ -46,12 +46,12 @@ class LRInterfacePublishers extends WP_Widget
 	<div style="width:100%;clear:both;float:left;">
 		<ul style="width:48%;float:left;" data-bind="foreach: publishers.slice(0, publishers().length*.5)">
 			<li style="margin-bottom: 10px;">
-				<a data-bind="text: $data.length>27?$data.substr(0,27)+'...':$data, attr: {href: $root.fixPublisherURL($data)}"></a><br/>
+				<a data-bind="text: $data, attr: {href: $root.fixPublisherURL($data)}"></a><br/>
 			</li>
 		</ul>
 		<ul style="width:48%;float:right;" data-bind="foreach: publishers.slice(publishers().length*.5, publishers().length)">
 			<li style="margin-bottom: 10px;">
-				<a data-bind="text: $data.length>27?$data.substr(0,27)+'...':$data, attr: {href: $root.fixPublisherURL($data)}"></a><br/>
+				<a data-bind="text: $data, attr: {href: $root.fixPublisherURL($data)}"></a><br/>
 			</li>
 		</ul>
 	</div>
