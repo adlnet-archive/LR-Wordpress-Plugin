@@ -1233,7 +1233,7 @@ var mainViewModel = function(resources){
 // jQuery.XDomainRequest.js
 // Author: Jason Moon - @JSONMOON
 // IE8+
-$.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
+/*$.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
     
     if(jQuery.browser.msie && window.XDomainRequest) {
         
@@ -1290,7 +1290,7 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
           }
         };
       }
-    });
+    });*/
 	
 	
 var Base64 = {
