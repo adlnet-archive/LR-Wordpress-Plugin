@@ -573,7 +573,7 @@ var addComma = function(num){
 };
 
 var stripHTML = function(str){
-	return str.replace(/<[^>]+>/gim, '');
+	return str.replace(/<[^>]+>/gim, '').replace(/&[^;]+;/gim, '');
 };
 
 /* The main View Model used by Knockout.js */
@@ -907,9 +907,9 @@ var mainViewModel = function(resources){
 
 				for(var i = startIndex; i < data.length; i++){
 				
-					data[i].title = stripHTML(data[i].title.replace(regexObj, '<b>$&</b>'));
-					data[i].description = stripHTML(data[i].description.replace(regexObj, '<b>$&</b>'));
-					data[i].publisher = data[i].publisher ? stripHTML(data[i].publisher.replace(regexObj, '<b>$&</b>')) : '';
+					data[i].title = stripHTML(data[i].title).replace(regexObj, '<b>$&</b>');
+					data[i].description = stripHTML(data[i].description).replace(regexObj, '<b>$&</b>');
+					data[i].publisher = data[i].publisher ? stripHTML(data[i].publisher).replace(regexObj, '<b>$&</b>') : '';
 				
 					self.results.push(data[i]);
 				}
