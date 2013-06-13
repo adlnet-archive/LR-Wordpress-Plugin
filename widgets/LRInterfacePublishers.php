@@ -67,7 +67,6 @@ class LRInterfacePublishers extends WP_Widget
 			var publishersSpin = new Spinner(opts).spin($('.pubSpinner')[0]);
 			<?php include_once('templates/scripts/applicationPreview.php'); ?>
 			
-
 			$(function(){
 				self.load();
 			});
@@ -79,3 +78,4 @@ class LRInterfacePublishers extends WP_Widget
 		return;
   }
 } 
+

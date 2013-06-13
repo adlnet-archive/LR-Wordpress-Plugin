@@ -624,7 +624,7 @@ var mainViewModel = function(resources){
 	
 	self.load = function(prev){
 		self.page(prev===true && self.page() > 0 ? self.page()-1 : self.page()+1);
-		$.getJSON("?json=publishers.publishers_list&fetchPage=" + self.page(), function(data){							
+		$.getJSON("?json=publishers.publishers_list&gov=1&fetchPage=" + self.page(), function(data){							
 			
 			if(data.length <= 0){
 				self.loadMore(false);
