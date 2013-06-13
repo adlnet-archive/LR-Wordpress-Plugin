@@ -834,6 +834,8 @@ var mainViewModel = function(resources){
 		$('#spinnerDiv').show();
 		$("#loadMore").hide();
 		temp.resultsNotFound(false);
+		isVisual = saveSearchType;
+		console.log("TYPE OF SEARCH: ", isVisual);
 		//var query = $("#s").val();
 		if(isVisual === true || isVisual === 'slice'){
 			
@@ -844,7 +846,7 @@ var mainViewModel = function(resources){
 			
 			loadIndex = (startOver === true) ? 1 : loadIndex;
 			
-			var data = {terms: query, page: loadIndex-1};
+			var data = {terms: query, lr_page: loadIndex-1};
 			if(self.filterSearchTerms().length > 0){
 				
 				var newArr = [];

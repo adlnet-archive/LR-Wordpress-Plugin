@@ -167,6 +167,7 @@
 		totalSlice = 15;
 		newLoad = 15;
 		var countReplace = <?php echo json_encode($count); ?>;
+		var saveSearchType = '<?php echo $type; ?>';
 		
 		<?php if(!empty($_GET['standard'])): ?>
 		
@@ -188,6 +189,6 @@
 			<?php endif; ?>
 			
 			//if regular search
-			self.loadNewPage('<?php echo $type; ?>');
+			self.loadNewPage(saveSearchType);
 		});
 	</script>
