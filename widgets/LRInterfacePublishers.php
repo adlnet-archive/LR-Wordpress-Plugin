@@ -39,7 +39,10 @@ class LRInterfacePublishers extends WP_Widget
 	extract($args, EXTR_SKIP);
 	
 	echo $before_widget;
+	
+	$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	?>
+	<h3><?php echo $title; ?></h3>
 	<div style="width:100%;clear:both;float:left;">
 		<ul style="width:48%;float:left;" data-bind="foreach: publishers.slice(0, publishers().length*.5)">
 			<li style="margin-bottom: 10px;">
