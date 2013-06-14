@@ -92,9 +92,10 @@ class LRInterfaceSearch extends WP_Widget
 			<label for="lrSearchBox" style="margin-bottom:6px;display:block;"><?php echo $placeholder; ?></label>
 		<?php endif; ?>
 		<div class="lrSearchCombo">
-			<input id="lrSearchBox" class="lrSearch" type="text" title="<?php echo $instance['placeholder']; ?>" name="query" <?php echo (empty($placeholder)||!empty($label))?'':'placeholder="' . $placeholder . '"'; ?> />
+			<input id="lrSearchBox" class="lrSearch" type="text" title="<?php echo $instance['placeholder']; ?>" name="query" <?php echo (empty($placeholder)||!empty($label))?'':'placeholder="' . $placeholder . '"'; ?> />			
 			<input class="lrSubmit" type="submit" value="Search" />
 		</div>
+		Federal Resources: <input id="lrGovCheck" type="checkbox"></input>
 	</form>
 	
 	
@@ -113,7 +114,12 @@ class LRInterfaceSearch extends WP_Widget
 			$("#LRsearchForm").submit(function(e){
 				e.preventDefault();
 				var search = encodeURIComponent($("#LRsearchForm input").val());
-				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", search + '&type=<?php echo $type; ?>');
+				var gov = $("#lrGovCheck").attr("checked");
+				var searchUrl = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", search + '&type=<?php echo $type; ?>');
+				if(gov){
+					searchUrl += "&gov=1"
+				}
+				window.location.href = searchUrl;
 			});
 		});
 	</script>

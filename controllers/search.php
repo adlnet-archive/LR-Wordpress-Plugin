@@ -11,7 +11,8 @@ Controller description: Search Controller
 			$query = array (
                             "terms" => $json_api->query->get("terms"),
                             "filter" => $json_api->query->get("filter"),
-                            "page" => $json_api->query->get("lr_page")
+                            "page" => $json_api->query->get("lr_page"),
+                            "gov" => $json_api->query->get("gov")
                         );
 			$raw_data = file_get_contents(self::SEARCH_ROOT . http_build_query($query));
 			$data = json_decode($raw_data);	

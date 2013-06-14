@@ -38,7 +38,7 @@ var urlTransform = {
 
         var temp = (urlObj.pathname[0] == "/") ? urlObj.pathname.substr(1, urlObj.pathname.length - 1) : urlObj.pathname;
         var id = temp.split("/")[idIndex];
-		
+			
 		if(screenUrl !== undefined){
 		
 			return screenUrl;
@@ -847,6 +847,9 @@ var mainViewModel = function(resources){
 			loadIndex = (startOver === true) ? 1 : loadIndex;
 			
 			var data = {terms: query, lr_page: loadIndex-1};
+			if (gov !== 0){
+				data.gov = 1;
+			}
 			if(self.filterSearchTerms().length > 0){
 				
 				var newArr = [];
@@ -861,10 +864,9 @@ var mainViewModel = function(resources){
 				data.filter = newArr.join(";");
 			}
 				
-				
 			lrConsole("Load index: ", loadIndex, query, data);
 			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";
-				
+			console.log(data);
 			$.ajax(window.location.pathname, {
 				dataType : 'json',
 				jsonp : 'callback',

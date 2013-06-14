@@ -2,7 +2,7 @@ var allOrganizations = [], followed = [], allTerms = [], query = "<?php echo emp
 var temp = new mainViewModel([]), activeModalName = null, lastSearchCache = "";
 var iframeHidden = true;
 var tempBookmarksArray = [];
-
+var gov = <?php echo empty($_GET['gov'])? 0 : 1; ?>;
 
 handleMainResourceModal(<?php echo empty($_GET['lr_resource']) ? 'false' : 'query'; ?>);
 
