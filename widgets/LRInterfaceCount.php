@@ -22,7 +22,6 @@ class LRInterfaceCount extends WP_Widget
 	</label>
 	<textarea class="widefat" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"><?php echo $count; ?></textarea>
 	<br/><br/>
-	
 </p>
   
 <?php
@@ -53,9 +52,8 @@ class LRInterfaceCount extends WP_Widget
 	
 	<script type="text/javascript">
 		jQuery(document).ready(function($){
-		
-			$.getJSON('<?php echo $host; ?>/data',function(data){	
-							
+			var url = window.location.pathname + "?json=count.get_count";
+			$.getJSON(url, function(data){	
 				$("#LR_resourceCount").html('<?php echo $count; ?>'.replace('$count', self.addComma(data['doc_count'])));
 			});
 		});

@@ -112,8 +112,8 @@ class LRInterfaceSearch extends WP_Widget
 			
 			$("#LRsearchForm").submit(function(e){
 				e.preventDefault();
-				
-				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", $("#LRsearchForm input").val() + '&type=<?php echo $type; ?>');
+				var search = encodeURIComponent($("#LRsearchForm input").val());
+				window.location.href = '<?php echo add_query_arg("query", "LRreplaceMe", get_page_link( $options['results']));?>'.replace("LRreplaceMe", search + '&type=<?php echo $type; ?>');
 			});
 		});
 	</script>

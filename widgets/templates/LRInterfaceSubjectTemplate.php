@@ -36,9 +36,8 @@
 			@include_once('scripts/applicationPreview.php'); 
 	} ?>
 
-	var openTreeStateArr;
 	window.onhashchange = function(e){
-		standardCollapseAllAndOpen();
+		standardCollapseAllAndOpen(e);
 	};
 	
 	$(document).ready(function(){

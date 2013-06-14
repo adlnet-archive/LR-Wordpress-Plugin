@@ -106,6 +106,7 @@ class LRInterfaceSubjectResults extends WP_Widget
 	
 	$options = get_option('lr_options_object');
 	$host  = empty($options['host']) ? "http://12.109.40.31" : $options['host'];
+	$indexLocation = json_encode(explode(',', sanitize_lr($_GET['subject'], ',', true)));
 	
 	include_once("templates/LRInterfaceSubjectResultsTemplate.php");
 

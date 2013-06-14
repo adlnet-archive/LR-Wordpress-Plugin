@@ -98,17 +98,20 @@
 	<link type="text/css" href="<?php echo plugins_url( '/styles/Hypertree.css' , __FILE__ ) ?>" rel="stylesheet" />
 	
 	<?php endif; ?>
-	<?php if($type == "index"): ?>
+	<?php if($type == "index" || $type == "publisher"): ?>
+
 		<?php if(empty($_GET['standard']) && ! empty($text)): ?>
-			<div class="row" style="width: 100%; overflow: hidden; clear:both;height:80px;"><h2><?php echo $text; ?></h2></div>
+			<div style="width: 100%; overflow: hidden; clear:both;margin-bottom:30px;">
+				<span style="font-size:22px;"><?php echo $text; ?></span>
+				<span id="countReplace" style="font-size:13px;"></span>
+			</div>
 		<?php endif; ?>
 		<?php if(!empty($_GET['standard'])): ?>
 			<div class="row" style="width: 100%; overflow: hidden; clear:both; border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7; margin-bottom:15px;">
 				<span style="line-height:19px;" data-bind="text:standardDescription"></span><br/><br/>
-				<a class="childrenResourceNumber" href="<?php echo $_GET['query']; ?>" style="float:right;"><?php echo $_GET['query']; ?></a>
+				<a class="childrenResourceNumber" href="http://asn.jesandco.org/resources/<?php echo sanitize_lr($_GET['query']); ?>" style="float:right;"><?php echo sanitize_lr($_GET['query']); ?></a>
 			</div>
 		<?php endif; ?>
-		
 		<div class="row">
 			<div class="span12 activity">
 				<!-- ko if: results().length > 0 -->
@@ -129,10 +132,10 @@
 									</div>
 									<div style="float:left;text-align:left;width:75%;">
 										<div style="color:#888; padding-bottom: 10px; width: 100%; max-width: 100%;">
-											<a data-bind="html:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
-											<p style="line-height:16px;margin-bottom:0;" data-bind="text: 'Source: ' + publisher, visible: $data.publisher != undefined "></p>
+											<a data-bind="html:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), html:title}" class="title"></a><br/>
+											<p style="line-height:16px;margin-bottom:0;" data-bind="html: 'Source: ' + publisher, visible: $data.publisher != undefined "></p>
 										</div>
-										<p data-bind="text:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></p>
+										<p data-bind="html:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></p>
 										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:url}" class="fine" style="float:right;"></a><br/>
 									</div>
 								</td>
@@ -163,6 +166,8 @@
 		
 		totalSlice = 15;
 		newLoad = 15;
+		var countReplace = <?php echo json_encode($count); ?>;
+		var saveSearchType = '<?php echo $type; ?>';
 		
 		<?php if(!empty($_GET['standard'])): ?>
 		
@@ -184,6 +189,6 @@
 			<?php endif; ?>
 			
 			//if regular search
-			self.loadNewPage(<?php echo $type == 'slice' ? 'true': ''; ?>);
+			self.loadNewPage(saveSearchType);
 		});
 	</script>

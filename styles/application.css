@@ -3,6 +3,16 @@ td{
 	vertical-align: top !important;
 }
 
+.site-header .LRInterfaceCount{
+	clear:both;
+	
+}
+.site-header .textwidget{
+
+	float:right;
+	clear:both;
+}
+
 .imageCell div{
 
 	height: 100%;

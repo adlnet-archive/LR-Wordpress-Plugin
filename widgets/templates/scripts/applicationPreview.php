@@ -9,6 +9,11 @@ handleMainResourceModal(<?php echo empty($_GET['lr_resource']) ? 'false' : 'quer
 
 var qmarkUrl = qmarkUrl?qmarkUrl:'<?php echo plugins_url( "templates/images/qmark.png" , dirname(__FILE__) ) ?>';
 temp.permalink = '<?php echo add_query_arg(array("lr_resource"=>"LRreplaceMe", 'query'=>false)); ?>';
+temp.fixPublisherURL = function(e){
+	
+	var tempStr = '<?php echo add_query_arg(array("query"=>"LRreplaceMe",'type'=>'publisher'), get_page_link( $options['results']));?>';
+	return tempStr.replace('LRreplaceMe', e);
+};
 
 for (var f in followed){
 	temp.followers.push({name:followed[f], content:[]});
@@ -26,34 +31,64 @@ temp.handleStandardsClick = function(item, e){
 		
 	var baseEncoded = Base64.encode(item.title());
 
-	console.log(e, '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
-	encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded));	
+	window.location = '<?php echo add_query_arg(array("query"=> "LRreplaceMe", "standard"=> "LRstandardReplaceMe"), get_page_link( $options['results']));?>'.replace("LRreplaceMe", 
+	encodeURIComponent(item.id())).replace("LRstandardReplaceMe", baseEncoded);	
 	
 	return true;
 };
 
-var standardCollapseAllAndOpen = function(){
-
-	openTreeStateArr = window.location.hash?parseInt(window.location.hash.slice(2,window.location.hash.length))-1:false
-
-	$(".saveOpen").data("isOpen", false);
-	$(".standard-div").hide();
-	$(self).parent().children(".standard-plus").html("&#9654;");
+var standardCollapseAllAndOpen = function(e){
 	
-	if(openTreeStateArr !== false){
-		var cacheStandardDiv = $($(".subjectTree")[openTreeStateArr]).parents('.standard-div');
+	console.log(e);
+	if(!window.location.hash || e){
+	
+	$(".saveOpen").data("isOpen", true);
+		$('.standard-plus').each(function(i, element){
+			standardPlusCollapse({preventDefault:function(){}}, element);
+		});	
+	}
+	
+	if(window.location.hash){
+	
+		$(".saveOpen").data("isOpen", false);
+		$(".standard-div").hide();
 		
-		cacheStandardDiv.show();		
-		cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+		if(window.location.hash.charAt(1) == 't'){
+			var openTreeStateArr = parseInt(window.location.hash.slice(2,window.location.hash.length))-1;
+
+			if(openTreeStateArr >= 0){
+				var cacheStandardDiv = $($('.subjectTree')[openTreeStateArr]).parents('.standard-div');
+				
+				cacheStandardDiv.show();		
+				cacheStandardDiv.siblings('.standard-plus').each(function(i, element){
+				
+					standardPlusCollapse({preventDefault:function(){}}, this);
+				});	
+			}
+		}
 		
-			standardPlusCollapse({preventDefault:function(){}}, this);
-		});
+		if(window.location.hash.charAt(1) == 's'){
+
+			openTreeStateArr = window.location.hash?window.location.hash.slice(2,window.location.hash.length).split(',') : false;
 			
+			if(openTreeStateArr !== false){
+				var tempPointer = temp.standards().children()[openTreeStateArr[1]];
+				for(var i = 2; openTreeStateArr.length > i; i++){
+
+					tempPointer.loadChildren();
+					
+					if(tempPointer.children){
+						standardPlusCollapse({preventDefault:function(){}}, '[name="'+tempPointer.title()+'"]');
+						tempPointer = tempPointer.children()[openTreeStateArr[i]];
+					}
+				}	
+			}
+		}
 	}
 };
 
 var standardPlusCollapse = function(e, self){
-	
+
 	e.preventDefault();
 	
 	self = self ? self : this;
@@ -84,7 +119,6 @@ var standardPlusCollapse = function(e, self){
 	
 	return false;
 };
-
 $(document).on("click", ".standard-plus", standardPlusCollapse);
 
 jQuery(document).ready(function($){
@@ -248,4 +282,4 @@ var handleOnclickUserBar = function(obj){
 	lrConsole(test, self.currentObject().timeline()[test]);
 	displayObjectData(self.getReversedTimeline()[test]);
 
-}
+};

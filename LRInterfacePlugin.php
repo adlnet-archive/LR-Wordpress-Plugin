@@ -8,10 +8,9 @@ Version: 1
 Author URI: http://adlnet.gov/
 */
 
-function sanitize_lr($str, $opt){
-	
-	return $str;
-	return preg_replace('/[^a-zA-Z0-9'.$opt.']+/', '', $str);
+function sanitize_lr($str, $opt = '', $numbers = false){
+
+	return $numbers ? preg_replace('/[^0-9'.$opt.']+/', '', $str) : preg_replace('/[^a-zA-Z0-9'.$opt.']+/', '', $str);
 }
 
 //Load the individual widgets
@@ -25,6 +24,7 @@ include_once('widgets/LRInterfaceSubject.php');
 include_once('widgets/LRInterfaceCount.php');
 include_once('widgets/LRInterfaceSubjectResults.php');
 include_once('widgets/LRInterfaceIENotSupported.php');
+include_once('widgets/LRInterfacePublishers.php');
 include_once('LRInterfacePluginSettings.php');
 
 function registerWidgets(){
@@ -39,12 +39,13 @@ function registerWidgets(){
 	register_widget("LRInterfaceFeaturedSearch");
 	register_widget("LRInterfaceSubjectResults");
 	register_widget("LRInterfaceIENotSupported");
+	register_widget("LRInterfacePublishers");
 }
 
 function lr_enqueue_script(){
 
 	wp_enqueue_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', false );
-	wp_enqueue_script( 'knockout', 'https://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js', false );
+	wp_enqueue_script( 'knockout',  plugins_url( "scripts/knockout-2.2.1.js" , __FILE__ ), false );
 	wp_enqueue_script( 'json2', '//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js', false );
 	wp_enqueue_script( 'hexmd5', plugins_url( "scripts/hexmd5.js" , __FILE__ ) , false );
 	wp_enqueue_script( 'lrinterface', plugins_url( "scripts/application.js" , __FILE__ ) , false );

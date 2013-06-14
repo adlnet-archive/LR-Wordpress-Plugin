@@ -206,6 +206,13 @@ var fetchLiveParadata = function(src){
 	});
 };
 
+var displaySocialMediaButtons = function(){
+	if(socialMediaPlugins){
+		$("#socialMediaPlugins").show();
+		$("#socialMediaPlugins").html(socialMediaPlugins);
+	}
+};
+
 var handleMainResourceModal = function(src, direct){
 	
 	if(src){
@@ -230,14 +237,15 @@ var handleMainResourceModal = function(src, direct){
 					var md5 = src;
 					if(data){
 						src = data.url;
+						document.title = data.title;
 						
 						//This is done because observable.valueHasMutated wasn't working.. so assign each property to a new object individually and update self
 						var currentObject = new resourceObject("Item", src);
 						currentObject.timeline = self.currentObject().timeline;
-						currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
-						currentObject.description = (data.description == undefined) ? "" : data.description;
+						currentObject.title = (data.title == undefined) ? doTransform(src) : stripHTML(data.title);
+						currentObject.description = (data.description == undefined) ? "" : stripHTML(data.description);
 						currentObject.url = (data.url == undefined) ? "" : data.url;
-						currentObject.publisher = (data.publisher == undefined) ? "" : data.publisher;
+						currentObject.publisher = (data.publisher == undefined) ? "" : stripHTML(data.publisher);
 						
 						lrConsole("qmarkUrl: ", qmarkUrl);
 						var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
@@ -260,6 +268,7 @@ var handleMainResourceModal = function(src, direct){
 						self.currentObject(currentObject);
 					}
 					
+					displaySocialMediaButtons();
 					fetchLiveParadata(data.url);
 				});
 			}
@@ -563,6 +572,10 @@ var addComma = function(num){
 	return newStr;
 };
 
+var stripHTML = function(str){
+	return str.replace(/<[^>]+>/gim, '').replace(/&[^;]+;/gim, '');
+};
+
 /* The main View Model used by Knockout.js */
 var mainViewModel = function(resources){
 
@@ -588,26 +601,71 @@ var mainViewModel = function(resources){
 	self.listOfStates = ko.observableArray();
 	self.standardsCounter = 0;
 	self.subjectCounter = 0;
+	self.page = ko.observable(-1);
+	self.publishers = ko.observableArray([]);
 	
-	self.model = function(node, noChildren){
-
+	//Temporarily set to false for federal resources
+	self.loadMore = ko.observable(false);
+	
+	self.handleStandardsNodeClick = function(data, e){
+		
+		if(data.id)
+			self.handleStandardsClick(data, e);
+			
+		else{
+			standardPlusCollapse(e, $(e.currentTarget));
+			data.loadChildren();
+		}
+		
+		return true;
+	};
+	
+	self.previous = function(){
+		self.load(true);
+	}
+	
+	self.load = function(prev){
+		self.page(prev===true && self.page() > 0 ? self.page()-1 : self.page()+1);
+		$.getJSON("?json=publishers.publishers_list&gov=1&fetchPage=" + self.page(), function(data){							
+			
+			if(data.length <= 0){
+				self.loadMore(false);
+			}else{
+				data = data.data;
+				console.log(data);
+				self.publishers(data);
+			}
+		});
+	}
+	
+	self.model = function(node, noChildren, parentRoute){
+		
 		var me = this;
 		me.node = node;
+		me.parentRoute = parentRoute ? parentRoute : [0];
 		me.title = ko.observable(node.title);
 		me.count = ko.observable(node.count);
+		me.childCount = ko.observable(node.childCount);
 		me.children = noChildren === true? undefined : ko.observableArray();
-		me.id = noChildren === true? ko.observable(node.id) : undefined;
+		me.id = node.id? ko.observable(node.id) : undefined;
+		
 		
 		me.loadChildren = function(){
-		
-			if(!me.node.children)
+			
+			//console.log("Load children");
+			if(!me.node.children || (me.children && me.children().length>1))
 				return;
 			
-			var childrenCheck;
-			for(var child in me.node.children){
-			
-				childrenCheck = me.node.children[child].children ? false : true;
-				me.children.push(new self.model(me.node.children[child], childrenCheck));
+			var tempArr = $.extend(true, [], me.parentRoute);
+			tempArr.push(-1);
+
+			for(var i = 0; i < me.node.children.length; i++){
+				
+				tempArr = $.extend(true, [], tempArr);
+				tempArr[tempArr.length-1]++;
+				
+				childrenCheck = me.node.children[i].children ? false : true;
+				me.children.push(new self.model(me.node.children[i], childrenCheck, tempArr));
 			}
 		};
 	};
@@ -776,8 +834,10 @@ var mainViewModel = function(resources){
 		$('#spinnerDiv').show();
 		$("#loadMore").hide();
 		temp.resultsNotFound(false);
+		isVisual = saveSearchType;
+		console.log("TYPE OF SEARCH: ", isVisual);
 		//var query = $("#s").val();
-		if(isVisual === true){
+		if(isVisual === true || isVisual === 'slice'){
 			
 			startNewSearch(query);
 		}
@@ -786,7 +846,7 @@ var mainViewModel = function(resources){
 			
 			loadIndex = (startOver === true) ? 1 : loadIndex;
 			
-			var data = {terms: query, page: loadIndex-1};
+			var data = {terms: query, lr_page: loadIndex-1};
 			if(self.filterSearchTerms().length > 0){
 				
 				var newArr = [];
@@ -803,7 +863,8 @@ var mainViewModel = function(resources){
 				
 				
 			lrConsole("Load index: ", loadIndex, query, data);
-			data.json = "search.search";
+			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";
+				
 			$.ajax(window.location.pathname, {
 				dataType : 'json',
 				jsonp : 'callback',
@@ -812,9 +873,16 @@ var mainViewModel = function(resources){
 				
 				
 				lrConsole("data: ", data);
+				
+				if(countReplace && data.count){
+					$('#countReplace').text(countReplace.replace('$count', ' - ' + addComma(data.count)));
+				}
+				
 				if(data.responseText)
 					data = JSON.parse(data.responseText).data;
-				data = data.data;
+				
+				data = data.data ? data.data : data;
+
 				//lrConsole(data);
 				$('#spinnerDiv').hide();
 				$("#loadMore").show();
@@ -828,10 +896,28 @@ var mainViewModel = function(resources){
 					
 					$("#loadMore").hide();
 					$("#endOfResults").show();
+				}		
+				
+				
+				var tempRegexArr = query.replace(/[^a-zA-Z0-9 ]/gi, '').split(' ');
+				for(var i = 0; i < tempRegexArr.length; i++){
+					
+					if(tempRegexArr[i].search(/[a-zA-Z0-9]/gi) == -1)
+						tempRegexArr.splice(i, 1);
 				}
+				
 
-				for(var i = startIndex; i < data.length; i++)
+				var regexObj = new RegExp('(' + tempRegexArr.join('|') + ')', 'gi');
+
+				for(var i = startIndex; i < data.length; i++){
+				
+					data[i].title = stripHTML(data[i].title).replace(regexObj, '<b>$&</b>');
+					data[i].description = stripHTML(data[i].description).replace(regexObj, '<b>$&</b>');
+					data[i].publisher = data[i].publisher ? stripHTML(data[i].publisher).replace(regexObj, '<b>$&</b>') : '';
+					data[i].hasScreenshot = data[i].hasScreenshot==undefined?true:data[i].hasScreenshot;
+					
 					self.results.push(data[i]);
+				}
 			
 				self.results.remove(function(item){
 					
@@ -1152,7 +1238,7 @@ var mainViewModel = function(resources){
 // jQuery.XDomainRequest.js
 // Author: Jason Moon - @JSONMOON
 // IE8+
-$.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
+/*$.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
     
     if(jQuery.browser.msie && window.XDomainRequest) {
         
@@ -1209,7 +1295,7 @@ $.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
           }
         };
       }
-    });
+    });*/
 	
 	
 var Base64 = {

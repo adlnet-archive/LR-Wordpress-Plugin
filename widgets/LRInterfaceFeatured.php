@@ -215,10 +215,10 @@ class LRInterfaceFeatured extends WP_Widget
 					var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
 					
 					//This is done because observable.valueHasMutated wasn't working..
-					currentObject.title = (data.title == undefined) ? doTransform(src) : data.title;
-					currentObject.description = (data.description == undefined) ? "" : data.description;
+					currentObject.title = (data.title == undefined) ? doTransform(src) : stripHTML(data.title);
+					currentObject.description = (data.description == undefined) ? "" : stripHTML(data.description);
 					currentObject.url = (data.url == undefined) ? "" : data.url;
-					currentObject.source = data.publisher == undefined ? "" : data.publisher;
+					currentObject.source = data.publisher == undefined ? "" : stripHTML(data.publisher);
 					currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
 					
 					currentObject.image = self.getImageSrc(null, currentObject.image);
