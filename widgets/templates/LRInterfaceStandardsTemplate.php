@@ -7,7 +7,7 @@
 						
 			<a href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'click':$root.handleStandardsNodeClick, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), visible:parentRoute.length>=3" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
 
-			<span class="childrenResourceNumber" data-bind="text: $data.childCount() >= 0? '( ' + $data.childCount() + ' )': ''">&nbsp;</span>
+			<span class="childrenResourceNumber" data-bind="text: $data.childCount() >= 0? '( ' + $root.addComma($data.childCount()) + ' )': ''">&nbsp;</span>
 			
 			<br/><br/>
 			<div class="saveOpen"></div>
