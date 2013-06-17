@@ -643,7 +643,10 @@ var mainViewModel = function(resources){
 		var me = this;
 		me.node = node;
 		me.parentRoute = parentRoute ? parentRoute : [0];
-		me.title = ko.observable(node.title);
+		var title = node.title.substr(0,8) == 'National' && me.parentRoute.length < 3 ? node.title.charAt(9).toUpperCase() + node.title.slice(10, node.title.length) : 
+					node.title.charAt(0).toUpperCase() + node.title.slice(1, node.title.length);
+					
+		me.title = ko.observable(title);
 		me.count = ko.observable(node.count);
 		me.childCount = ko.observable(node.childCount);
 		me.children = noChildren === true? undefined : ko.observableArray();

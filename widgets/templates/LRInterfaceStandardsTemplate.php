@@ -3,7 +3,7 @@
 		<!-- ko if: $data && $data.children !== undefined && ($data.childCount() > 0 || parentRoute.length>=3) -->
 
 			<a href="#" data-bind="click:$data.loadChildren" class="standard-plus">&#9654;</a>
-			<span href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), visible:parentRoute.length<3" class="standard-link-collapse" style="line-height:21px;">&nbsp;</span>
+			<span href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'html': title(), visible:parentRoute.length<3" class="standard-link-collapse" style="line-height:21px;">&nbsp;</span>
 						
 			<a href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'click':$root.handleStandardsNodeClick, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), visible:parentRoute.length>=3" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
 
