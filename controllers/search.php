@@ -11,8 +11,7 @@ Controller description: Search Controller
 			$query = array (
                             "terms" => $json_api->query->get("terms"),
                             "filter" => $json_api->query->get("filter"),
-                            "page" => $json_api->query->get("lr_page"),
-                            "gov" => $json_api->query->get("gov")
+                            "page" => $json_api->query->get("lr_page")
                         );
 			$raw_data = file_get_contents(self::SEARCH_ROOT . http_build_query($query));
 			$data = json_decode($raw_data);	
@@ -28,6 +27,7 @@ Controller description: Search Controller
 			$raw_data = file_get_contents(self::PUBLISHER_ROOT . $json_api->query->get("terms") . '?' . http_build_query($query));
 			$data = json_decode($raw_data);	
 			return array('data'=>$data);
+
 		}
 	}
 ?>
