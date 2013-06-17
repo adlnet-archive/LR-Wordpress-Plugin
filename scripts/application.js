@@ -21,7 +21,7 @@ if (!(window.console && console.log)) { (function() { var noop = function() {}; 
 
 var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
-	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, debugMode = true, saveStandardsData;
+	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, debugMode = true, saveStandardsData, resultsSaveBuffer;
 
 var lrConsole  = function(){
 
@@ -576,6 +576,70 @@ var stripHTML = function(str){
 	return str.replace(/<[^>]+>/gim, '').replace(/&[^;]+;/gim, '');
 };
 
+var updateResults = function(data){
+	
+	lrConsole("data: ", data);
+	
+	if(countReplace && data.count){
+		$('#countReplace').text(countReplace.replace('$count', ' - ' + addComma(data.count)));
+	}
+	
+	if(data.responseText)
+		data = JSON.parse(data.responseText).data;
+	
+	data = data.data ? data.data : data;
+
+	//lrConsole(data);
+	$('#spinnerDiv').hide();
+	$("#loadMore").show();
+	$('#spinnerDiv').css("margin-top", "50px");
+	//var startIndex = (loadIndex == 2) ? 0 : 1;
+	
+	if(data.length == 0 && loadIndex == 2)
+		temp.resultsNotFound(true);
+	
+	else if(data.length == 0){
+		
+		$("#loadMore").hide();
+		$("#endOfResults").show();
+	}		
+	
+	
+	var tempRegexArr = query.replace(/[^a-zA-Z0-9 ]/gi, '').split(' ');
+	for(var i = 0; i < tempRegexArr.length; i++){
+		
+		if(tempRegexArr[i].search(/[a-zA-Z0-9]/gi) == -1)
+			tempRegexArr.splice(i, 1);
+	}
+	
+
+	var regexObj = new RegExp('(' + tempRegexArr.join('|') + ')', 'gi');
+
+	for(var i = 0; i < data.length; i++){
+	
+		data[i].title = stripHTML(data[i].title).replace(regexObj, '<b>$&</b>');
+		data[i].description = stripHTML(data[i].description).replace(regexObj, '<b>$&</b>');
+		data[i].publisher = data[i].publisher ? stripHTML(data[i].publisher).replace(regexObj, '<b>$&</b>') : '';
+		data[i].hasScreenshot = data[i].hasScreenshot==undefined?true:data[i].hasScreenshot;
+		
+		self.results.push(data[i]);
+	}
+
+	self.results.remove(function(item){
+		
+		return !self.notOnBlackList(item.url);
+	});
+	
+	handlePerfectSize();
+};
+
+var noMoreResults = function(error){
+	lrConsole(error);
+	$('#spinnerDiv').hide();
+	$('#spinnerDiv').css("margin-top", "50px");
+	temp.resultsNotFound(true);			
+};
+
 /* The main View Model used by Knockout.js */
 var mainViewModel = function(resources){
 
@@ -846,7 +910,7 @@ var mainViewModel = function(resources){
 		}
 		
 		else {
-			
+			//debugger;
 			loadIndex = (startOver === true) ? 1 : loadIndex;
 			
 			var data = {terms: query, lr_page: loadIndex-1};
@@ -867,79 +931,56 @@ var mainViewModel = function(resources){
 				data.filter = newArr.join(";");
 			}
 				
-			lrConsole("Load index: ", loadIndex, query, data);
 			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";
-			console.log(data);
-			$.ajax(window.location.pathname, {
-				dataType : 'json',
-				jsonp : 'callback',
-				data: data
-			}).done(function(data){
-				
-				
-				lrConsole("data: ", data);
-				
-				if(countReplace && data.count){
-					$('#countReplace').text(countReplace.replace('$count', ' - ' + addComma(data.count)));
-				}
-				
-				if(data.responseText)
-					data = JSON.parse(data.responseText).data;
-				
-				data = data.data ? data.data : data;
-
-				//lrConsole(data);
-				$('#spinnerDiv').hide();
-				$("#loadMore").show();
-				$('#spinnerDiv').css("margin-top", "50px");
-				var startIndex = (loadIndex == 2) ? 0 : 1;
-				
-				if(data.length == 0 && loadIndex == 2)
-					temp.resultsNotFound(true);
-				
-				else if(data.length == 0){
-					
-					$("#loadMore").hide();
-					$("#endOfResults").show();
-				}		
-				
-				
-				var tempRegexArr = query.replace(/[^a-zA-Z0-9 ]/gi, '').split(' ');
-				for(var i = 0; i < tempRegexArr.length; i++){
-					
-					if(tempRegexArr[i].search(/[a-zA-Z0-9]/gi) == -1)
-						tempRegexArr.splice(i, 1);
-				}
-				
-
-				var regexObj = new RegExp('(' + tempRegexArr.join('|') + ')', 'gi');
-
-				for(var i = startIndex; i < data.length; i++){
-				
-					data[i].title = stripHTML(data[i].title).replace(regexObj, '<b>$&</b>');
-					data[i].description = stripHTML(data[i].description).replace(regexObj, '<b>$&</b>');
-					data[i].publisher = data[i].publisher ? stripHTML(data[i].publisher).replace(regexObj, '<b>$&</b>') : '';
-					data[i].hasScreenshot = data[i].hasScreenshot==undefined?true:data[i].hasScreenshot;
-					
-					self.results.push(data[i]);
-				}
 			
-				self.results.remove(function(item){
+			if(resultsSaveBuffer){
 					
-					return !self.notOnBlackList(item.url);
+					updateResults(resultsSaveBuffer);
+					$.ajax(window.location.pathname, {
+						dataType : 'json',
+						jsonp : 'callback',
+						data: data
+					}).done(function(data){
+						resultsSaveBuffer = data;
+						if(data.length == 0)
+							temp.resultsNotFound(true);
+							
+						loadIndex++;
+							
+					}).fail(noMoreResults);
+			}
+			
+			else{
+			
+				$.ajax(window.location.pathname, {
+					dataType : 'json',
+					jsonp : 'callback',
+					data: data
+				}).done(function(data){
+				
+					updateResults(data);
+					
+					loadIndex++;
+					var newData = {terms: query, lr_page: loadIndex-1};
+					newData.json = isVisual == 'publisher'? "search.publisher" :"search.search";
+					loadIndex++;
+					$.ajax(window.location.pathname, {
+						dataType : 'json',
+						jsonp : 'callback',
+						data: newData
+					})
+					.done(function(data){
+						resultsSaveBuffer = data.data;
+						
+						if(resultsSaveBuffer.length == 0 && loadIndex > 2){
+							$("#loadMore").hide();
+							$("#endOfResults").show();	
+						}
+						
+					});
 				});
-				
-				handlePerfectSize();
-			}).fail(function(error){
-				lrConsole(error);
-				$('#spinnerDiv').hide();
-				$('#spinnerDiv').css("margin-top", "50px");
-				temp.resultsNotFound(true);
-				
-				
-			});
+			}
 			
-			loadIndex++;
 			scrollbarFix($(".resultModal"));
 		}
 	};
