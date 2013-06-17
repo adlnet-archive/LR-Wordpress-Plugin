@@ -54,7 +54,7 @@ class LRInterfaceCount extends WP_Widget
 		jQuery(document).ready(function($){
 			var url = window.location.pathname + "?json=count.get_count";
 			$.getJSON(url, function(data){	
-				$("#LR_resourceCount").html('<?php echo $count; ?>'.replace('$count', data['doc_count']));
+				$("#LR_resourceCount").html('<?php echo $count; ?>'.replace('$count', self.addComma(data['doc_count'])));
 			});
 		});
 	</script>

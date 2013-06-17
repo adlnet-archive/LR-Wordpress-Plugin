@@ -95,7 +95,7 @@ class LRInterfaceSearch extends WP_Widget
 			<input id="lrSearchBox" class="lrSearch" type="text" title="<?php echo $instance['placeholder']; ?>" name="query" <?php echo (empty($placeholder)||!empty($label))?'':'placeholder="' . $placeholder . '"'; ?> />			
 			<input class="lrSubmit" type="submit" value="Search" />
 		</div>
-		Federal Resources: <input id="lrGovCheck" type="checkbox"></input>
+		<input id="lrGovCheck" type="checkbox"></input> <span style="font-weight:bold;">Federal Resources Only</span>
 	</form>
 	
 	
