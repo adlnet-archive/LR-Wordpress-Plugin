@@ -595,8 +595,10 @@ var updateResults = function(data){
 	$('#spinnerDiv').css("margin-top", "50px");
 	//var startIndex = (loadIndex == 2) ? 0 : 1;
 	
-	if(data.length == 0 && loadIndex == 2)
+	if(data.length == 0 && loadIndex <= 2){
 		temp.resultsNotFound(true);
+		return false;
+	}
 	
 	else if(data.length == 0){
 		
@@ -631,6 +633,7 @@ var updateResults = function(data){
 	});
 	
 	handlePerfectSize();
+	return true;
 };
 
 var noMoreResults = function(error){
@@ -958,7 +961,9 @@ var mainViewModel = function(resources){
 					data: data
 				}).done(function(data){
 				
-					updateResults(data);
+					var nothingFound = updateResults(data);
+					if(nothingFound === false)
+						return;
 					
 					loadIndex++;
 					var newData = {terms: query, lr_page: loadIndex-1};
