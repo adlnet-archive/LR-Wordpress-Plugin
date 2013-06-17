@@ -1,35 +1,34 @@
 <script type="text/html" id="standards-template">
-		<div class="standardsTree">
-			<!-- ko if: $data && $data.children !== undefined -->
+	<div class="standardsTree">
+		<!-- ko if: $data && $data.children !== undefined && ($data.childCount() > 0 || parentRoute.length>=3) -->
 
-				<a href="#" data-bind="click:$data.loadChildren" class="standard-plus">&#9654;</a>
-				<a href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'click':$data.loadChildren, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length)" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
-				<span class="childrenResourceNumber" data-bind="text: $data.childCount() >= 0? '( ' + $data.childCount() + ' )': ''">&nbsp;</span>
-				<a href="#" title="Search for this standard directly" data-bind="click:$root.handleStandardsNodeClick, visible:$data.count(), attr:{href:'#s'+parentRoute}" style="text-decoration:none;">
-					<img src="<?php echo plugins_url( 'images/glass.png' , __FILE__ ) ?>" style="box-shadow:none; width:12px;height:12px;" class="directAlignment" />
-					<span class="childrenResourceNumber" data-bind="text: $data.count() + ' aligned resources'">&nbsp;</span>
-				</a>
-				
-				<br/><br/>
-				<div class="saveOpen"></div>
-				
-				<div style="padding-left: 40px;" class="standard-div" data-bind="'template':{'name': 'standards-template', 'foreach': children}"></div>
-			<!-- /ko -->
-			<!-- ko if: $data && $data.children == undefined -->				
-				<div style="border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7;" >
-					<a style="text-decoration:none;" href="#" data-bind="'html': title(), 'attr':{href:'#s'+parentRoute}, 'click':$root.handleStandardsClick" class="standard-link">&nbsp;</a>
-					<span class="childrenResourceNumber" data-bind="'text': $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
-					
-					<div class="noChildren"></div>
-				</div>
-					<br/><br/>
-			<!-- /ko -->
+			<a href="#" data-bind="click:$data.loadChildren" class="standard-plus">&#9654;</a>
+			<span href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), visible:parentRoute.length<3" class="standard-link-collapse" style="line-height:21px;">&nbsp;</span>
+						
+			<a href="#" data-bind="'attr':{'name':$data.title?$data.title():'', href:'#s'+parentRoute}, 'click':$root.handleStandardsNodeClick, 'html': title().charAt(0).toUpperCase() + title().slice(1, title().length), visible:parentRoute.length>=3" class="standard-link-collapse" style="line-height:21px;">&nbsp;</a>
+
+			<span class="childrenResourceNumber" data-bind="text: $data.childCount() >= 0? '( ' + $data.childCount() + ' )': ''">&nbsp;</span>
 			
-		</div>
+			<br/><br/>
+			<div class="saveOpen"></div>
+			
+			<div style="padding-left: 40px;" class="standard-div" data-bind="'template':{'name': 'standards-template', 'foreach': children}"></div>
+		<!-- /ko -->
+		<!-- ko if: $data && $data.children == undefined -->				
+			<div style="border: 1px #d8d8d8 solid; padding: 7px; background:#f7f7f7;" >
+				<a style="text-decoration:none;" href="#" data-bind="'html': title(), 'attr':{href:'#s'+parentRoute}, 'click':$root.handleStandardsClick" class="standard-link">&nbsp;</a>
+				<span class="childrenResourceNumber" data-bind="'text': $data.count() >= 0? '( ' + $data.count() + ' )': ''">&nbsp;</span>
+				
+				<div class="noChildren"></div>
+			</div>
+				<br/><br/>
+		<!-- /ko -->
+		
+	</div>
 </script>
 
 <div style="width:100%; overflow:hidden;clear:both;float:left;margin-bottom:20px;">
-	<div class="standardsContainer" data-bind="foreach:['Multistate', 'State']">
+	<div class="standardsContainer" data-bind="foreach:['Multistate']"><!-- Readd state to array here -->
 		<div class="standardHeader" data-bind="click:$root.handleStandardHeaderClick, text:$data, css:{standardHeaderInactive:$index()>0}"></div>
 		<!--<div style="float:right; color: red;padding:16px 10px 0 0;" data-bind="visible:$index()==1">Beta</div>-->
 	</div>
