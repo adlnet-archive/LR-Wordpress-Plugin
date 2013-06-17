@@ -906,6 +906,7 @@ var mainViewModel = function(resources){
 		temp.resultsNotFound(false);
 		isVisual = saveSearchType;
 		console.log("TYPE OF SEARCH: ", isVisual);
+		
 		//var query = $("#s").val();
 		if(isVisual === true || isVisual === 'slice'){
 			
@@ -938,19 +939,21 @@ var mainViewModel = function(resources){
 			
 			if(resultsSaveBuffer){
 					
-					updateResults(resultsSaveBuffer);
-					$.ajax(window.location.pathname, {
-						dataType : 'json',
-						jsonp : 'callback',
-						data: data
-					}).done(function(data){
-						resultsSaveBuffer = data;
-						if(data.length == 0)
-							temp.resultsNotFound(true);
-							
-						loadIndex++;
-							
-					}).fail(noMoreResults);
+				updateResults(resultsSaveBuffer);
+				$.ajax(window.location.pathname, {
+					dataType : 'json',
+					jsonp : 'callback',
+					data: data
+				}).done(function(data){
+					resultsSaveBuffer = data.data;
+					//debugger;
+					if(resultsSaveBuffer.length == 0 && (loadIndex > 1 || startOver && startOver.type == 'click')){
+						$("#loadMore").hide();
+						$("#endOfResults").show();	
+					}
+					loadIndex++;
+						
+				});
 			}
 			
 			else{
@@ -976,12 +979,10 @@ var mainViewModel = function(resources){
 					})
 					.done(function(data){
 						resultsSaveBuffer = data.data;
-						
-						if(resultsSaveBuffer.length == 0 && loadIndex > 2){
+						if(resultsSaveBuffer.length == 0 && (loadIndex > 1 || startOver && startOver.type == 'click')){
 							$("#loadMore").hide();
 							$("#endOfResults").show();	
 						}
-						
 					});
 				});
 			}
