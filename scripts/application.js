@@ -579,9 +579,9 @@ var stripHTML = function(str){
 var updateResults = function(data){
 	
 	lrConsole("data: ", data);
-	
-	if(countReplace && data.count){
-		$('#countReplace').text(countReplace.replace('$count', ' - ' + addComma(data.count)));
+
+	if(countReplace && data.count >= 0){
+		self.resultsCount(countReplace.replace('$count', ' - ' + addComma(data.count)));
 	}
 	
 	if(data.responseText)
@@ -647,7 +647,10 @@ var noMoreResults = function(error){
 var mainViewModel = function(resources){
 
     self = this;
-
+	
+	/*
+		Should refactor the view model and templates to load only the observables that are required by a widget
+	*/
     self.data = ko.observableArray(resources);
     self.bookmarks = ko.observableArray();
     self.followers = ko.observableArray(followingList);
@@ -670,6 +673,7 @@ var mainViewModel = function(resources){
 	self.subjectCounter = 0;
 	self.page = ko.observable(-1);
 	self.publishers = ko.observableArray([]);
+	self.resultsCount = ko.observableArray();
 	
 	//Temporarily set to false for federal resources
 	self.loadMore = ko.observable(false);
@@ -772,11 +776,11 @@ var mainViewModel = function(resources){
 		
 	self.handlePublisherClick = function(data, obj){
 		
-		var target = obj.target;
+		var targetName = $(obj.target).attr("name");
 		
-		self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == $(target).attr("name")) ? '' : $(target).attr("name");		
+		self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == targetName) ? '' : targetName;		
 		
-		lrConsole("click: ", self.filterSearchTerms()[1], $(target).attr("name"));
+		lrConsole("click: ", self.filterSearchTerms()[1], targetName);
 		self.results.removeAll();
 		self.loadNewPage(false, true);
 		
@@ -905,7 +909,6 @@ var mainViewModel = function(resources){
 		$("#loadMore").hide();
 		temp.resultsNotFound(false);
 		isVisual = saveSearchType;
-		console.log("TYPE OF SEARCH: ", isVisual);
 		
 		//var query = $("#s").val();
 		if(isVisual === true || isVisual === 'slice'){
@@ -937,7 +940,7 @@ var mainViewModel = function(resources){
 				
 			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";
 			
-			if(resultsSaveBuffer){
+			if(resultsSaveBuffer && loadIndex > 1){
 					
 				updateResults(resultsSaveBuffer);
 				$.ajax(window.location.pathname, {
@@ -945,9 +948,9 @@ var mainViewModel = function(resources){
 					jsonp : 'callback',
 					data: data
 				}).done(function(data){
-					resultsSaveBuffer = data.data;
+					resultsSaveBuffer = data;
 					//debugger;
-					if(resultsSaveBuffer.length == 0 && (loadIndex > 1 || startOver && startOver.type == 'click')){
+					if(resultsSaveBuffer.data.length == 0 && (loadIndex > 1 || startOver && startOver.type == 'click')){
 						$("#loadMore").hide();
 						$("#endOfResults").show();	
 					}
@@ -962,24 +965,24 @@ var mainViewModel = function(resources){
 					dataType : 'json',
 					jsonp : 'callback',
 					data: data
-				}).done(function(data){
+				}).done(function(dataIn){
 				
-					var nothingFound = updateResults(data);
+					var nothingFound = updateResults(dataIn);
 					if(nothingFound === false)
 						return;
 					
 					loadIndex++;
-					var newData = {terms: query, lr_page: loadIndex-1};
-					newData.json = isVisual == 'publisher'? "search.publisher" :"search.search";
+					data.lr_page = loadIndex-1;
 					loadIndex++;
+					
 					$.ajax(window.location.pathname, {
 						dataType : 'json',
 						jsonp : 'callback',
-						data: newData
+						data: data
 					})
 					.done(function(data){
-						resultsSaveBuffer = data.data;
-						if(resultsSaveBuffer.length == 0 && (loadIndex > 1 || startOver && startOver.type == 'click')){
+						resultsSaveBuffer = data;
+						if(resultsSaveBuffer.data.length == 0 && (loadIndex > 1 || startOver && startOver.type == 'click')){
 							$("#loadMore").hide();
 							$("#endOfResults").show();	
 						}

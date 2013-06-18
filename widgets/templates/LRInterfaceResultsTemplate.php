@@ -103,7 +103,7 @@
 		<?php if(empty($_GET['standard']) && ! empty($text)): ?>
 			<div style="width: 100%; overflow: hidden; clear:both;margin-bottom:30px;">
 				<span style="font-size:22px;"><?php echo $text; ?></span>
-				<span id="countReplace" style="font-size:13px;"></span>
+				<span data-bind="text:resultsCount" style="font-size:13px;"></span>
 			</div>
 		<?php endif; ?>
 		<?php if(!empty($_GET['standard'])): ?>
