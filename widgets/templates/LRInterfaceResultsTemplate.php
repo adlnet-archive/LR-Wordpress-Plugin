@@ -133,7 +133,7 @@
 									<div style="float:left;text-align:left;width:75%;">
 										<div style="color:#888; padding-bottom: 10px; width: 100%; max-width: 100%;">
 											<a data-bind="html:$root.getShorterStr($data, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url), html:title}" class="title"></a><br/>
-											<p style="line-height:16px;margin-bottom:0;" data-bind="html: 'Source: ' + publisher, visible: $data.publisher != undefined "></p>
+											<p style="line-height:16px;margin-bottom:0;" data-bind="html: 'Source: ' + publisher, visible: $data.publisher != undefined && $data.publisher != ''"></p>
 										</div>
 										<p data-bind="html:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></p>
 										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:url}" class="fine" style="float:right;"></a><br/>
