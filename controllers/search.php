@@ -22,12 +22,18 @@ Controller description: Search Controller
 			global $json_api;
 			$query = array (
                             "filter" => $json_api->query->get("filter"),
-                            "page" => $json_api->query->get("lr_page")
+                            "page" => $json_api->query->get("lr_page"),
                         );
-			$raw_data = file_get_contents(self::PUBLISHER_ROOT . $json_api->query->get("terms") . '?' . http_build_query($query));
-			$data = json_decode($raw_data);	
-			return array('data'=>$data);
-
+            $url = self::PUBLISHER_ROOT . rawurlencode($json_api->query->get("terms"));
+            if ($json_api->query->get("filter") || $json_api->query->get("lr_page"))
+                $url = $url . '?' . http_build_query($query);
+            try{
+                $raw_data = file_get_contents($url);
+                $data = json_decode($raw_data);	
+                return array('data'=>$data);
+            }catch(Exception $ex){
+                return "fail";
+            }
 		}
 	}
 ?>
