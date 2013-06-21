@@ -726,12 +726,13 @@ var mainViewModel = function(resources){
 			success: function(data){							
 			
 				$(publishersSpin.el).hide();
-				if(data.length <= 0){
+				data = data.data;
+				if(! data){
 					self.errorPublisher(true);
 				}
 				else{
 					self.errorPublisher(false);
-					data = data.data;
+					
 					
 					self.publishers(data);
 					self.publishers().sort(function (a, b) {
