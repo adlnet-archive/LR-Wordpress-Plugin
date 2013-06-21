@@ -51,8 +51,9 @@ class LRInterfacePublishers extends WP_Widget
 	$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 	$govOnly = empty($instance['govOnly']) ? '' : $instance['govOnly'];
 ?>
-	<h3><?php echo $title; ?></h3>
-	
+	<?php if(!empty($govOnly)): ?>
+		<h3><?php echo $title; ?></h3>
+	<?php endif; ?>
 	<?php if(empty($govOnly)): ?>
 		<div class="publisherDiv" data-bind="foreach:allLetters, visible:$root.publishers().length>0||$root.errorPublisher">
 			<a href="" class="publisherLetter" data-bind="text:$data, click:$root.handleLetterClick"></a>
