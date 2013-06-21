@@ -2,7 +2,18 @@ td{
 
 	vertical-align: top !important;
 }
+.publisherLetter{
+	text-decoration: none;
+	margin-right: 5px;
+}
+.publisherDiv{
 
+	text-align: center;
+	border-bottom: 1px #ECECEC solid;
+	margin: 19px auto;
+	padding-bottom: 5px;
+	width: 74%;
+}
 .site-header .LRInterfaceCount{
 	clear:both;
 	

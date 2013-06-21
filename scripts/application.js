@@ -20,7 +20,7 @@
 if (!(window.console && console.log)) { (function() { var noop = function() {}; var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn']; var length = methods.length; var console = window.console = {}; while (length--) { console[methods[length]] = noop; } }()); }
 
 var $=($)?$:jQuery;
-var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, 
+var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, currentSubstrLetter = 'a', publishersCache = {},
 	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, debugMode = true, saveStandardsData, resultsSaveBuffer;
 
 var lrConsole  = function(){
@@ -674,6 +674,8 @@ var mainViewModel = function(resources){
 	self.page = ko.observable(-1);
 	self.publishers = ko.observableArray([]);
 	self.resultsCount = ko.observableArray();
+	self.allLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+	self.errorPublisher = ko.observable(false);
 	
 	//Temporarily set to false for federal resources
 	self.loadMore = ko.observable(false);
@@ -693,21 +695,59 @@ var mainViewModel = function(resources){
 	
 	self.previous = function(){
 		self.load(true);
-	}
+	};
+	
+	self.handleLetterClick = function(data, e){
+		
+		if(currentSubstrLetter == data.toLowerCase())
+			return;
+			
+		currentSubstrLetter = data.toLowerCase();
+		self.load();
+		
+		console.log(data, e);
+	};
 	
 	self.load = function(prev){
 		self.page(prev===true && self.page() > 0 ? self.page()-1 : self.page()+1);
-		$.getJSON("?json=publishers.publishers_list&gov=1&fetchPage=" + self.page(), function(data){							
+		
+		//Assuming there is no pagination. Will break if there is.
+		if(publishersCache[currentSubstrLetter]){
+		
+			self.publishers(publishersCache[currentSubstrLetter]);
+			return;
+		}
+		
+		$(publishersSpin.el).show();
+		self.errorPublisher(false);
+		self.publishers([]);
+		$.ajax({
+			url: "?json=publishers.publishers_list&letter="+currentSubstrLetter, 
+			success: function(data){							
 			
-			if(data.length <= 0){
-				self.loadMore(false);
-			}else{
-				data = data.data;
-				console.log(data);
-				self.publishers(data);
+				$(publishersSpin.el).hide();
+				if(data.length <= 0){
+					self.errorPublisher(true);
+				}
+				else{
+					self.errorPublisher(false);
+					data = data.data;
+					
+					self.publishers(data);
+					self.publishers().sort(function (a, b) {
+						return a.toLowerCase().localeCompare(b.toLowerCase());
+					});
+					self.publishers.valueHasMutated();
+					
+					publishersCache[currentSubstrLetter] = self.publishers();
+				}
+			},
+			error: function(){
+				self.errorPublisher(true);
+				$(publishersSpin.el).hide();
 			}
 		});
-	}
+	};
 	
 	self.model = function(node, noChildren, parentRoute){
 		
