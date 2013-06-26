@@ -16,7 +16,7 @@ function sanitize_lr($str, $opt = '', $numbers = false){
 $redis_enabled = false;
 
 if($redis_enabled){
-	require '/vendor/predis/predis/lib/Predis/Autoloader.php';
+	require 'vendor/predis/predis/lib/Predis/Autoloader.php';
 
 	Predis\Autoloader::register();
 	$lr_redis = new Predis\Client();
