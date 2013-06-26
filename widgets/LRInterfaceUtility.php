@@ -41,7 +41,7 @@ class LRInterfaceUtility extends WP_Widget
  
   function widget($args, $instance)
   {
-    $type = $_GET['type'];
+    $type = empty($_GET['type'])?'':$_GET['type'];
 	$options = get_option('lr_options_object');
 
 	if((empty($_GET['lr_resource']) || !empty($options['paradata'])) && $type != "slice" && empty($_GET["query"])){
