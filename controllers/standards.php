@@ -22,7 +22,7 @@ Controller description: Standards Controller
 				$lr_redis->set($key, $value);
 			}
 			
-			$lr_redis->expire($key, '3600');
+			$lr_redis->expire($key, '10800');
 			return $value;
 		}
 		
