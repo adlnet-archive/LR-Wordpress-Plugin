@@ -41,7 +41,7 @@ Controller description: Data Controller
 			$query = array (
 				keys => str_replace("\\", "", $json_api->query->get("keys"))
 			);
-			$raw_data = file_get_contents(self::DATA_ROOT . "?" . http_build_query($query));
+			$raw_data = $this->handleRedisDataItem("?" . http_build_query($query));
 			$data = json_decode($raw_data);
 			return array(
 				data => $data
