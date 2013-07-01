@@ -14,16 +14,22 @@ Controller description: Data Controller
 			
 			global $lr_redis;
 			
-			$key = md5('$data_item/' .$doc_id);
-			$value = $lr_redis->get($key);
-			
-			if(empty($value)){
-				$value = file_get_contents(self::DATA_ROOT . $doc_id);
-				$lr_redis->set($key, $value);
+			try{
+				$key = md5('$data_item/' .$doc_id);
+				$value = $lr_redis->get($key);
+				
+				if(empty($value)){
+					$value = file_get_contents(self::DATA_ROOT . $doc_id);
+					$lr_redis->set($key, $value);
+				}
+				
+				$lr_redis->expire($key, '10800');
+				return $value;
 			}
 			
-			$lr_redis->expire($key, '10800');
-			return $value;
+			catch(Exception $e){
+				return file_get_contents(self::DATA_ROOT . $doc_id);
+			}
 		}
 		
 		public function get_data_item(){

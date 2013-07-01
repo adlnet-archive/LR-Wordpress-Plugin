@@ -14,16 +14,22 @@ Controller description: Standards Controller
 			
 			global $lr_redis;
 			
-			$key = md5('$standards/' .$standard);
-			$value = $lr_redis->get($key);
-			
-			if(empty($value)){
-				$value = file_get_contents(self::SEARCH_ROOT . $standard);
-				$lr_redis->set($key, $value);
+			try{
+				$key = md5('$standards/' .$standard);
+				$value = $lr_redis->get($key);
+				
+				if(empty($value)){
+					$value = file_get_contents(self::SEARCH_ROOT . $standard);
+					$lr_redis->set($key, $value);
+				}
+				
+				$lr_redis->expire($key, '10800');
+				return $value;
 			}
 			
-			$lr_redis->expire($key, '10800');
-			return $value;
+			catch(Exception $e){
+				return file_get_contents(self::SEARCH_ROOT . $standard);
+			}
 		}
 		
 		public function standards(){
