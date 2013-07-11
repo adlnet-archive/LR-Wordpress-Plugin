@@ -11,7 +11,7 @@ Controller description: Data Controller
 			$raw_data = file_get_contents(self::DATA_ROOT . $doc_id);
 			$data = json_decode($raw_data);
 			return array(
-				data => $data
+				data => $data=>data
 				);			
 		}
 		public function get_data_items(){
@@ -22,7 +22,7 @@ Controller description: Data Controller
 			$raw_data = file_get_contents(self::DATA_ROOT . "?" . http_build_query($query));
 			$data = json_decode($raw_data);
 			return array(
-				data => $data
+				data => $data=>data
 				);						
 		}
 	}
