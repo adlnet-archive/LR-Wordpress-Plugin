@@ -13,6 +13,15 @@ function sanitize_lr($str, $opt = '', $numbers = false){
 	return $numbers ? preg_replace('/[^0-9'.$opt.']+/', '', $str) : preg_replace('/[^a-zA-Z0-9'.$opt.']+/', '', $str);
 }
 
+$redis_enabled = false;
+
+if($redis_enabled){
+	require 'vendor/predis/predis/lib/Predis/Autoloader.php';
+
+	Predis\Autoloader::register();
+	$lr_redis = new Predis\Client();
+}
+
 //Load the individual widgets
 include_once('widgets/LRInterfaceSearch.php');
 include_once('widgets/LRInterfaceResults.php');
