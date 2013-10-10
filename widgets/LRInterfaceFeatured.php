@@ -219,7 +219,7 @@ class LRInterfaceFeatured extends WP_Widget
 					currentObject.description = (data.description == undefined) ? "" : stripHTML(data.description);
 					currentObject.url = (data.url == undefined) ? "" : data.url;
 					currentObject.source = data.publisher == undefined ? "" : stripHTML(data.publisher);
-					currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
+					currentObject.image = (data.hasScreenshot !== true) ? imageUrl : "/screenshot/" + md5;
 					
 					currentObject.image = self.getImageSrc(null, currentObject.image);
 					currentObject.hasScreenshot = currentObject.image != imageUrl;				

@@ -75,27 +75,35 @@ class LRInterfaceUtility extends WP_Widget
 		echo $before_title . $title .  $after_title;;
 	?>
 
+		<!--ko if: filterSearchTerms().length > 0 -->
+		<div style="margin-bottom:3px;">Active Filters:</div>
+		<!-- /ko -->
+		<div style="margin-top:10px; padding-left:10px;" data-bind="foreach: filterSearchTerms">
+			<span data-bind="text: $root.getShorterStr($data.name, 40)"></span>
+			<button class="LRxButton" title="Remove Filter" data-bind="visible:$data, click:$root.removeFilter">X</button>
+		</div>		
 		<div data-bind="with: getFilterSections">
 			<div style="margin-bottom:3px;">By content type:</div>
 			
 			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">	
 
-				<button class="filterPublisher btn" data-bind="'html':$data, 'attr':{'href': '#','name':$data, 'class':$data==$root.filterSearchTerms()[1]?'filterPublisherOn':'filterPublisher'}, 'click':$root.handlePublisherClick" style=""></button>
+				<button class="filterPublisher btn" data-bind="'html':$data.category, 'attr':{'href': '#','name':$data.category, 'class':$data==$root.filterSearchTerms()[1]?'filterPublisherOn':'filterPublisher'}, 'click':$root.handleContentTypeClick" style=""></button>
 			</div>
 			
-			
-			<div style="margin-top:10px;margin-bottom:3px;" data-bind="visible:false&&$data.publishers.length > 1 || $root.filterSearchTerms()[0]"><label for="publisherSelectId">By publisher:</label></div>
+<!-- 			<div style="margin-top:10px;margin-bottom:3px;" data-bind="visible:false&&$data.publishers.length > 1 || $root.filterSearchTerms()[0]"><label for="publisherSelectId">By publisher:</label></div>
 			<div data-bind="visible: false&&$data.publishers.length > 1">
 				
 				<select id="publisherSelectId" class="filterPublisherSelect" multiple style="width:90%;" data-bind="foreach:$data.publishers">	
 					<option data-bind="'html': $root.getShorterStr($data, 40), 'attr':{'value':$data}"></option>
 				</select>
-			</div>
-			<div style="margin-top:10px; padding-left:10px;">
-				<span data-bind="visible:$root.filterSearchTerms()[0], text: $root.getShorterStr($root.filterSearchTerms()[0], 40)"></span>
-				<button class="LRxButton" title="Remove Filter" data-bind="visible:$root.filterSearchTerms()[0]">X</button>
-			</div>
+			</div> -->
 		</div>
+		<!--ko if: accessibilityFeatures().length > 0 -->
+		<div style="margin-bottom:3px;">By accessibility features:</div>
+		<!-- /ko -->
+		<div data-bind="foreach: accessibilityFeatures"	style="clear:both;overflow:hidden;width:100%;padding-left:10px;">
+			<button class="filterPublisher btn" data-bind="'html':$data.name, 'attr':{'name':$data.name, 'class':$data==$root.filterSearchTerms()[1]?'filterPublisherOn':'filterPublisher'}, 'click':$root.applyFilter" style=""></button>					
+		</div>				
 		<script type="text/javascript">
 			<?php include_once('templates/scripts/applicationPreview.php'); ?>
 		

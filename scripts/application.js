@@ -662,6 +662,7 @@ var mainViewModel = function(resources){
 	self.featuredResource = ko.observableArray();
 	self.children = [];
 	self.standards = ko.observable({children:[]});
+	self.accessibilityFeatures = ko.observableArray();
 	self.images = ko.observableArray();
 	self.featuredResultsHelper = ko.observableArray();
 	self.levelTracker = [0];
@@ -815,18 +816,7 @@ var mainViewModel = function(resources){
 		return newStr;
 	};
 		
-	self.handlePublisherClick = function(data, obj){
-		
-		var targetName = $(obj.target).attr("name");
-		
-		self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == targetName) ? '' : targetName;		
-		
-		lrConsole("click: ", self.filterSearchTerms()[1], targetName);
-		self.results.removeAll();
-		self.loadNewPage(false, true);
-		
-		return;
-	};
+
 	
 	self.handleSubCategoryClick = function(data, obj){
 			
@@ -894,7 +884,118 @@ var mainViewModel = function(resources){
 	
 	self.getFilterSections = ko.computed(function(){
 	
-		var returnObj = {contentTypes: ['Video', 'Primary Doc', 'Animation', 'Photo'], publishers: []};
+		var returnObj = {
+				contentTypes: [
+					{
+						"category": 'Video', 
+						"accessibility": [						
+						{
+							"name": "Captions",
+							"values": ["captions"]
+						}, 
+						{
+							"name": "Audio Description",
+							"values": ["audioDescription"]
+						}, 
+						{
+							"name": "Transcript",
+							"values": ["transcript"]
+						}, 
+						{
+							"name": "Flashing",
+							"values": ["flashing"]
+						}, 
+						{
+							"name": "Sound",
+							"values": ["sound"]
+						}, 
+						{
+							"name": "Motion Simulation",
+							"values": ["motionSimulation"]
+						}						
+						]
+					}, 
+					{
+						"category": 'Primary Doc', 
+						"accessibility": [
+						{
+							"name": "Braile",
+							"values": ["braile"]
+						}, 
+						{
+							"name": "Description", 
+							"values": ["alternativeText", "longDescription"]
+						},
+						{
+							"name": "BRF",
+							"values": ["BRF"]
+						},
+						{
+							"name":  "MP3",
+							"values": ["MP3"]
+						}, 
+						{
+							"name":	"DAISY",
+							"values": ["DAISY"] 
+						},
+						{
+							"name":	"EPUB 3",
+							"values": ["EPUB 3"]
+						}
+						]
+					}, 
+					{
+						"category": 'Animation', 
+						"accessibility": [						
+						{
+							"name": "Captions",
+							"values": ["captions"]
+						}, 
+						{
+							"name": "Audio Description",
+							"values": ["audioDescription"]
+						}, 
+						{
+							"name": "Transcript",
+							"values": ["transcript"]
+						}, 
+						{
+							"name": "Flashing",
+							"values": ["flashing"]
+						}, 
+						{
+							"name": "Sound",
+							"values": ["sound"]
+						}, 
+						{
+							"name": "Motion Simulation",
+							"values": ["motionSimulation"]
+						}						
+						]
+					}, 
+					{
+						"category": 'Photo', 
+						"accessibility": [						
+						{
+							"name": "Description",
+							"values": ["alternativeText", "longDescription"]
+						}, 
+						{
+							"name": "Tactile",
+							"values": ["tactileObject", "tactileGraphic"]
+						}, 
+						{
+							"name": "Color Dependent",
+							"values": ["colorDependent"]
+						}, 
+						{
+							"name": "Text On Image",
+							"values": ["textOnImage"]
+						}
+						]
+					}
+					], 
+					publishers: []};
 		
 		//Get different results
 		for(var i = 0; i < self.results().length; i++){
@@ -912,7 +1013,33 @@ var mainViewModel = function(resources){
 				
 		return returnObj;
 	});
-	
+
+	self.handleContentTypeClick = function(data, obj){
+		
+		var targetName = $(obj.target).addClass('inverse').removeClass('btn').attr("name");	
+		self.accessibilityFeatures.removeAll();
+		if(data.accessibility){
+			var func = function(x){self.accessibilityFeatures.push(x);};
+			data.accessibility.forEach(func);
+		}
+		self.filterSearchTerms.push({"name": data.category, "values": [data.category]});
+		// self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == targetName) ? '' : targetName;		
+		
+		//self.results.removeAll();
+		//self.loadNewPage(false, true);
+		
+		return;
+	};	
+	self.removeFilter = function(data, obj){
+		self.filterSearchTerms.remove(data);
+		self.results.removeAll();
+		self.loadNewPage(false, true);			
+	}
+	self.applyFilter = function(data, obj){		
+		self.filterSearchTerms.push(data);
+		self.results.removeAll();
+		self.loadNewPage(false, true);			
+	};
 	self.notOnBlackList = function(url){
 		
 		var link = getLocation(url);
@@ -950,7 +1077,6 @@ var mainViewModel = function(resources){
 		$("#loadMore").hide();
 		temp.resultsNotFound(false);
 		isVisual = saveSearchType;
-		
 		//var query = $("#s").val();
 		if(isVisual === true || isVisual === 'slice'){
 			
@@ -959,7 +1085,7 @@ var mainViewModel = function(resources){
 		
 		else {
 			//debugger;
-			loadIndex = (startOver === true) ? 1 : loadIndex;
+			loadIndex = (startOver === true) ? 0 : loadIndex;
 			
 			var data = {terms: query, lr_page: loadIndex-1};
 			if (gov !== 0){
@@ -969,18 +1095,20 @@ var mainViewModel = function(resources){
 				
 				var newArr = [];
 				for(var i = 0; i < self.filterSearchTerms().length; i++){
-
-				  if(self.filterSearchTerms()[i]){
-					newArr.push(self.filterSearchTerms()[i]);
+				  var filter = self.filterSearchTerms()[i];
+				  if(filter){
+				  	if (filter.values){
+				  		newArr = newArr.concat(filter.values);
+				  	}else{
+						newArr.push(filter);
+					}
 				  }
-				}	
-				
+				}					
 				//Joining to help simplify server side processing
 				data.filter = newArr.join(";");
 			}
 				
-			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";
-			
+			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";			
 			if(resultsSaveBuffer && loadIndex > 1){
 					
 				updateResults(resultsSaveBuffer);
@@ -1001,7 +1129,7 @@ var mainViewModel = function(resources){
 			}
 			
 			else{
-			
+				console.log(data);	
 				$.ajax(window.location.pathname, {
 					dataType : 'json',
 					jsonp : 'callback',

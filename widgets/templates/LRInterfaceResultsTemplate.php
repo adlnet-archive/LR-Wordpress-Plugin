@@ -57,7 +57,7 @@
 								<div>
 									<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
-										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{alt:title,src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource screenshot" />
+										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{alt:title,src:$root.getImageSrc(url, '/screenshot/' + _id)}" class="img-polaroid" alt="Resource screenshot" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
 										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__); ?>" data-bind="attr:{src:$root.getImageSrc(url, '<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>')}" alt="Magnifying glass image" class="img-polaroid" />
@@ -69,6 +69,12 @@
 									attr:{href:$root.wordpressLinkTransform($root.permalink,url), title:title}" class="title"></a><br/>
 									<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:$root.wordpressLinkTransform($root.permalink,url)}" class="fine"></a><br/>
 									<span data-bind="text:(description.length<280)? description:description.substr(0, 280)+'...'" class="fine"></span>
+									<p>
+										<span>Media Features: Captions, Transcript</span>
+									</p>
+									<p>
+										<span>Format: Daisy, MP3, BRF, EPUB 3</span>
+									</p>
 								</div>
 							</td>
 						</tr>
@@ -124,7 +130,7 @@
 									<div style="float:left;width: 140px;min-width:140px;text-align:center;">
 										<a data-bind="attr:{href:$root.wordpressLinkTransform($root.permalink,url)}">
 										<!-- ko if: hasScreenshot -->
-										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__ ); ?>" data-bind="attr:{alt:title, src:$root.getImageSrc(url, '<?php echo $host; ?>/screenshot/' + _id)}" class="img-polaroid" alt="Resource Screenshot" />
+										<img src="<?php echo plugins_url( "images/qmark.png" , __FILE__ ); ?>" data-bind="attr:{alt:title, src:$root.getImageSrc(url, '/screenshot/' + _id)}" class="img-polaroid" alt="Resource Screenshot" />
 										<!-- /ko -->
 										<!-- ko if: !hasScreenshot -->
 										<img src="<?php echo plugins_url( 'images/qmark.png' , __FILE__ ) ?>" class="img-polaroid" alt="Magnifying glass image" />
@@ -137,7 +143,24 @@
 											<p style="line-height:16px;margin-bottom:0;" data-bind="html: 'Source: ' + publisher, visible: $data.publisher != undefined && $data.publisher != ''"></p>
 										</div>
 										<p data-bind="html:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></p>
+										<!-- ko if: $data.mediaFeatures -->
+										<div style="color:black" >
+											Media Features: 
+											<span data-bind="foreach: $data.mediaFeatures">
+												<span data-bind="html: $data"></span>
+											</span>											
+										</div>								
+										<!-- /ko -->		
+										<!-- ko if: $data.format -->
+										<div style="color:black">
+											Format: 
+											<span data-bind="foreach: $data.format">
+												<span data-bind="html: $data"></span>
+											</span>														
+										</div>
+										<!-- /ko -->		
 										<a data-bind="text:$root.getShorterStr(url, 50), attr:{href:url}" class="fine" style="float:right;"></a><br/>
+
 									</div>
 								</td>
 							</tr>
