@@ -147,7 +147,7 @@
 										<div style="color:black" >
 											Media Features: 
 											<span data-bind="foreach: $data.mediaFeatures">
-												<span data-bind="html: $data"></span>
+												<span data-bind="html: $data.formatMediaFeature()"></span>
 											</span>											
 										</div>								
 										<!-- /ko -->		

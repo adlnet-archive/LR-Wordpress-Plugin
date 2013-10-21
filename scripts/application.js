@@ -23,6 +23,22 @@ var $=($)?$:jQuery;
 var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = "", directAccess = false, currentSubstrLetter = 'a', publishersCache = {},
 	totalSlice = 6, loadIndex = 1, newLoad = 10, blackList = ["www.engineeringpathway.com"], previewSearchLoaded = false, debugMode = true, saveStandardsData, resultsSaveBuffer;
 
+String.prototype.formatMediaFeature = function(){
+	var test = /[A-Z]/;
+	var display = new Array(this.length + 1);
+	console.log(this);
+	var j = 0;
+	for(var i  = 0; i < this.length; i++){
+			if(test.test(this[i])){
+				display[j] = " ";
+				j++;
+			}
+			display[j] = this[i].toLowerCase();
+			j++;
+	}	
+	return display.join("");
+}
+
 var lrConsole  = function(){
 
 	if(debugMode && arguments.length > 0 && console.log.apply)
@@ -1070,7 +1086,8 @@ var mainViewModel = function(resources){
 		lrConsole(totalSlice);
 		addFullDescriptions();
 	};
-	
+
+
 	self.loadNewPage = function(isVisual, startOver){
 		
 		$('#spinnerDiv').show();
