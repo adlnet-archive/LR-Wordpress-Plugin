@@ -1038,11 +1038,11 @@ var mainViewModel = function(resources){
 			var func = function(x){self.accessibilityFeatures.push(x);};
 			data.accessibility.forEach(func);
 		}
+		self.filterSearchTerms.removeAll()
 		self.filterSearchTerms.push({"name": data.category, "values": [data.category]});
-		// self.filterSearchTerms()[1] = (self.filterSearchTerms()[1] == targetName) ? '' : targetName;		
 		
-		//self.results.removeAll();
-		//self.loadNewPage(false, true);
+		self.results.removeAll();
+		self.loadNewPage(false, true);
 		
 		return;
 	};	
@@ -1052,6 +1052,7 @@ var mainViewModel = function(resources){
 		self.loadNewPage(false, true);			
 	}
 	self.applyFilter = function(data, obj){		
+		self.filterSearchTerms.removeAll()
 		self.filterSearchTerms.push(data);
 		self.results.removeAll();
 		self.loadNewPage(false, true);			
@@ -1104,7 +1105,7 @@ var mainViewModel = function(resources){
 			//debugger;
 			loadIndex = (startOver === true) ? 0 : loadIndex;
 			
-			var data = {terms: query, lr_page: loadIndex <== 0 : 0 ?loadIndex-1};
+			var data = {terms: query, lr_page: loadIndex <= 0 ? 0 : loadIndex-1};
 			if (gov !== 0){
 				data.gov = 1;
 			}
