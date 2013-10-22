@@ -1104,7 +1104,7 @@ var mainViewModel = function(resources){
 			//debugger;
 			loadIndex = (startOver === true) ? 0 : loadIndex;
 			
-			var data = {terms: query, lr_page: loadIndex};
+			var data = {terms: query, lr_page: loadIndex <== 0 : 0 ?loadIndex-1};
 			if (gov !== 0){
 				data.gov = 1;
 			}
