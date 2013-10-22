@@ -899,7 +899,11 @@ var mainViewModel = function(resources){
 	};
 	
 	self.getFilterSections = ko.computed(function(){
-	
+/*						{
+							"name": "Braile",
+							"values": ["braile"]
+						}, */
+							
 		var returnObj = {
 				contentTypes: [
 					{
@@ -934,10 +938,7 @@ var mainViewModel = function(resources){
 					{
 						"category": 'Primary Doc', 
 						"accessibility": [
-						{
-							"name": "Braile",
-							"values": ["braile"]
-						}, 
+
 						{
 							"name": "Description", 
 							"values": ["alternativeText", "longDescription"]
@@ -952,7 +953,7 @@ var mainViewModel = function(resources){
 						}, 
 						{
 							"name":	"DAISY",
-							"values": ["DAISY"] 
+							"values": ["DAISY3"] 
 						},
 						{
 							"name":	"EPUB 3",
