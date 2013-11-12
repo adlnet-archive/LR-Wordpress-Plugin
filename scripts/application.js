@@ -1109,14 +1109,20 @@ var mainViewModel = function(resources){
 		return;
 	};	
 	self.removeFilter = function(data, obj){
-		self.filterSearchTerms.remove(data);		
-		self.loadNewPage(false, true);			
+	    data.style("filterPublisher")
+	    self.filterSearchTerms.remove(data);		
+	    self.loadNewPage(false, true);			
 	}
 	self.applyFilter = function(data, obj){
+	    var style = "filterPublisherOn";
+	    if(data.style() === style){
+		self.removeFilter(data, obj);
+	    }else{
 		data.style("filterPublisherOn")				
 		self.filterSearchTerms.push(data);
 		self.results.removeAll();
 		self.loadNewPage(false, true);			
+	    }
 	};
 	self.notOnBlackList = function(url){
 		
