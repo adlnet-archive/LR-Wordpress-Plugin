@@ -41,8 +41,8 @@ String.prototype.formatMediaFeature = function(){
 
 var lrConsole  = function(){
 
-	if(debugMode && arguments.length > 0 && console.log.apply)
-		console.log.apply(console, arguments)
+	//if(debugMode && arguments.length > 0 && console.log.apply)
+		//console.log.apply(console, arguments)
 };
 	
 var urlTransform = {
@@ -249,7 +249,6 @@ var handleMainResourceModal = function(src, direct){
 				$.getJSON(url, function(data){
 					data = data.data;
 					data = data.pop();
-					console.log(data);
 					var md5 = src;
 					if(data){
 						src = data.url;
@@ -262,7 +261,7 @@ var handleMainResourceModal = function(src, direct){
 						currentObject.description = (data.description == undefined) ? "" : stripHTML(data.description);
 						currentObject.url = (data.url == undefined) ? "" : data.url;
 						currentObject.publisher = (data.publisher == undefined) ? "" : stripHTML(data.publisher);
-						
+						currentObject.id = data._id;
 						lrConsole("qmarkUrl: ", qmarkUrl);
 						var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
 						
@@ -369,7 +368,7 @@ var resourceObject = function(name, url, timeline){
     this.description = "";
     this.image = "";
     this.hasScreenshot = false;
-
+    this.id = ko.observable(1);
     //The timeline should be an observable array of paradata objects
     this.timeline = (timeline !== undefined) ? ko.observableArray(timeline) : ko.observableArray();
 };
@@ -1192,8 +1191,9 @@ var mainViewModel = function(resources){
 				//Joining to help simplify server side processing
 				data.filter = newArr.join(";");
 			}
-				
-			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";			
+		    console.log("search query");	
+		    console.log(data);
+		    data.json = isVisual == 'publisher'? "query.publisher" :"query.search";			
 			if(resultsSaveBuffer && loadIndex > 1){
 					
 				updateResults(resultsSaveBuffer);
