@@ -38,7 +38,7 @@
       <input type="hidden" name="json" value="flagged.flag_item" ></input>
       <input type="hidden" name="id" data-bind="value: currentObject().id"></input>
       <div class="control-group">
-	<label for="reason" class="control-label" style="padding-right:4.5%;">Reason</label>
+	<label for="reason" class="control-label">Reason&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 	<select name="reason" id="reason">
 	  <option value="duplicate">Duplicate</option>
 	  <option value="duplicate">Inappropriate</option>
@@ -48,7 +48,8 @@
 	<label class="control-label" for="description" style="vertical-align: top;">Description</label>
 	<textarea name="description" id="desc"></textarea>
       </div>
-      <div class="control-group" style="padding-left: 12.5%;">
+      <div class="control-group">
+      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 	<button id="submitFlag" class="btn btn-info lrSubmitNoFloat" style="border: 1px solid #d9d9d9 !important;">Flag</button>
       </div>
     </fieldset>
