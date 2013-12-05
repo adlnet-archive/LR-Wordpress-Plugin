@@ -30,7 +30,11 @@ Controller description: Flagged Controller
 		}
 		public function get_flagged_items(){
 		  global $json_api;
-		  $raw_data = file_get_contents(self::DATA_ROOT);
+		  $url = self::DATA_ROOT;
+		  if($json_api->query->get("id")){
+			$url = $url . '/' . $json_api->query->get("id");
+		  }		  
+		  $raw_data = file_get_contents($url);
 		  return json_decode($raw_data);	
 		}
 	}
