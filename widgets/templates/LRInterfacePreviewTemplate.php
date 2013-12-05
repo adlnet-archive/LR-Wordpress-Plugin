@@ -36,7 +36,7 @@
     <fieldset>
       <div id="result"></div>
       <input type="hidden" name="json" value="flagged.flag_item" ></input>
-      <input type="hidden" name="id" data-bind="value: currentObject().id"></input>
+      <input type="hidden" name="id" id="docId" data-bind="value: currentObject().id"></input>
       <div class="control-group">
 	<label for="reason" class="control-label">Reason&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 	<select name="reason" id="reason">
@@ -55,6 +55,41 @@
     </fieldset>
   </form>
 </div>
+<?php if(is_user_logged_in()){?>      
+      <div id="reviewPanel">
+      <h3>This content has been flagged for review</h3>
+      <dl id="flags">
+      </dl>
+      </div>
+      <script type="text/javascript">
+      $(document).ready(function(){
+      var url = window.location.href;
+      url = url.substring(0, url.lastIndexOf('?'));      
+      function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+          results = regex.exec(location.search);
+         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+      var id = getParameterByName("lr_resource");
+      $.getJSON(url, {json: "flagged.get_flagged_items", id: id}, function(data){
+          var reviewPanel = $("#reviewPanel");
+          if(data.flaggedItems.length <=0){
+              reviewPanel.css("display", "none");
+	  }else{
+              reviewPanel.css("display", "block");
+              var flags = $("#flags");
+              for(var i in data.flaggedItems){
+                  var current = data.flaggedItems[i];
+                  var title = $("<dt>").html(current.reason);
+                  var description = $("<dd>").html(current.description);
+                  flags.append(title).append(description);
+              }
+	  }	  
+      });
+      });
+      </script>
+<?php }?>
 <div id="socialMediaPlugins" style="float:right;margin-top:45px;display:none;"></div>
 
 <div class="modal" id="metadata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bind="visible: ! isMetadataHidden()">
