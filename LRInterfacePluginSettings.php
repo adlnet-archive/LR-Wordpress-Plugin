@@ -5,8 +5,8 @@ add_action('admin_menu', 'lr_options_manager');
 function lr_options_manager() {
 
 	//create new top-level menu
-	add_menu_page('LR Interface', 'LR Interface', 'administrator', __FILE__, 'lr_options_page', plugins_url('/images/icon.png', __FILE__));
-
+	add_menu_page('LR Interface', 'LR Interface', 'manage_options',"lr-options-config", 'lr_options_page', plugins_url('/images/icon.png', __FILE__));
+	add_submenu_page("lr-options-config", "Flagged Items", "Flagged Items", "manage_options", "lr-flagged-items", 'flagged_items');
 	//call register settings function
 	add_action( 'admin_init', 'register_mysettings' );
 }
@@ -17,11 +17,39 @@ function register_mysettings() {
 	register_setting( 'lr-settings-group', 'lr_options_object' );
 }
 
+function flagged_items(){
+?>
+<div class="wrap">
+  <h1>Flagged Items</h1>	   
+  <dl id="flaggedDocuments"/>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+  var container = $("#flaggedDocuments");
+  $.getJSON("/wordpress", {json: "flagged.get_flagged_ids"}, function(data){
+      if(data.ids){
+      for(var i in data.ids){
+      var id = data.ids[i];
+      var link = $("<a>").attr("href", "/wordpress/?page_id=4&type=index&lr_resource=" + id._id).html(id.title);
+      container.append($("<dt>").append(link));
+      container.append($("<dd>").append(id.description));
+      }}
+      });
+});
+  </script>
+</div>
+<?php
+}
 function lr_options_page() {
 
 $options = get_option('lr_options_object');
 
-$nodeArray = array("http://node01.public.learningregistry.net/", "http://node02.public.learningregistry.net/", "http://lrtest01.public.learningregistry.net/", "http://sandbox.learningregistry.org/", "http://lrdev03.learningregistry.org/", "http://lrdev05.learningregistry.org/");
+$nodeArray = array("http://node01.public.learningregistry.net/", 
+                   "http://node02.public.learningregistry.net/", 
+		   "http://lrtest01.public.learningregistry.net/", 
+		   "http://sandbox.learningregistry.org/", 
+		   "http://lrdev03.learningregistry.org/", 
+		   "http://lrdev05.learningregistry.org/");
 
 ?>
 <div class="wrap">

@@ -37,5 +37,10 @@ Controller description: Flagged Controller
 		  $raw_data = file_get_contents($url);
 		  return json_decode($raw_data);	
 		}
+		public function get_flagged_ids(){
+		  global $json_api;
+		  $raw_data = file_get_contents(self::DATA_ROOT . '/docs');
+		  return json_decode($raw_data);			  
+		}
 	}
 ?>
