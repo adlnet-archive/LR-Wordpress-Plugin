@@ -27,9 +27,9 @@ function flagged_items(){
   $(document).ready(function(){
   var container = $("#flaggedDocuments");
   $.getJSON("/wordpress", {json: "flagged.get_flagged_ids"}, function(data){
-      if(data.ids){
-      for(var i in data.ids){
-      var id = data.ids[i];
+      if(data.data){
+      for(var i in data.data){
+      var id = data.data[i];
       var link = $("<a>").attr("href", "/wordpress/?page_id=4&type=index&lr_resource=" + id._id).html(id.title);
       container.append($("<dt>").append(link));
       container.append($("<dd>").append(id.description));
