@@ -79,15 +79,14 @@ class LRInterfaceUtility extends WP_Widget
 		<div style="margin-bottom:3px;">Active Filters:</div>
 		<!-- /ko -->
 		<div style="margin-top:10px; padding-left:10px;" data-bind="foreach: filterSearchTerms">
-			<span data-bind="text: $root.getShorterStr($data.name, 40)"></span>
-			<button class="LRxButton" title="Remove Filter" data-bind="visible:$data, click:$root.removeFilter">X</button>
+			<label data-bind="text: $root.getShorterStr($data.name, 40), attr: {for: $data.name}"></label>
+			<button class="LRxButton" title="Remove Filter" data-bind="click:$root.removeFilter, attr: {name: $data.name}">X</button>
 		</div>		
 		<div data-bind="with: getFilterSections">
 			<div style="margin-bottom:3px;">By content type:</div>
 			
-			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">	
-
-				<button class="filterPublisher btn" data-bind="'html':$data.category, 'attr':{'href': '#', 'name':$data.category, 'class':$data.style}, 'click':$root.handleContentTypeClick" style=""></button>
+			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">				     					  
+				<button data-bind="'html':$data.category, 'attr':{'name':$data.category, 'class':$data.style}, 'click':$root.handleContentTypeClick" style=""></button>
 			</div>
 			
 <!-- 			<div style="margin-top:10px;margin-bottom:3px;" data-bind="visible:false&&$data.publishers.length > 1 || $root.filterSearchTerms()[0]"><label for="publisherSelectId">By publisher:</label></div>
@@ -112,13 +111,13 @@ class LRInterfaceUtility extends WP_Widget
 				
 				$(".filterPublisherSelect").val("All Publishers");
 				
-				$(document).on("click", ".LRxButton", function(e){
+				/*$(document).on("click", ".LRxButton", function(e){
 					
 					self.results.removeAll();
 					self.filterSearchTerms()[0] = '';
 					self.filterSearchTerms.valueHasMutated();
 					self.loadNewPage(false, true);
-				});
+				});*/
 				
 				$(document).on("change", ".filterPublisherSelect", function(e){
 

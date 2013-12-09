@@ -26,7 +26,6 @@ var currentObjectMetadata = [], lastContentFrameSource = "", saveFrameState = ""
 String.prototype.formatMediaFeature = function(){
 	var test = /[A-Z]/;
 	var display = new Array(this.length + 1);
-	console.log(this);
 	var j = 0;
 	for(var i  = 0; i < this.length; i++){
 			if(test.test(this[i])){
@@ -721,7 +720,6 @@ var mainViewModel = function(resources){
 		currentSubstrLetter = data.toLowerCase();
 		self.load();
 		
-		console.log(data, e);
 	};
 	
 	self.load = function(prev){
@@ -897,227 +895,218 @@ var mainViewModel = function(resources){
 		}	
 	};
 	
-	self.getFilterSections = ko.computed(function(){
-/*						{
-							"name": "Braile",
-							"values": ["braile"]
-						}, */
-							
-		var returnObj = {
+	self.getFilterSections = {
 				contentTypes: [
-					{
-						"category": 'Video', 
+				    {
+					"category": ko.observable('Video'), 
+					"style": ko.observable("filterPublisher btn"),
+					"accessibility": [						
+					    {
+						"name": "Captions",
+						"values": ["captions"],
+						"style": ko.observable("filterPublisher btn"),
+					    }, 
+					    {
+						"name": "Audio Description",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["audioDescription"]
+						
+					    }, 
+					    {
+						"name": "Transcript",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["transcript"]
+					    }, 
+					    {
+						"name": "Flashing",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["flashing"]
+					    }, 
+					    {
+						"name": "Sound",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["sound"]
+					    }, 
+					    {
+						"name": "Motion Simulation",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["motionSimulation"]
+					    }						
+					]
+				    }, 
+				    {
+					"category": 'Book', 
+					"style": ko.observable("filterPublisher btn"),
+					"accessibility": [					    
+					    {
+						"name": "Image Description", 
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["alternativeText", "longDescription"]
+					    },
+					    {
+						"name": "BRF",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["BRF"]
+					    },
+					    {
+						"name":  "Audio",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["MP3"]
+					    }, 
+					    {
+						"name":	"DAISY",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["DAISY3"] 
+					    },
+					    {
+						"name":	"EPUB 3",
 						"style": ko.observable("filterPublisher"),
-						"accessibility": [						
-						{
-							"name": "Captions",
-							"values": ["captions"],
-							"style": ko.observable("filterPublisher")
-						}, 
-						{
-							"name": "Audio Description",
-							"style": ko.observable("filterPublisher"),
-							"values": ["audioDescription"]
-
-						}, 
-						{
-							"name": "Transcript",
-							"style": ko.observable("filterPublisher"),
-							"values": ["transcript"]
-						}, 
-						{
-							"name": "Flashing",
-							"style": ko.observable("filterPublisher"),
-							"values": ["flashing"]
-						}, 
-						{
-							"name": "Sound",
-							"style": ko.observable("filterPublisher"),
-							"values": ["sound"]
-						}, 
-						{
-							"name": "Motion Simulation",
-							"style": ko.observable("filterPublisher"),
-							"values": ["motionSimulation"]
-						}						
-						]
-					}, 
-					{
-						"category": 'Book', 
-						"style": ko.observable("filterPublisher"),
-						"accessibility": [
-
-						{
-							"name": "Image Description", 
-							"style": ko.observable("filterPublisher"),
-							"values": ["alternativeText", "longDescription"]
-						},
-						{
-							"name": "BRF",
-							"style": ko.observable("filterPublisher"),
-							"values": ["BRF"]
-						},
-						{
-							"name":  "Audio",
-							"style": ko.observable("filterPublisher"),
-							"values": ["MP3"]
-						}, 
-						{
-							"name":	"DAISY",
-							"style": ko.observable("filterPublisher"),
-							"values": ["DAISY3"] 
-						},
-						{
-							"name":	"EPUB 3",
-							"style": ko.observable("filterPublisher"),
-							"values": ["EPUB 3"]
-						}
-						]
-					}, 
-					{
-						"category": 'Primary Doc', 
-						"style": ko.observable("filterPublisher"),
-						"accessibility": [
-
-						{
-							"name": "Image Description", 
-							"style": ko.observable("filterPublisher"),
-							"values": ["alternativeText", "longDescription"]
-						},
-						{
-							"name": "BRF",
-							"style": ko.observable("filterPublisher"),
-							"values": ["BRF"]
-						},
-						{
-							"name":  "Audio",
-							"style": ko.observable("filterPublisher"),
-							"values": ["MP3"]
-						}, 
-						{
-							"name":	"DAISY",
-							"style": ko.observable("filterPublisher"),
-							"values": ["DAISY3"] 
-						},
-						{
-							"name":	"EPUB 3",
-							"style": ko.observable("filterPublisher"),
-							"values": ["EPUB 3"]
-						}
-						]
-					},					
-					{
-						"category": 'Animation',
-						"style": ko.observable("filterPublisher"), 
-						"accessibility": [						
-						{
-							"name": "Captions",
-							"style": ko.observable("filterPublisher"),
-							"values": ["captions"]
-						}, 
-						{
-							"name": "Audio Description",
-							"style": ko.observable("filterPublisher"),
-							"values": ["audioDescription"]
-						}, 
-						{
-							"name": "Transcript",
-							"style": ko.observable("filterPublisher"),
-							"values": ["transcript"]
-						}, 
-						{
-							"name": "Flashing",
-							"style": ko.observable("filterPublisher"),
-							"values": ["flashing"]
-						}, 
-						{
-							"name": "Sound",
-							"style": ko.observable("filterPublisher"),
-							"values": ["sound"]
-						}, 
-						{
-							"name": "Motion Simulation",
-							"style": ko.observable("filterPublisher"),
-							"values": ["motionSimulation"]
-						}						
-						]
-					}, 
-					{
-						"category": 'Photo',
-						"style": ko.observable("filterPublisher"), 
-						"accessibility": [						
-						{
-							"name": "Image Description",
-							"style": ko.observable("filterPublisher"),
-							"values": ["alternativeText", "longDescription"]
-						}, 
-						{
-							"name": "Tactile",
-							"style": ko.observable("filterPublisher"),
-							"values": ["tactileObject", "tactileGraphic"]
-						}, 
-						{
-							"name": "Color Dependent",
-							"style": ko.observable("filterPublisher"),
-							"values": ["colorDependent"]
-						}, 
-						{
-							"name": "Text On Image",
-							"style": ko.observable("filterPublisher"),
-							"values": ["textOnImage"]
-						}
-						]
-					}
-					], 
-					publishers: []};
-		
-		//Get different results
+						"values": ["EPUB 3"]
+					    }
+					]
+				    }, 
+				    {
+					"category": 'Primary Doc', 
+					"style": ko.observable("filterPublisher btn"),
+					"accessibility": [					    
+					    {
+						"name": "Image Description", 
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["alternativeText", "longDescription"]
+					    },
+					    {
+						"name": "BRF",		
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["BRF"]
+					    },
+					    {
+						"name":  "Audio",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["MP3"]
+					    }, 
+					    {
+						"name":	"DAISY",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["DAISY3"] 
+					    },
+					    {
+						"name":	"EPUB 3",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["EPUB 3"]
+					    }
+					]
+				    },					
+				    {
+					"category": 'Animation',
+					"style": ko.observable("filterPublisher btn"),
+					"accessibility": [						
+					    {
+						"name": "Captions",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["captions"]
+					    }, 
+					    {
+						"name": "Audio Description",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["audioDescription"]
+					    }, 
+					    {
+						"name": "Transcript",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["transcript"]
+					    }, 
+					    {
+						"name": "Flashing",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["flashing"]
+					    }, 
+					    {
+						"name": "Sound",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["sound"]
+					    }, 
+					    {
+						"name": "Motion Simulation",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["motionSimulation"]
+					    }						
+					]
+				    }, 
+				    {
+					"category": 'Photo',
+					"style": ko.observable("filterPublisher btn"),
+					"accessibility": [						
+					    {
+						"name": "Image Description",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["alternativeText", "longDescription"]
+					    }, 
+					    {
+						"name": "Tactile",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["tactileObject", "tactileGraphic"]
+					    }, 
+					    {
+						"name": "Color Dependent",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["colorDependent"]
+					    }, 
+					    {
+						"name": "Text On Image",
+						"style": ko.observable("filterPublisher btn"),
+						"values": ["textOnImage"]
+					    }
+					]
+				    }
+				], 
+	    publishers: ko.computed(function(){
+		var publishers = ["All publishers"];
 		for(var i = 0; i < self.results().length; i++){
 			
-			if(self.results()[i].publisher && $.inArray(self.results()[i].publisher, returnObj.publishers) == -1)
-				returnObj.publishers.push(self.results()[i].publisher);			
-		}
-
-		
-		if(returnObj.publishers.length > 1){
-			var tempArray = ["All publishers"];
-			tempArray.push.apply(tempArray, returnObj.publishers);
-			returnObj.publishers = tempArray;
-		}
-				
-		return returnObj;
-	});
+			if(self.results()[i].publisher && $.inArray(self.results()[i].publisher, publishers) == -1)
+			    publishers.push(self.results()[i].publisher);			
+		}					
+		return publishers
+	    })
+	};
 
 	self.handleContentTypeClick = function(data, obj){
-		
-		var targetName = $(obj.target).addClass('inverse').removeClass('btn').attr("name");	
-		self.accessibilityFeatures.removeAll();
-		if(data.accessibility){
-			var func = function(x){self.accessibilityFeatures.push(x);};
-			data.accessibility.forEach(func);
-		}
-		self.filterSearchTerms.removeAll()
-		$(".filterPublisherOn").removeClass("filterPublisherOn")
-							   .addClass("filterPublisher");		
-		data.style("filterPublisherOn");		
-		self.filterSearchTerms.removeAll()
-		self.filterSearchTerms.push({"name": data.category, "values": [data.category]});		
-		self.results.removeAll();
-		self.loadNewPage(false, true);
-		
-		return;
+	    function setStyle(item){
+		if(item.style) item.style("filterPublisher btn");
+		if(item.accessibility){
+		    item.accessibility.forEach(setStyle);
+                }
+	    }
+	    
+	    var targetName = $(obj.target).addClass('inverse').removeClass('btn').attr("name");	
+	    self.accessibilityFeatures.removeAll();
+	    if(data.accessibility){
+		var func = function(x){self.accessibilityFeatures.push(x);};
+		data.accessibility.forEach(func);
+	    }
+	    self.getFilterSections.contentTypes.forEach(setStyle);
+	    self.filterSearchTerms.removeAll()
+	    data.style("filterPublisherOn btn");		
+	    self.filterSearchTerms.push({"name": data.category, "values": [data.category], "obj": data});	
+	    self.results.removeAll();
+	    self.loadNewPage(false, true);
+	    return;
 	};	
 	self.removeFilter = function(data, obj){
-	    data.style("filterPublisher")
+	    if(data.style){
+		data.style("filterPublisher btn");
+	    }else{
+		data.obj.style("filterPublisher btn");
+	    }
 	    self.filterSearchTerms.remove(data);		
 	    self.loadNewPage(false, true);			
 	}
 	self.applyFilter = function(data, obj){
-	    var style = "filterPublisherOn";
+	    var style = "filterPublisherOn btn";
 	    if(data.style() === style){
 		self.removeFilter(data, obj);
 	    }else{
-		data.style("filterPublisherOn")				
+		data.style("filterPublisherOn btn")				
 		self.filterSearchTerms.push(data);
 		self.results.removeAll();
 		self.loadNewPage(false, true);			
@@ -1191,8 +1180,6 @@ var mainViewModel = function(resources){
 				//Joining to help simplify server side processing
 				data.filter = newArr.join(";");
 			}
-		    console.log("search query");	
-		    console.log(data);
 		    data.json = isVisual == 'publisher'? "query.publisher" :"query.search";			
 			if(resultsSaveBuffer && loadIndex > 1){
 					
@@ -1214,13 +1201,11 @@ var mainViewModel = function(resources){
 			}
 			
 			else{
-				console.log(data);	
 				$.ajax(window.location.pathname, {
 					dataType : 'json',
 					jsonp : 'callback',
 					data: data
 				}).done(function(dataIn){
-				
 					var nothingFound = updateResults(dataIn);
 					if(nothingFound === false)
 						return;
