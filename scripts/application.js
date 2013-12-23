@@ -979,7 +979,7 @@ var mainViewModel = function(resources){
 				data.filter = newArr.join(";");
 			}
 				
-			data.json = isVisual == 'publisher'? "search.publisher" :"search.search";
+			data.json = isVisual == 'publisher'? "query.publisher" :"query.search";
 			
 			if(resultsSaveBuffer && loadIndex > 1){
 					
