@@ -4,7 +4,7 @@ Controller name: Publishers
 Controller description: Publishers Controller
 */
 	class JSON_API_Publishers_Controller {
-		const PUBLISHERS_ROOT = "http://12.109.40.31/publishers/";
+		const PUBLISHERS_ROOT = "http://72.243.185.28/publishers/";
 		public function publishers_list(){
 			global $json_api;
 			$page = $json_api->query->get("fetchPage");		

@@ -1,11 +1,11 @@
 <?php
 	/*
-Controller name: Search
-Controller description: Search Controller
+Controller name: Query
+Controller description: Query Controller
 */
-	class JSON_API_Search_Controller {
-		const SEARCH_ROOT = "http://12.109.40.31/search?";
-		const PUBLISHER_ROOT = "http://12.109.40.31/publisher/";
+	class JSON_API_Query_Controller {
+		const SEARCH_ROOT = "http://72.243.185.28/search?";
+		const PUBLISHER_ROOT = "http://72.243.185.28/publisher/";
 		
 		public function handleRedisSearch($termsArr){
 			global $redis_enabled;

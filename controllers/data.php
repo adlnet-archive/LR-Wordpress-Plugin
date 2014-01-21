@@ -4,7 +4,7 @@ Controller name: Data
 Controller description: Data Controller
 */
 	class JSON_API_Data_Controller {
-		const DATA_ROOT = "http://12.109.40.31/data/";
+		const DATA_ROOT = "http://72.243.185.28/data/";
 		
 		public function handleRedisDataItem($doc_id){
 			global $redis_enabled;

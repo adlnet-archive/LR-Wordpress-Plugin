@@ -4,7 +4,7 @@ Controller name: Standards
 Controller description: Standards Controller
 */	
 	class JSON_API_Standards_Controller {
-		const SEARCH_ROOT = "http://12.109.40.31/new/standards/";
+		const SEARCH_ROOT = "http://72.243.185.28/new/standards/";
 		
 		public function handleRedisStandard($standard){
 			global $redis_enabled;
