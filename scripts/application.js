@@ -1528,69 +1528,6 @@ var mainViewModel = function(resources){
 		return link.replace("LRreplaceMe", hex_md5(query));
 	};
 };
-
-// jQuery.XDomainRequest.js
-// Author: Jason Moon - @JSONMOON
-// IE8+
-/*$.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
-    
-    if(jQuery.browser.msie && window.XDomainRequest) {
-        
-        var xdr;
-        
-        return {
-            
-            send: function( headers, completeCallback ) {
-
-                // Use Microsoft XDR
-                xdr = new XDomainRequest();
-				
-				var data = (options.data && options.type == "POST") ? "?" + options.data : "";	
-                xdr.open(options.type, options.url + data);
-                
-                xdr.onload = function() {
-                    
-                    if(this.contentType.match(/\/xml/)){
-                        
-                        var dom = new ActiveXObject("Microsoft.XMLDOM");
-                        dom.async = false;
-                        dom.loadXML(this.responseText);
-                        completeCallback(200, "success", [dom]);
-                        
-                    }else{
-                        
-                        completeCallback(200, "success", [this.responseText]);
-                        
-                    }
-
-                };
-				
-				xdr.onprogress = function () { };
-                
-                xdr.ontimeout = function(){
-                    completeCallback(408, "error", ["The request timed out."]);
-                };
-                
-                xdr.onerror = function(){
-					//alert("IE ERROR");
-                    completeCallback(404, "error", ["The requested resource could not be found."]);
-                };
-				
-				xdr.timeout = 5000;
-                
-				setTimeout(function () {
-					xdr.send();
-				}, 0);
-				
-          },
-          abort: function() {
-              if(xdr)xdr.abort();
-			  lrConsole("abort!");
-          }
-        };
-      }
-    });*/
-	
 	
 var Base64 = {
 	// private property

@@ -4,7 +4,7 @@ Controller name: Data
 Controller description: Data Controller
 */
 	class JSON_API_Data_Controller {
-		const DATA_ROOT = "http://72.243.185.28/data/";
+		const DATA_ROOT = "http://72.243.185.28/data";
 		
 		public function handleRedisDataItem($doc_id){
 			global $redis_enabled;
@@ -25,10 +25,13 @@ Controller description: Data Controller
 				
 				$lr_redis->expire($key, '10800');
 				return $value;
-			}
-			
-			catch(Exception $e){
-				return file_get_contents(self::DATA_ROOT . $doc_id);
+			}			
+			catch(Exception $e){			
+			  $rawResult = file_get_contents(self::DATA_ROOT . $doc_id);
+			  if(!$rawResult){
+			    var_dump($rawResult);
+			  }
+			  return $rawResult;
 			}
 		}
 		
@@ -36,9 +39,9 @@ Controller description: Data Controller
 			global $json_api;			
 			$doc_id = $json_api->query->get("doc_id");
 			$raw_data = $this->handleRedisDataItem($doc_id);
-			$data = json_decode($raw_data);
+			$data = json_decode('/' . $raw_data);
 			return array(
-				data => $data=>data
+				data => $data->data
 				);			
 		}
 		
@@ -50,7 +53,7 @@ Controller description: Data Controller
 			$raw_data = $this->handleRedisDataItem("?" . http_build_query($query));
 			$data = json_decode($raw_data);
 			return array(
-				data => $data=>data
+				data => $data->data
 				);						
 		}
 	}

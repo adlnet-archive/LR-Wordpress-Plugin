@@ -4,7 +4,7 @@ Controller name: Flagged
 Controller description: Flagged Controller
 */
 	class JSON_API_Flagged_Controller {
-		const DATA_ROOT = "http://localhost:9000/flagged";				
+		const DATA_ROOT = "http://72.243.185.28/";
 		public function flag_item(){
 		  global $json_api;			
 		  $postData = array(
