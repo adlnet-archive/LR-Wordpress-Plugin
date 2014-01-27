@@ -265,6 +265,7 @@ var handleMainResourceModal = function(src, direct){
 						var imageUrl = qmarkUrl? qmarkUrl:"/images/qmark.png";
 						
 						currentObject.image = (data.hasScreenshot !== true) ? imageUrl : serviceHost + "/screenshot/" + md5;
+					        console.log(currentObject.image);
 						currentObject.image = self.getImageSrc(data.url, currentObject.image);
 						currentObject.hasScreenshot = currentObject.image != imageUrl;				
 						
@@ -670,56 +671,57 @@ var mainViewModel = function(resources){
     self.followers = ko.observableArray(followingList);
     self.results = ko.observableArray();
     self.resultsNotFound = ko.observable(false);
-	self.saveResultsDisplay = ko.observableArray();
-	self.relatedResultsNodes = ko.observableArray();
-	self.isMetadataHidden = ko.observable(-1);
-	self.featuredResource = ko.observableArray();
-	self.children = [];
-	self.standards = ko.observable({children:[]});
-	self.accessibilityFeatures = ko.observableArray();
-	self.images = ko.observableArray();
-	self.featuredResultsHelper = ko.observableArray();
-	self.levelTracker = [0];
-	self.handleStandardsClick = function(item, e){};
-	self.standardDescription = '';
-	self.filterSearchTerms = ko.observableArray();
-	self.listOfStates = ko.observableArray();
-	self.standardsCounter = 0;
-	self.subjectCounter = 0;
-	self.page = ko.observable(-1);
-	self.publishers = ko.observableArray([]);
-	self.resultsCount = ko.observableArray();
-	self.allLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-	self.errorPublisher = ko.observable(false);
+    self.saveResultsDisplay = ko.observableArray();
+    self.relatedResultsNodes = ko.observableArray();
+    self.isMetadataHidden = ko.observable(-1);
+    self.featuredResource = ko.observableArray();
+    self.children = [];
+    self.standards = ko.observable({children:[]});
+    self.accessibilityFeatures = ko.observableArray();
+    self.images = ko.observableArray();
+    self.featuredResultsHelper = ko.observableArray();
+    self.levelTracker = [0];
+    self.handleStandardsClick = function(item, e){};
+    self.standardDescription = '';
+    self.filterSearchTerms = ko.observableArray();
+    self.accessibility = [];
+    self.listOfStates = ko.observableArray();
+    self.standardsCounter = 0;
+    self.subjectCounter = 0;
+    self.page = ko.observable(-1);
+    self.publishers = ko.observableArray([]);
+    self.resultsCount = ko.observableArray();
+    self.allLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    self.errorPublisher = ko.observable(false);
+    
+    //Temporarily set to false for federal resources
+    self.loadMore = ko.observable(false);
+    
+    self.handleStandardsNodeClick = function(data, e){
 	
-	//Temporarily set to false for federal resources
-	self.loadMore = ko.observable(false);
+	if(data.id)
+	    self.handleStandardsClick(data, e);
 	
-	self.handleStandardsNodeClick = function(data, e){
-		
-		if(data.id)
-			self.handleStandardsClick(data, e);
-			
-		else{
-			standardPlusCollapse(e, $(e.currentTarget));
-			data.loadChildren();
-		}
-		
-		return true;
-	};
+	else{
+	    standardPlusCollapse(e, $(e.currentTarget));
+	    data.loadChildren();
+	}
 	
-	self.previous = function(){
-		self.load(true);
-	};
+	return true;
+    };
+    
+    self.previous = function(){
+	self.load(true);
+    };
+    
+    self.handleLetterClick = function(data, e){
 	
-	self.handleLetterClick = function(data, e){
-		
-		if(currentSubstrLetter == data.toLowerCase())
-			return;
-			
-		currentSubstrLetter = data.toLowerCase();
-		self.load();
-		
+	if(currentSubstrLetter == data.toLowerCase())
+	    return;
+	
+	currentSubstrLetter = data.toLowerCase();
+	self.load();
+	
 	};
 	
 	self.load = function(prev){
@@ -1085,9 +1087,10 @@ var mainViewModel = function(resources){
 		data.accessibility.forEach(func);
 	    }
 	    self.getFilterSections.contentTypes.forEach(setStyle);
-	    self.filterSearchTerms.removeAll()
+	    self.accessibility = [];
 	    data.style("filterPublisherOn btn");		
-	    self.filterSearchTerms.push({"name": data.category, "values": [data.category], "obj": data});	
+	    self.filterSearchTerms.push({name: data.category, obj: data});
+	    self.contentType = data.category;
 	    self.results.removeAll();
 	    self.loadNewPage(false, true);
 	    return;
@@ -1097,7 +1100,10 @@ var mainViewModel = function(resources){
 		data.style("filterPublisher btn");
 	    }else{
 		data.obj.style("filterPublisher btn");
-	    }
+	    }	    
+	    self.accessibility = self.accessibility.filter(function(i){
+		return i == data.name;
+	    });
 	    self.filterSearchTerms.remove(data);		
 	    self.loadNewPage(false, true);			
 	}
@@ -1108,6 +1114,7 @@ var mainViewModel = function(resources){
 	    }else{
 		data.style("filterPublisherOn btn")				
 		self.filterSearchTerms.push(data);
+		self.accessibility.push(data.name);
 		self.results.removeAll();
 		self.loadNewPage(false, true);			
 	    }
@@ -1164,7 +1171,7 @@ var mainViewModel = function(resources){
 			if (gov !== 0){
 				data.gov = 1;
 			}
-			if(self.filterSearchTerms().length > 0){
+			/*if(self.filterSearchTerms().length > 0){
 				
 				var newArr = [];
 				for(var i = 0; i < self.filterSearchTerms().length; i++){
@@ -1179,7 +1186,14 @@ var mainViewModel = function(resources){
 				}					
 				//Joining to help simplify server side processing
 				data.filter = newArr.join(";");
-			}
+			}*/
+		    delete data.filter;
+		    if(self.contentType){
+			data.contentType = self.contentType;
+		    }
+		    if(self.accessibility.length > 0){
+			data.accessibility = self.accessibility.join(";");
+		    }
 		    data.json = isVisual == 'publisher'? "query.publisher" :"query.search";			
 			if(resultsSaveBuffer && loadIndex > 1){
 					
@@ -1443,13 +1457,11 @@ var mainViewModel = function(resources){
         enableModal();
     };
 
-	self.getImageSrc = function(url, screen){
-		
-		var u = (url)?getLocation(url) : {hostname:'void'};
-
-		return urlTransform[u.hostname] ? urlTransform[u.hostname](u, screen) : screen;
-		
-	};
+    self.getImageSrc = function(url, screen){
+	var u = (url)?getLocation(url) : {hostname:'void'};
+	return urlTransform[u.hostname] ? urlTransform[u.hostname](u, screen) : serviceHost + screen;
+	
+    };
 	
     self.deleteResource = function(){
 

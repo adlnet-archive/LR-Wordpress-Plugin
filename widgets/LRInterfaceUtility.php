@@ -87,15 +87,7 @@ class LRInterfaceUtility extends WP_Widget
 			
 			<div data-bind="foreach:$data.contentTypes" style="clear:both;overflow:hidden;width:100%;padding-left:10px;">				     					  
 				<button data-bind="'html':$data.category, 'attr':{'name':$data.category, 'class':$data.style}, 'click':$root.handleContentTypeClick" style=""></button>
-			</div>
-			
-<!-- 			<div style="margin-top:10px;margin-bottom:3px;" data-bind="visible:false&&$data.publishers.length > 1 || $root.filterSearchTerms()[0]"><label for="publisherSelectId">By publisher:</label></div>
-			<div data-bind="visible: false&&$data.publishers.length > 1">
-				
-				<select id="publisherSelectId" class="filterPublisherSelect" multiple style="width:90%;" data-bind="foreach:$data.publishers">	
-					<option data-bind="'html': $root.getShorterStr($data, 40), 'attr':{'value':$data}"></option>
-				</select>
-			</div> -->
+			</div>			
 		</div>
 		<!--ko if: accessibilityFeatures().length > 0 -->
 		<div style="margin-bottom:3px;">By accessibility features:</div>
