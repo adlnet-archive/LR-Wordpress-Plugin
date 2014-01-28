@@ -143,10 +143,10 @@
 											<p style="line-height:16px;margin-bottom:0;" data-bind="html: 'Source: ' + publisher, visible: $data.publisher != undefined && $data.publisher != ''"></p>
 										</div>
 										<p data-bind="html:(description.length==0)? '':description.substr(0, 280)+'...'" class="fine"></p>
-										<!-- ko if: $data.mediaFeatures.length > 0 -->
+										<!-- ko if: $data.accessibilityFeature.length > 0 -->
 										<div style="color:black" >
-											Media Features: 
-											<span data-bind="foreach: $data.mediaFeatures">
+											Accessibility Features: 
+											<span data-bind="foreach: $data.accessibilityFeature">
 												<span data-bind="html: $data.formatMediaFeature()"></span>
 											</span>											
 										</div>								
