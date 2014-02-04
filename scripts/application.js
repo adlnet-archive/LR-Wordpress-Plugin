@@ -901,7 +901,8 @@ var mainViewModel = function(resources){
 				contentTypes: [
 				    {
 					"category": ko.observable('Video'), 
-					"style": ko.observable("filterPublisher btn"),
+					"style": ko.observable("filterPublisher btn"),					
+					"selected": false,
 					"accessibility": [						
 					    {
 						"name": "Captions",
@@ -939,6 +940,7 @@ var mainViewModel = function(resources){
 				    {
 					"category": 'Book', 
 					"style": ko.observable("filterPublisher btn"),
+					"selected": false,
 					"accessibility": [					    
 					    {
 						"name": "Image Description", 
@@ -970,6 +972,7 @@ var mainViewModel = function(resources){
 				    {
 					"category": 'Primary Doc', 
 					"style": ko.observable("filterPublisher btn"),
+					"selected": false,
 					"accessibility": [					    
 					    {
 						"name": "Image Description", 
@@ -1001,6 +1004,7 @@ var mainViewModel = function(resources){
 				    {
 					"category": 'Animation',
 					"style": ko.observable("filterPublisher btn"),
+					"selected": false,
 					"accessibility": [						
 					    {
 						"name": "Captions",
@@ -1037,6 +1041,7 @@ var mainViewModel = function(resources){
 				    {
 					"category": 'Photo',
 					"style": ko.observable("filterPublisher btn"),
+					"selected": false,
 					"accessibility": [						
 					    {
 						"name": "Image Description",
@@ -1073,28 +1078,32 @@ var mainViewModel = function(resources){
 	};
 
 	self.handleContentTypeClick = function(data, obj){
-	    function setStyle(item){
-		if(item.style) item.style("filterPublisher btn");
-		if(item.accessibility){
-		    item.accessibility.forEach(setStyle);
-                }
-	    }
-	    
-	    var targetName = $(obj.target).addClass('inverse').removeClass('btn').attr("name");	
-	    self.accessibilityFeatures.removeAll();
-	    if(data.accessibility){
-		var func = function(x){self.accessibilityFeatures.push(x);};
-		data.accessibility.forEach(func);
-	    }
-	    self.getFilterSections.contentTypes.forEach(setStyle);
-	    self.accessibility = [];
-	    data.style("filterPublisherOn btn");		
-	    self.filterSearchTerms.push({name: data.category, obj: data});
-	    self.contentType = data.category;
+		self.accessibilityFeatures.removeAll();		
+		self.accessibility = [];
+		self.filterSearchTerms.removeAll()		
+		if(data.selected){
+			data.style("filterPublisher btn");			
+			data.selected = false;
+			self.contentType = null;
+		}else{
+	    	if(data.accessibility){
+				var func = function(x){self.accessibilityFeatures.push(x);};
+				data.accessibility.forEach(func);
+	    	}	
+	    	self.getFilterSections.contentTypes.forEach(function(item){
+	    		item.selected = false;
+	    		item.style("filterPublisher btn");			
+	    	});
+	    	data.selected = true;
+	    	data.style("filterPublisherOn btn");		
+	    	self.contentType = data.category;
+	    	self.filterSearchTerms.push({name: data.category, obj: data});
+		}	    	   	    	    
 	    self.results.removeAll();
 	    self.loadNewPage(false, true);
 	    return;
 	};	
+
 	self.removeFilter = function(data, obj){
 	    if(data.style){
 		data.style("filterPublisher btn");

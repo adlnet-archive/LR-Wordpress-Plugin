@@ -78,10 +78,10 @@ class LRInterfaceUtility extends WP_Widget
 		<!--ko if: filterSearchTerms().length > 0 -->
 		<div style="margin-bottom:3px;">Active Filters:</div>
 		<!-- /ko -->
-		<div style="margin-top:10px; padding-left:10px;" data-bind="foreach: filterSearchTerms">
+<!-- 		<div style="margin-top:10px; padding-left:10px;" data-bind="foreach: filterSearchTerms">
 			<label data-bind="text: $root.getShorterStr($data.name, 40), attr: {for: $data.name}"></label>
 			<button class="LRxButton" title="Remove Filter" data-bind="click:$root.removeFilter, attr: {name: $data.name}">X</button>
-		</div>		
+		</div>		 -->
 		<div data-bind="with: getFilterSections">
 			<div style="margin-bottom:3px;">By content type:</div>
 			
