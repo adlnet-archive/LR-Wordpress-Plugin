@@ -1093,6 +1093,11 @@ var mainViewModel = function(resources){
 	    	self.getFilterSections.contentTypes.forEach(function(item){
 	    		item.selected = false;
 	    		item.style("filterPublisher btn");			
+	    		if(item.accessibility){
+	    			item.accessibility.forEach(function(a){
+	    				a.style("filterPublisher btn");			
+	    			});
+	    		}
 	    	});
 	    	data.selected = true;
 	    	data.style("filterPublisherOn btn");		
