@@ -39,7 +39,9 @@ Controller description: Query Controller
                             "terms" => $json_api->query->get("terms"),
                             "filter" => $json_api->query->get("filter"),
                             "page" => $json_api->query->get("lr_page"),
-							"gov" => $json_api->query->get("gov")
+    			    "gov" => $json_api->query->get("gov"),
+                            "contentType" => $json_api->query->get("contentType"),
+                            "accessibility" => $json_api->query->get("accessibility")
                         );
 			$raw_data = $this->handleRedisSearch($query);
 			$data = json_decode($raw_data);	
