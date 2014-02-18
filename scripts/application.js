@@ -1116,7 +1116,10 @@ var mainViewModel = function(resources){
 		data.obj.style("filterPublisher btn");
 	    }	    
 	    self.accessibility = self.accessibility.filter(function(i){
-		return i == data.name;
+	    	for(var j in data.values){
+	    		if(i === data.values[j]) return true;
+	    	}
+			return false;
 	    });
 	    self.filterSearchTerms.remove(data);		
 	    self.loadNewPage(false, true);			
@@ -1128,7 +1131,9 @@ var mainViewModel = function(resources){
 	    }else{
 		data.style("filterPublisherOn btn")				
 		self.filterSearchTerms.push(data);
-		self.accessibility.push(data.name);
+		for(var i in data.values){
+			self.accessibility.push(data.values[i]);	
+		}				
 		self.results.removeAll();
 		self.loadNewPage(false, true);			
 	    }
